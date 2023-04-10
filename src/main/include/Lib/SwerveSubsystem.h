@@ -21,8 +21,8 @@ struct SwerveInputData
     int driveBRID = 8;
     units::meter_t trackWidth{10};
     units::meter_t wheelBase{10};
-    units::meters_per_second_t minSpeed{5};
-    units::meters_per_second_t maxSpeed{5};
+    units::meters_per_second_t xSpeed{5};
+    units::meters_per_second_t ySpeed{5};
     units::radians_per_second_t maxTurnSpeed{1};
 };
 
@@ -42,7 +42,7 @@ public:
      backRightLocation{trackWidth/2, wheelBase/2},
      backLeftLocation{-trackWidth/2, wheelBase/2},
      kinematics{frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation},
-     speeds{data.minSpeed, data.maxSpeed, data.maxTurnSpeed},
+     speeds{data.xSpeed, data.ySpeed, data.maxTurnSpeed},
      odometry{kinematics, frc::Rotation2d{0_deg}, {frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}}, frc::Pose2d{0_m, 0_m, 0_rad}},
      swerveModuleStates{frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}}
       {}
