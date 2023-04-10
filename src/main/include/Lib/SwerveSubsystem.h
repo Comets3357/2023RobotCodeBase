@@ -6,6 +6,7 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/geometry/Translation2d.h>
+#include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include "lib/TimerSubsystem.h"
 
 struct SwerveInputData
@@ -140,7 +141,7 @@ public:
 
     frc::Pose2d GetPose()
     {
-        return odometry.GetPose();
+        return odometry.GetEstimatedPosition();
     }
 
     frc::Rotation2d GetRotation()
@@ -186,7 +187,7 @@ private:
     SwerveModule backLeftModule;
     SwerveModule backRightModule;
 
-    frc::SwerveDriveOdometry<4> odometry;
+    frc::SwerveDrivePoseEstimator<4> odometry;
 
     frc::Pose2d pose;
 
