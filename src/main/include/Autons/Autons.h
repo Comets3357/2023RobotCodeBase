@@ -7,10 +7,13 @@
 #include <frc/trajectory/TrajectoryUtil.h>
 #include "lib/SwerveSubsystem.h"
 #include "lib/SwerveTrajectoryCommand.h"
+#include <frc2/command/WaitCommand.h>
 
 #include <map>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <filesystem>
 
 struct autonCommandGroups
 {
@@ -26,14 +29,12 @@ public:
 
     void RunAuton(std::string AutonName);
     void LoadPaths();
+    void LoadAutons();
 
     //Autons
     std::map<std::string, autonCommandGroups> autons;
     std::map<std::string, frc::Trajectory> paths;
-    std::vector<std::string> pathNames = 
-    {
-        "Path",
-        "Path2"
-    };
+
+    SwerveSubsystem* swerveSubsystem;
 
 };

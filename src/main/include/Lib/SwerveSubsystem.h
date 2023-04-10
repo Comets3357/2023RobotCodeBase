@@ -4,6 +4,7 @@
 #include "SwerveModule.h"
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
+#include <frc/Trajectory/Trajectory.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/geometry/Translation2d.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
