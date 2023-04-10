@@ -10,10 +10,10 @@
 
 struct SwerveInputData
 {
-    int asmithFLID = 1;
-    int asmithFRID = 2;
-    int asmithBLID = 3;
-    int asmithBRID = 4;
+    int azimuthFLID = 1;
+    int azimuthFRID = 2;
+    int azimuthBLID = 3;
+    int azimuthBRID = 4;
     int driveFLID = 5;
     int driveFRID = 6;
     int driveBLID = 7;
@@ -35,7 +35,7 @@ class SwerveSubsystem : public frc2::SubsystemBase
 {
 public:
     SwerveSubsystem(SwerveInputData data, TimerData* timer) : timerData{timer}, trackWidth{data.trackWidth}, wheelBase{data.wheelBase},
-     frontLeftModule{data.asmithFLID, data.driveFLID}, frontRightModule{data.asmithFRID, data.driveFRID}, backRightModule{data.asmithBRID, data.driveBRID}, backLeftModule{data.asmithBLID, data.driveBLID},
+     frontLeftModule{data.azimuthFLID, data.driveFLID}, frontRightModule{data.azimuthFRID, data.driveFRID}, backRightModule{data.azimuthBRID, data.driveBRID}, backLeftModule{data.azimuthBLID, data.driveBLID},
      frontLeftLocation{-trackWidth/2, -wheelBase/2},
      frontRightLocation{trackWidth/2, -wheelBase/2},
      backRightLocation{trackWidth/2, wheelBase/2},

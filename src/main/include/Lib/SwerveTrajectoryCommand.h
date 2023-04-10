@@ -29,13 +29,16 @@ public:
       frc::Trajectory::State trajectoryState = trajectory.Sample(sampleSec);
       chassisSpeed = controller.Calculate(swerveSubsystem->GetPose(), trajectoryState, swerveSubsystem->GetRotation());
       swerveSubsystem->SetChassisSpeed(chassisSpeed);
+
+
+      
     }
 
     bool IsFinished() override
     {
       return sampleSec > totalTime;
     }
-
+    
 
 
 private:

@@ -13,7 +13,7 @@ class SwerveModule
 {
 public:
 
-    SwerveModule(const int AsmithID, const int DriveID) : asmithMotor{AsmithID, POSITION_SPARK_MAX_RELATIVE}, driveMotor{DriveID}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
+    SwerveModule(const int AzimuthID, const int DriveID) : azimuthMotor{AzimuthID, POSITION_SPARK_MAX_RELATIVE}, driveMotor{DriveID}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
     {
         PID pid;
         pid.FF = 1.0;
@@ -23,7 +23,7 @@ public:
 
     void DisabledPeriodic()
     {
-        asmithMotor.ZeroRelativeEncoder();
+        azimuthMotor.ZeroRelativeEncoder();
     }
 
 
@@ -35,7 +35,7 @@ public:
         // speedMultiplier *= angleDegrees > 90.0 || angleDegrees < -90.0 ? -1.0 : 1.0;
         // angleDegrees += angleDegrees > 90.0 ? -180.0 : angleDegrees < -90.0 ? 180.0 : 0.0;
         
-        asmithMotor.SetPosition((double)degree.Degrees());//angleDegrees);
+        azimuthMotor.SetPosition((double)degree.Degrees());//angleDegrees);
 
 
         // lastDegree = asmithMotor.absoluteEncoderPosition;
@@ -50,7 +50,7 @@ public:
     void Periodic()
     {
         position.distance = units::meter_t{driveMotor.GetPosition()};
-        position.angle = frc::Rotation2d{units::degree_t{asmithMotor.absoluteEncoderPosition}};
+        position.angle = frc::Rotation2d{units::degree_t{azimuthMotor.absoluteEncoderPosition}};
     }
 
     frc::SwerveModulePosition GetPosition()
@@ -62,7 +62,7 @@ public:
 
 private:
 
-    PositionSparkMax asmithMotor;
+    PositionSparkMax azimuthMotor;
     WheelSparkMax driveMotor;
 
     double lastDegree;
