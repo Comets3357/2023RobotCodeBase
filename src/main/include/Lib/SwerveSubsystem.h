@@ -80,10 +80,10 @@ public:
 
     void SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desiredStates) {
     
-        swerveModuleStates[0].Optimize(desiredStates[0], frontLeftModule.GetPosition().angle);
-        swerveModuleStates[1].Optimize(desiredStates[1], frontRightModule.GetPosition().angle);
-        swerveModuleStates[2].Optimize(desiredStates[2], backLeftModule.GetPosition().angle);
-        swerveModuleStates[3].Optimize(desiredStates[3], backRightModule.GetPosition().angle);
+        swerveModuleStates[0] = frc::SwerveModuleState::Optimize(desiredStates[0], frontLeftModule.GetPosition().angle);
+        swerveModuleStates[1] = frc::SwerveModuleState::Optimize(desiredStates[1], frontRightModule.GetPosition().angle);
+        swerveModuleStates[2] = frc::SwerveModuleState::Optimize(desiredStates[2], backLeftModule.GetPosition().angle);
+        swerveModuleStates[3] = frc::SwerveModuleState::Optimize(desiredStates[3], backRightModule.GetPosition().angle);
 
         frontLeftModule.SetAsimuthPosition(swerveModuleStates[0].angle);
         frontLeftModule.SetSpeed(swerveModuleStates[0].speed);
