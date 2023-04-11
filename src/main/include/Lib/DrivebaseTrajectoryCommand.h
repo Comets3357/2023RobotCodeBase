@@ -47,6 +47,8 @@ public:
     DrivebaseTrajectoryCommand(std::string path, DrivebaseSubsystem* drivebaseSubsystem) : drivebase{drivebaseSubsystem}, trajectoryName{path}
     {
         AddRequirements(drivebase);
+
+        
     }
 
     void Initialize() override

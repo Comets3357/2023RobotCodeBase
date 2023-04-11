@@ -34,7 +34,15 @@ public:
     //Autons
     std::map<std::string, autonCommandGroups> autons;
     std::map<std::string, frc::Trajectory> paths;
+    std::map<std::string, std::function<void(std::string)>> commands;
 
     SwerveSubsystem* swerveSubsystem;
+
+
+    template <typename T>
+    void AddAutonAction()
+    {
+        commands[typeid(T).name()] = [this](std::string pathName) {autons[pathName].actionCommands.AddCommands(T{});};
+    }
 
 };

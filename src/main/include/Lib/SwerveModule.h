@@ -30,15 +30,15 @@ public:
 
     void SetAsimuthPosition(frc::Rotation2d degree)
     {
-        // double currentPositionDegrees = degree;
-        // double angleDegrees = std::fmod(currentPositionDegrees - lastDegree + 540.0, 360.0) - 180.0;
-        // speedMultiplier *= angleDegrees > 90.0 || angleDegrees < -90.0 ? -1.0 : 1.0;
-        // angleDegrees += angleDegrees > 90.0 ? -180.0 : angleDegrees < -90.0 ? 180.0 : 0.0;
+        double currentPositionDegrees = (double)degree.Degrees();
+        double angleDegrees = std::fmod(currentPositionDegrees - lastDegree + 540.0, 360.0) - 180.0;
+        speedMultiplier *= angleDegrees > 90.0 || angleDegrees < -90.0 ? -1.0 : 1.0;
+        angleDegrees += angleDegrees > 90.0 ? -180.0 : angleDegrees < -90.0 ? 180.0 : 0.0;
         
-        azimuthMotor.SetPosition((double)degree.Degrees());//angleDegrees);
+        azimuthMotor.SetPosition(angleDegrees);
 
 
-        // lastDegree = asmithMotor.absoluteEncoderPosition;
+        lastDegree = azimuthMotor.absoluteEncoderPosition;
     }
 
     void SetSpeed(units::meters_per_second_t velocity)

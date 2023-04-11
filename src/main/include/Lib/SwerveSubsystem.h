@@ -51,7 +51,7 @@ public:
     void SetSpeed(units::meters_per_second_t y, units::meters_per_second_t x, units::radians_per_second_t rotation)
     {
         speeds = frc::ChassisSpeeds::FromFieldRelativeSpeeds(x, y, rotation, frc::Rotation2d(units::degree_t{gyro.yaw}));
-        //SetChassisSpeed(speeds);
+        SetChassisSpeed(speeds);
     }
 
     void CheckResetOdometry(frc::Trajectory trajectory)
@@ -121,6 +121,9 @@ public:
 
         backRightModule.SetAsimuthPosition(swerveModuleStates[3].angle);
         backRightModule.SetSpeed(swerveModuleStates[3].speed);
+
+        frc::SmartDashboard::PutNumber("Degree", (double)swerveModuleStates[3].angle.Degrees());
+        frc::SmartDashboard::PutNumber("Vel", (double)swerveModuleStates[3].speed);
 
     }
 

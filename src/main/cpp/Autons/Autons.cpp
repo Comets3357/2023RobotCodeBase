@@ -66,7 +66,10 @@ void Autons::LoadAutons()
                     }
                     else
                     {
-                        autons[entry.path().stem().string()].drivebaseCommands.AddCommands(SwerveTrajectoryCommand(paths[line], swerveSubsystem));
+                        if (paths.contains(line))
+                        {
+                            autons[entry.path().stem().string()].drivebaseCommands.AddCommands(SwerveTrajectoryCommand(paths[line], swerveSubsystem));
+                        }
                     }
                 }
             }
@@ -75,6 +78,34 @@ void Autons::LoadAutons()
 
     for (const auto& entry : std::filesystem::directory_iterator(secondaryControlPath))
     {
-        
+        if (entry.is_regular_file())
+        {
+            std::ifstream file(entry.path().filename().string());
+
+            if (file.is_open())
+            {
+                std::string line;
+
+                while (std::getline(file, line))
+                {
+                    if (line.find("break"))
+                    {
+                        double breakTime = std::stod(line.substr(6));
+                        autons[entry.path().stem().string()].actionCommands.AddCommands(frc2::WaitCommand(units::second_t(breakTime)));
+                    }
+                    else
+                    {
+                        if (commands.contains(line))
+                        {
+                            commands[line](entry.path().stem().string());
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
+
+
+

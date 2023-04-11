@@ -20,6 +20,7 @@ public:
       swerveSubsystem->CheckResetOdometry(trajectory);
       trajectorySecOffset = units::second_t{swerveSubsystem->timerData->timeSinceEnabled};
       totalTime = trajectory.TotalTime();
+
       
     }
 
