@@ -39,10 +39,10 @@ public:
     SwerveSubsystem* swerveSubsystem;
 
 
-    template <typename T>
+    template <typename Command>
     void AddAutonAction()
     {
-        commands[typeid(T).name()] = [this](std::string pathName) {autons[pathName].actionCommands.AddCommands(T{});};
+        commands[typeid(Command).name()] = [this](std::string pathName) {autons[pathName].actionCommands.AddCommands(Command{});};
     }
 
 };
