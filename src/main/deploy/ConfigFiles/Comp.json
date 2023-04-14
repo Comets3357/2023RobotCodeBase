@@ -13,6 +13,7 @@
 			"AbsoluteZeroOffset": 0.0,
 			"MaxSpeed": 1.0,
 			"MinSpeed": -1.0,
+			"IdleMode": "break",
 			"VelocityPID": {
 				"P": 0.0,
 				"I": 0.0,
@@ -37,6 +38,7 @@
 			"AbsoluteZeroOffset": 0.0,
 			"MaxSpeed": 1.0,
 			"MinSpeed": -1.0,
+			"IdleMode": "Break",
 			"VelocityPID": {
 				"P": 0.0,
 				"I": 0.0,
@@ -57,6 +59,7 @@
 			"InvertedRelative": false,
 			"CurrentLimit": 60,
 			"RelativeConversionFactor": 1.0,
+			"IdleMode": "Coast",
 			"VelocityPID": {
 				"P": 0.0,
 				"I": 0.0,
@@ -69,6 +72,7 @@
 			"InvertedRelative": false,
 			"CurrentLimit": 60,
 			"RelativeConversionFactor": 1.0,
+			"IdleMode": "Break",
 			"VelocityPID": {
 				"P": 0.0,
 				"I": 0.0,
@@ -81,7 +85,8 @@
 		{
 			"Name": "EndEffectorRoller",
 			"InvertedRelative": false,
-			"CurrentLimit": 60
+			"CurrentLimit": 60,
+			"IdleMode": "Break"
 		}
 	]
 }

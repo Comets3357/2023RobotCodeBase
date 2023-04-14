@@ -19,6 +19,7 @@ struct PositionMotorConfig {
     double absolute_zero_offset;
     double max_speed;
     double min_speed;
+    rev::CANSparkMax::IdleMode idleMode;
 
     PID velocity_pid;
     PID position_pid;
@@ -28,6 +29,7 @@ struct WheelMotorConfig {
     bool inverted_relative;
     int current_limit;
     double relative_conversion_factor;
+    rev::CANSparkMax::IdleMode idleMode;
 
     struct VelocityPID {
         double p;
@@ -40,6 +42,7 @@ struct WheelMotorConfig {
 struct RollerMotorConfig {
     bool inverted_relative;
     int current_limit;
+    rev::CANSparkMax::IdleMode idleMode;
 };
 
 struct RobotConfig {
@@ -85,6 +88,7 @@ public:
             position_motor_config.absolute_zero_offset = position_motor_config_json["AbsoluteZeroOffset"].asDouble();
              position_motor_config.max_speed = position_motor_config_json["MaxSpeed"].asDouble();
             position_motor_config.min_speed = position_motor_config_json["MinSpeed"].asDouble();
+            position_motor_config.idleMode = position_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
             const auto& velocity_pid_json = position_motor_config_json["VelocityPID"];
             position_motor_config.velocity_pid.P = velocity_pid_json["P"].asDouble();
@@ -108,6 +112,7 @@ public:
             wheel_motor_config.inverted_relative = wheel_motor_config_json["InvertedRelative"].asBool();
             wheel_motor_config.current_limit = wheel_motor_config_json["CurrentLimit"].asInt();
             wheel_motor_config.relative_conversion_factor = wheel_motor_config_json["RelativeConversionFactor"].asDouble();
+            wheel_motor_config.idleMode = wheel_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
             const auto& velocity_pid_json = wheel_motor_config_json["VelocityPID"];
             wheel_motor_config.velocity_pid.p = velocity_pid_json["P"].asDouble();
@@ -124,6 +129,8 @@ public:
 
             roller_motor_config.inverted_relative = roller_motor_config_json["InvertedRelative"].asBool();
             roller_motor_config.current_limit = roller_motor_config_json["CurrentLimit"].asInt();
+            roller_motor_config.idleMode = roller_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+
 
             robot_config.roller_motor_configs[roller_motor_config_json["Name"].asString()] = roller_motor_config;
 

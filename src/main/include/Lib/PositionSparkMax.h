@@ -15,6 +15,7 @@
 #include <math.h>
 #include <thread>
 #include "PID.h"
+#include "Lib/ConfigFiles.h"
 
 enum PositionSparkMaxRunMode
 {
@@ -45,6 +46,36 @@ public:
             absoluteEncoderTask = std::make_unique<std::thread>(&PositionSparkMax::CheckAbsoluteEncoder, this);
         }
     };
+
+    void SetConfig(std::string name)
+    {
+        PositionMotorConfig config = ConfigFiles::getInstance().robot_config.position_motor_configs[name];
+
+        if (
+            motor.GetInverted() != config.inverted_relative || 
+            motor.GetIdleMode() != config.idleMode || 
+            PIDController.GetOutputMin(1) != config.min_speed ||
+            PIDController.GetOutputMax(1) != config.max_speed ||
+            relativeEncoder.GetPositionConversionFactor() != config.relative_conversion_factor;
+            absoluteEncoder.GetInverted() != config.inverted_absolute ||
+            absoluteEncoder.GetPositionConversionFactor() != config.absolute_conversion_factor ||
+            absoluteEncoder.GetZeroOffset() != config.absolute_zero_offset
+        )
+        {
+            motor.RestoreFactoryDefaults();
+            motor.SetInverted(config.inverted_relative);
+            motor.SetSmartCurrentLimit(config.current_limit);
+            motor.SetIdleMode(config.idleMode);
+            PIDController.SetOutputRange(config.min_speed, config.max_speed, 1);
+            SetVelocityPID(config.velocity_pid);
+            SetPositionPID(config.position_pid);
+            relativeEncoder.SetPositionConversionFactor(config.relative_conversion_factor);
+            absoluteEncoder.SetInverted(config.inverted_absolute);
+            absoluteEncoder.SetPositionConversionFactor(config.absolute_conversion_factor);
+            absoluteEncoder.SetZeroOffset(config.absolute_zero_offset);
+            motor.BurnFlash();
+        }
+    }
 
     void ZeroRelativeEncoder()
     {
