@@ -10,7 +10,10 @@
 
 #include "Lib/SwerveSubsystem.h"
 
+#include "Lib/ConfigFiles.h"
+
 void Robot::RobotInit() {
+ConfigFiles::getInstance().LoadConfigFiles("comp");
 m_container.timerSubsystem.ResetAndBeginTimer();
 }
 

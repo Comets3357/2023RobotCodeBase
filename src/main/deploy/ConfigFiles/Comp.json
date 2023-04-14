@@ -1,0 +1,87 @@
+{
+
+
+
+	"PositionMotorConfigs": [
+		{
+			"Name": "ElbowMotor",
+			"InvertedAbsolute": false,
+			"InvertedRelative": false,
+			"CurrentLimit": 60,
+			"RelativeConversionFactor": 1.0,
+			"AbsoluteConversionFactor": 1.0,
+			"AbsoluteZeroOffset": 0.0,
+			"MaxSpeed": 1.0,
+			"MinSpeed": -1.0,
+			"VelocityPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			},
+			"PositionPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			}
+		},
+
+		{
+			"name": "WristMotor",
+			"InvertedAbsolute": false,
+			"InvertedRelative": false,
+			"CurrentLimit": 60,
+			"RelativeConversionFactor": 1.0,
+			"AbsoluteConversionFactor": 1.0,
+			"AbsoluteZeroOffset": 0.0,
+			"MaxSpeed": 1.0,
+			"MinSpeed": -1.0,
+			"VelocityPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			},
+			"PositionPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			}
+		}
+	],
+	"WheelMotorConfig": [
+		{
+			"Name": "Drivebase",
+			"InvertedRelative": false,
+			"CurrentLimit": 60,
+			"RelativeConversionFactor": 1.0,
+			"VelocityPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			}
+		},
+		{
+			"Name": "FlyWheel",
+			"InvertedRelative": false,
+			"CurrentLimit": 60,
+			"RelativeConversionFactor": 1.0,
+			"VelocityPID": {
+				"P": 0.0,
+				"I": 0.0,
+				"D": 0.0,
+				"FF": 0.0
+			}
+		}
+	],
+	"RollerMotorConfig": [
+		{
+			"Name": "EndEffectorRoller",
+			"InvertedRelative": false,
+			"CurrentLimit": 60
+		}
+	]
+}

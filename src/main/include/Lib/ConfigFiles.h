@@ -1,85 +1,135 @@
-#pragma once
+#include <iostream>
+#include <fstream>
+#include "Json/json.h"
 
-#include <map>
 #include <string>
 #include <vector>
-#include <iostream>
-#include <filesystem>
+#include <map>
+#include <frc/fileSystem.h>
+#include "PID.h"
 
-#include <frc/filesystem.h>
-#include <fstream>
+#include <rev/CANSparkMax.h>
+
+struct PositionMotorConfig {
+    bool inverted_absolute;
+    bool inverted_relative;
+    int current_limit;
+    double relative_conversion_factor;
+    double absolute_conversion_factor;
+    double absolute_zero_offset;
+    double max_speed;
+    double min_speed;
+
+    PID velocity_pid;
+    PID position_pid;
+};
+
+struct WheelMotorConfig {
+    bool inverted_relative;
+    int current_limit;
+    double relative_conversion_factor;
+
+    struct VelocityPID {
+        double p;
+        double i;
+        double d;
+        double ff;
+    } velocity_pid;
+};
+
+struct RollerMotorConfig {
+    bool inverted_relative;
+    int current_limit;
+};
+
+struct RobotConfig {
+    std::map<std::string, PositionMotorConfig> position_motor_configs;
+    std::map<std::string, WheelMotorConfig> wheel_motor_configs;
+    std::map<std::string, RollerMotorConfig> roller_motor_configs;
+
+};
+
 
 class ConfigFiles
 {
-    public:
+public:
 
-    ConfigFiles();
-
-
-    struct MotorConfig
+    static ConfigFiles& getInstance()
     {
-        bool inverted = false;
-        double currentLimit = 40;
+        static ConfigFiles config;
+        return config;
+    }
 
-    };
-
-    enum currentConfigType
+    void LoadConfigFiles(std::string fileName)
     {
-        NONE,
-        MOTOR_CONFIG
-    };
+        std::ifstream json_file(frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + fileName + ".json");
+        Json::Value root;
+        Json::CharReaderBuilder builder;
+        std::string errors;
 
+        if (!Json::parseFromStream(builder, json_file, &root, &errors)) {
+            std::cerr << "Failed to parse JSON: " << errors << std::endl;
+        }
 
-    void LoadConfig(std::string name)
-    {
+        // Access values in root object
+        
 
-        std::ifstream file{frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + name};
+        for (const auto& position_motor_config_json : root["PositionMotorConfigs"]) {
+            PositionMotorConfig position_motor_config;
 
-        if (file.is_open())
+            position_motor_config.inverted_absolute = position_motor_config_json["InvertedAbsolute"].asBool();
+            position_motor_config.inverted_relative = position_motor_config_json["InvertedRelative"].asBool();
+            position_motor_config.current_limit = position_motor_config_json["CurrentLimit"].asInt();
+            position_motor_config.relative_conversion_factor = position_motor_config_json["RelativeConversionFactor"].asDouble();
+            position_motor_config.absolute_conversion_factor = position_motor_config_json["AbsoluteConversionFactor"].asDouble();
+            position_motor_config.absolute_zero_offset = position_motor_config_json["AbsoluteZeroOffset"].asDouble();
+             position_motor_config.max_speed = position_motor_config_json["MaxSpeed"].asDouble();
+            position_motor_config.min_speed = position_motor_config_json["MinSpeed"].asDouble();
+
+            const auto& velocity_pid_json = position_motor_config_json["VelocityPID"];
+            position_motor_config.velocity_pid.P = velocity_pid_json["P"].asDouble();
+            position_motor_config.velocity_pid.I = velocity_pid_json["I"].asDouble();
+            position_motor_config.velocity_pid.D = velocity_pid_json["D"].asDouble();
+            position_motor_config.velocity_pid.FF = velocity_pid_json["FF"].asDouble();
+
+            const auto& position_pid_json = position_motor_config_json["PositionPID"];
+            position_motor_config.position_pid.P = position_pid_json["P"].asDouble();
+            position_motor_config.position_pid.I = position_pid_json["I"].asDouble();
+            position_motor_config.position_pid.D = position_pid_json["D"].asDouble();
+            position_motor_config.position_pid.FF = position_pid_json["FF"].asDouble();
+           
+
+            robot_config.position_motor_configs[position_motor_config_json["Name"].asString()] = position_motor_config;
+        }
+
+        for (const auto& wheel_motor_config_json : root["WheelMotorConfig"]) {
+            WheelMotorConfig wheel_motor_config;
+
+            wheel_motor_config.inverted_relative = wheel_motor_config_json["InvertedRelative"].asBool();
+            wheel_motor_config.current_limit = wheel_motor_config_json["CurrentLimit"].asInt();
+            wheel_motor_config.relative_conversion_factor = wheel_motor_config_json["RelativeConversionFactor"].asDouble();
+
+            const auto& velocity_pid_json = wheel_motor_config_json["VelocityPID"];
+            wheel_motor_config.velocity_pid.p = velocity_pid_json["P"].asDouble();
+            wheel_motor_config.velocity_pid.i = velocity_pid_json["I"].asDouble();
+            wheel_motor_config.velocity_pid.d = velocity_pid_json["D"].asDouble();
+            wheel_motor_config.velocity_pid.ff = velocity_pid_json["FF"].asDouble();
+
+            robot_config.wheel_motor_configs[wheel_motor_config_json["Name"].asString()] = wheel_motor_config;
+        }
+
+        for (const auto& roller_motor_config_json : root["RollerMotorConfig"])
         {
-            std::string line;
+            RollerMotorConfig roller_motor_config;
 
-            while (std::getline(file, line))
-            {
-                if (line.find("MotorConfig"))
-                {
-                    configName = line.substr(12);
-                    configType = MOTOR_CONFIG;
-                    motorConfigs[configName] = MotorConfig{};
-                }
-                else
-                {
-                    switch (configType)
-                    {
-                    case MOTOR_CONFIG:
+            roller_motor_config.inverted_relative = roller_motor_config_json["InvertedRelative"].asBool();
+            roller_motor_config.current_limit = roller_motor_config_json["CurrentLimit"].asInt();
 
-                        if (line.find("inverted:"))
-                        {
-                            int num = std::stoi(line.substr(10));
-                            motorConfigs[configName].inverted = num==1 ? true : false;
-                        }
-                        else if (line.find("currentlimit:"))
-                        {
-                            double num = std::stod(line.substr(14));
-                            motorConfigs[configName].currentLimit = num;
-                        }
+            robot_config.roller_motor_configs[roller_motor_config_json["Name"].asString()] = roller_motor_config;
 
-                        break;
-                    
-                    default:
-                        break;
-                    }
-                }
-
-                
-            }
         }
     }
 
-    private:
-
-    std::string configName = "";
-    currentConfigType configType = NONE;
-
-    std::map<std::string, MotorConfig> motorConfigs;
+    RobotConfig robot_config;
 };
+
