@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include <iostream>
 #include <fstream>
 #include "Json/json.h"
@@ -31,12 +34,7 @@ struct WheelMotorConfig {
     double relative_conversion_factor;
     rev::CANSparkMax::IdleMode idleMode;
 
-    struct VelocityPID {
-        double p;
-        double i;
-        double d;
-        double ff;
-    } velocity_pid;
+    PID velocity_pid;
 };
 
 struct RollerMotorConfig {
@@ -59,8 +57,8 @@ public:
 
     static ConfigFiles& getInstance()
     {
-        static ConfigFiles config;
-        return config;
+        static ConfigFiles instance;
+        return instance;
     }
 
     void LoadConfigFiles(std::string fileName)
@@ -115,10 +113,10 @@ public:
             wheel_motor_config.idleMode = wheel_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
             const auto& velocity_pid_json = wheel_motor_config_json["VelocityPID"];
-            wheel_motor_config.velocity_pid.p = velocity_pid_json["P"].asDouble();
-            wheel_motor_config.velocity_pid.i = velocity_pid_json["I"].asDouble();
-            wheel_motor_config.velocity_pid.d = velocity_pid_json["D"].asDouble();
-            wheel_motor_config.velocity_pid.ff = velocity_pid_json["FF"].asDouble();
+            wheel_motor_config.velocity_pid.P = velocity_pid_json["P"].asDouble();
+            wheel_motor_config.velocity_pid.I = velocity_pid_json["I"].asDouble();
+            wheel_motor_config.velocity_pid.D = velocity_pid_json["D"].asDouble();
+            wheel_motor_config.velocity_pid.FF = velocity_pid_json["FF"].asDouble();
 
             robot_config.wheel_motor_configs[wheel_motor_config_json["Name"].asString()] = wheel_motor_config;
         }
@@ -138,5 +136,13 @@ public:
     }
 
     RobotConfig robot_config;
+
+    private:
+
+    ConfigFiles() {} // Private constructor to prevent instantiation outside of class
+    ConfigFiles(const ConfigFiles&) = delete; // Disable copy constructor
+    ConfigFiles& operator=(const ConfigFiles&) = delete; // Disable copy assignment operator
+    ConfigFiles(ConfigFiles&&) = delete; // Disable move constructor
+    ConfigFiles& operator=(ConfigFiles&&) = delete; // Disable move assignment operator
 };
 
