@@ -32,6 +32,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         moduleConfig.absoluteInverted = config.get("AbsoluteInverted").get<bool>();
         moduleConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
         moduleConfig.absoluteConversionFactor = config.get("AbsoluteConversionFactor").get<double>();
+
+        robotConfig.swerveModuleConfigs[config.get("Name").get<std::string>()] = moduleConfig;
     }
 
     for (auto& config : swerveConfigs)
@@ -47,6 +49,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         swerveConfig.xSpeed = units::meters_per_second_t{config.get("xSpeed").get<double>()};
         swerveConfig.xSpeed = units::meters_per_second_t{config.get("ySpeed").get<double>()};
         swerveConfig.maxTurnSpeed = units::radians_per_second_t{config.get("MaxTurnSpeed").get<double>()};
+
+        robotConfig.swerveConfigs[config.get("Name").get<std::string>()] = swerveConfig;
     }
 
     for (auto& config : positionMotorConfigs) {

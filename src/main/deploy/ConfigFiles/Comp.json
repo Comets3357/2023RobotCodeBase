@@ -88,5 +88,72 @@
 			"CurrentLimit": 60,
 			"IdleMode": "Break"
 		}
+	],
+
+	"SwerveConfigs": [
+		{
+			"Name": "Swerve",
+			"FrontLeftModule": "Module1",
+			"FrontRightModule": "Module2",
+			"BackLeftModule": "Module3",
+			"BackRightModule": "Module4",
+			"TrackWidth": 10,
+			"WheelBase": 10,
+			"xSpeed": 10,
+			"ySpeed": 10,
+			"MaxTurnSpeed": 20
+		}
+	],
+
+	"SwerveModuleConfigs": [
+		{
+			"Name": "Module1",
+			"AzimuthID": 1,
+			"DriveID": 2,
+			"RelativeInverted": false,
+			"AbsoluteInverted": false,
+			"RelativeConversionFactor": 100.0,
+			"AbsoluteConversionFactor": 360.0
+		},
+
+		{
+			"Name": "Module2",
+			"AzimuthID": 1,
+			"DriveID": 2,
+			"RelativeInverted": false,
+			"AbsoluteInverted": false,
+			"RelativeConversionFactor": 100.0,
+			"AbsoluteConversionFactor": 360.0
+		},
+
+		{
+			"Name": "Module3",
+			"AzimuthID": 1,
+			"DriveID": 2,
+			"RelativeInverted": false,
+			"AbsoluteInverted": false,
+			"RelativeConversionFactor": 100.0,
+			"AbsoluteConversionFactor": 360.0
+		},
+
+		{
+			"Name": "Module4",
+			"AzimuthID": 1,
+			"DriveID": 2,
+			"RelativeInverted": false,
+			"AbsoluteInverted": false,
+			"RelativeConversionFactor": 100.0,
+			"AbsoluteConversionFactor": 360.0
+		},
+
+		{
+			"Name": "Module5",
+			"AzimuthID": 1,
+			"DriveID": 2,
+			"RelativeInverted": false,
+			"AbsoluteInverted": false,
+			"RelativeConversionFactor": 100.0,
+			"AbsoluteConversionFactor": 360.0
+		}
 	]
 }
