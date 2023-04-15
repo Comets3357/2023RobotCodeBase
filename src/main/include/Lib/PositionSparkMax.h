@@ -49,30 +49,30 @@ public:
 
     void SetConfig(std::string name)
     {
-        PositionMotorConfig config = ConfigFiles::getInstance().robot_config.position_motor_configs[name];
+        PositionMotorConfig config = ConfigFiles::getInstance().robot_config.positionMotorConfigs[name];
 
         if (
-            motor.GetInverted() != config.inverted_relative || 
+            motor.GetInverted() != config.invertedRelative || 
             motor.GetIdleMode() != config.idleMode || 
-            PIDController.GetOutputMin(1) != config.min_speed ||
-            PIDController.GetOutputMax(1) != config.max_speed ||
-            relativeEncoder.GetPositionConversionFactor() != config.relative_conversion_factor;
-            absoluteEncoder.GetInverted() != config.inverted_absolute ||
-            absoluteEncoder.GetPositionConversionFactor() != config.absolute_conversion_factor ||
-            absoluteEncoder.GetZeroOffset() != config.absolute_zero_offset
+            PIDController.GetOutputMin(1) != config.minSpeed ||
+            PIDController.GetOutputMax(1) != config.maxSpeed ||
+            relativeEncoder.GetPositionConversionFactor() != config.relativeConversionFactor;
+            absoluteEncoder.GetInverted() != config.invertedAbsolute ||
+            absoluteEncoder.GetPositionConversionFactor() != config.absoluteConversionFactor ||
+            absoluteEncoder.GetZeroOffset() != config.absoluteZeroOffset
         )
         {
             motor.RestoreFactoryDefaults();
-            motor.SetInverted(config.inverted_relative);
-            motor.SetSmartCurrentLimit(config.current_limit);
+            motor.SetInverted(config.invertedRelative);
+            motor.SetSmartCurrentLimit(config.currentLimit);
             motor.SetIdleMode(config.idleMode);
-            PIDController.SetOutputRange(config.min_speed, config.max_speed, 1);
-            SetVelocityPID(config.velocity_pid);
-            SetPositionPID(config.position_pid);
-            relativeEncoder.SetPositionConversionFactor(config.relative_conversion_factor);
-            absoluteEncoder.SetInverted(config.inverted_absolute);
-            absoluteEncoder.SetPositionConversionFactor(config.absolute_conversion_factor);
-            absoluteEncoder.SetZeroOffset(config.absolute_zero_offset);
+            PIDController.SetOutputRange(config.minSpeed, config.maxSpeed, 1);
+            SetVelocityPID(config.velocityPID);
+            SetPositionPID(config.positionPID);
+            relativeEncoder.SetPositionConversionFactor(config.relativeConversionFactor);
+            absoluteEncoder.SetInverted(config.invertedAbsolute);
+            absoluteEncoder.SetPositionConversionFactor(config.absoluteConversionFactor);
+            absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
             motor.BurnFlash();
         }
     }

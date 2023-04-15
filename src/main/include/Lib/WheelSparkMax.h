@@ -16,20 +16,20 @@ public:
 
     void SetConfig(std::string name)
     {
-        WheelMotorConfig config = ConfigFiles::getInstance().robot_config.wheel_motor_configs[name];
+        WheelMotorConfig config = ConfigFiles::getInstance().robot_config.wheelMotorConfigs[name];
 
         if (
-            motor.GetInverted() != config.inverted_relative || 
+            motor.GetInverted() != config.invertedRelative || 
             motor.GetIdleMode() != config.idleMode || 
-            encoder.GetPositionConversionFactor() != config.relative_conversion_factor
+            encoder.GetPositionConversionFactor() != config.relativeConversionFactor
         )
         {
             motor.RestoreFactoryDefaults();
-            motor.SetInverted(config.inverted_relative);
-            motor.SetSmartCurrentLimit(config.current_limit);
+            motor.SetInverted(config.invertedRelative);
+            motor.SetSmartCurrentLimit(config.currentLimit);
             motor.SetIdleMode(config.idleMode);
-            SetVelocityPID(config.velocity_pid);
-            encoder.SetPositionConversionFactor(config.relative_conversion_factor);
+            SetVelocityPID(config.velocityPID);
+            encoder.SetPositionConversionFactor(config.relativeConversionFactor);
             motor.BurnFlash();
         }
     }

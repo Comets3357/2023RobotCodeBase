@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "Json/json.h"
+#include "Json/picojson.h"
 
 #include <string>
 #include <vector>
@@ -14,39 +14,39 @@
 #include <rev/CANSparkMax.h>
 
 struct PositionMotorConfig {
-    bool inverted_absolute;
-    bool inverted_relative;
-    int current_limit;
-    double relative_conversion_factor;
-    double absolute_conversion_factor;
-    double absolute_zero_offset;
-    double max_speed;
-    double min_speed;
+    bool invertedAbsolute;
+    bool invertedRelative;
+    double currentLimit;
+    double relativeConversionFactor;
+    double absoluteConversionFactor;
+    double absoluteZeroOffset;
+    double maxSpeed;
+    double minSpeed;
     rev::CANSparkMax::IdleMode idleMode;
 
-    PID velocity_pid;
-    PID position_pid;
+    PID velocityPID;
+    PID positionPID;
 };
 
 struct WheelMotorConfig {
-    bool inverted_relative;
-    int current_limit;
-    double relative_conversion_factor;
+    bool invertedRelative;
+    double currentLimit;
+    double relativeConversionFactor;
     rev::CANSparkMax::IdleMode idleMode;
 
-    PID velocity_pid;
+    PID velocityPID;
 };
 
 struct RollerMotorConfig {
-    bool inverted_relative;
-    int current_limit;
+    bool invertedRelative;
+    double currentLimit;
     rev::CANSparkMax::IdleMode idleMode;
 };
 
 struct RobotConfig {
-    std::map<std::string, PositionMotorConfig> position_motor_configs;
-    std::map<std::string, WheelMotorConfig> wheel_motor_configs;
-    std::map<std::string, RollerMotorConfig> roller_motor_configs;
+    std::map<std::string, PositionMotorConfig> positionMotorConfigs;
+    std::map<std::string, WheelMotorConfig> wheelMotorConfigs;
+    std::map<std::string, RollerMotorConfig> rollerMotorConfigs;
 
 };
 
@@ -63,76 +63,77 @@ public:
 
     void LoadConfigFiles(std::string fileName)
     {
-        std::ifstream json_file(frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + fileName + ".json");
-        Json::Value root;
-        Json::CharReaderBuilder builder;
-        std::string errors;
 
-        if (!Json::parseFromStream(builder, json_file, &root, &errors)) {
-            std::cerr << "Failed to parse JSON: " << errors << std::endl;
+        std::ifstream jsonFile("path/to/your/json/file.json");
+        if (!jsonFile.is_open()) {
+            std::cerr << "Failed to open file" << std::endl;
         }
 
-        // Access values in root object
-        
+        std::string jsonString((std::istreambuf_iterator<char>(jsonFile)), std::istreambuf_iterator<char>());
 
-        for (const auto& position_motor_config_json : root["PositionMotorConfigs"]) {
-            PositionMotorConfig position_motor_config;
-
-            position_motor_config.inverted_absolute = position_motor_config_json["InvertedAbsolute"].asBool();
-            position_motor_config.inverted_relative = position_motor_config_json["InvertedRelative"].asBool();
-            position_motor_config.current_limit = position_motor_config_json["CurrentLimit"].asInt();
-            position_motor_config.relative_conversion_factor = position_motor_config_json["RelativeConversionFactor"].asDouble();
-            position_motor_config.absolute_conversion_factor = position_motor_config_json["AbsoluteConversionFactor"].asDouble();
-            position_motor_config.absolute_zero_offset = position_motor_config_json["AbsoluteZeroOffset"].asDouble();
-             position_motor_config.max_speed = position_motor_config_json["MaxSpeed"].asDouble();
-            position_motor_config.min_speed = position_motor_config_json["MinSpeed"].asDouble();
-            position_motor_config.idleMode = position_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
-
-            const auto& velocity_pid_json = position_motor_config_json["VelocityPID"];
-            position_motor_config.velocity_pid.P = velocity_pid_json["P"].asDouble();
-            position_motor_config.velocity_pid.I = velocity_pid_json["I"].asDouble();
-            position_motor_config.velocity_pid.D = velocity_pid_json["D"].asDouble();
-            position_motor_config.velocity_pid.FF = velocity_pid_json["FF"].asDouble();
-
-            const auto& position_pid_json = position_motor_config_json["PositionPID"];
-            position_motor_config.position_pid.P = position_pid_json["P"].asDouble();
-            position_motor_config.position_pid.I = position_pid_json["I"].asDouble();
-            position_motor_config.position_pid.D = position_pid_json["D"].asDouble();
-            position_motor_config.position_pid.FF = position_pid_json["FF"].asDouble();
-           
-
-            robot_config.position_motor_configs[position_motor_config_json["Name"].asString()] = position_motor_config;
+        picojson::value jsonValue;
+        std::string error = picojson::parse(jsonValue, jsonString);
+        if (!error.empty()) {
+            std::cerr << "JSON parse error: " << error << std::endl;
         }
 
-        for (const auto& wheel_motor_config_json : root["WheelMotorConfig"]) {
-            WheelMotorConfig wheel_motor_config;
+        picojson::array positionMotorConfigs = jsonValue.get("PositionMotorConfigs").get<picojson::array>();
+        picojson::array rollerMotorConfigs = jsonValue.get("RollerMotorConfigs").get<picojson::array>();
+        picojson::array wheelMotorConfigs = jsonValue.get("WheelMotorConfigs").get<picojson::array>();
 
-            wheel_motor_config.inverted_relative = wheel_motor_config_json["InvertedRelative"].asBool();
-            wheel_motor_config.current_limit = wheel_motor_config_json["CurrentLimit"].asInt();
-            wheel_motor_config.relative_conversion_factor = wheel_motor_config_json["RelativeConversionFactor"].asDouble();
-            wheel_motor_config.idleMode = wheel_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+        for (auto& config : positionMotorConfigs) {
+            PositionMotorConfig motorConfig;
+            motorConfig.invertedAbsolute = config.get("InvertedAbsolute").get<bool>();
+            motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
+            motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
+            motorConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
+            motorConfig.absoluteConversionFactor = config.get("AbsoluteConversionFactor").get<double>();
+            motorConfig.absoluteZeroOffset = config.get("AbsoluteZeroOffset").get<double>();
+            motorConfig.maxSpeed = config.get("MaxSpeed").get<double>();
+            motorConfig.minSpeed = config.get("MinSpeed").get<double>();
+            motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
-            const auto& velocity_pid_json = wheel_motor_config_json["VelocityPID"];
-            wheel_motor_config.velocity_pid.P = velocity_pid_json["P"].asDouble();
-            wheel_motor_config.velocity_pid.I = velocity_pid_json["I"].asDouble();
-            wheel_motor_config.velocity_pid.D = velocity_pid_json["D"].asDouble();
-            wheel_motor_config.velocity_pid.FF = velocity_pid_json["FF"].asDouble();
+            motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
+            motorConfig.velocityPID.I = config.get("VelocityPID").get("I").get<double>();
+            motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
+            motorConfig.velocityPID.FF = config.get("VelocityPID").get("FF").get<double>();
 
-            robot_config.wheel_motor_configs[wheel_motor_config_json["Name"].asString()] = wheel_motor_config;
+            motorConfig.positionPID.P = config.get("PositionPID").get("P").get<double>();
+            motorConfig.positionPID.I = config.get("PositionPID").get("I").get<double>();
+            motorConfig.positionPID.D = config.get("PositionPID").get("D").get<double>();
+            motorConfig.positionPID.FF = config.get("PositionPID").get("FF").get<double>();
+
+            robot_config.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
         }
 
-        for (const auto& roller_motor_config_json : root["RollerMotorConfig"])
+        for (auto& config : wheelMotorConfigs)
         {
-            RollerMotorConfig roller_motor_config;
+        
+            WheelMotorConfig motorConfig;
+            motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
+            motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
+            motorConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
+            motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
-            roller_motor_config.inverted_relative = roller_motor_config_json["InvertedRelative"].asBool();
-            roller_motor_config.current_limit = roller_motor_config_json["CurrentLimit"].asInt();
-            roller_motor_config.idleMode = roller_motor_config_json["IdleMode"].asString()=="Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+            motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
+            motorConfig.velocityPID.I = config.get("VelocityPID").get("I").get<double>();
+            motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
+            motorConfig.velocityPID.FF = config.get("VelocityPID").get("FF").get<double>();
 
-
-            robot_config.roller_motor_configs[roller_motor_config_json["Name"].asString()] = roller_motor_config;
-
+            robot_config.wheelMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
         }
+
+        for (auto& config : rollerMotorConfigs)
+        {
+            RollerMotorConfig motorConfig;
+            motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
+            motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
+            motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+
+            robot_config.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
+        }
+
+
     }
 
     RobotConfig robot_config;

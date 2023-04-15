@@ -19,16 +19,16 @@ public:
 
     void SetConfig(std::string name)
     {
-        RollerMotorConfig config = ConfigFiles::getInstance().robot_config.roller_motor_configs[name];
+        RollerMotorConfig config = ConfigFiles::getInstance().robot_config.rollerMotorConfigs[name];
 
         if (
-            motor.GetInverted() != config.inverted_relative || 
+            motor.GetInverted() != config.invertedRelative || 
             motor.GetIdleMode() != config.idleMode
         )
         {
             motor.RestoreFactoryDefaults();
-            motor.SetInverted(config.inverted_relative);
-            motor.SetSmartCurrentLimit(config.current_limit);
+            motor.SetInverted(config.invertedRelative);
+            motor.SetSmartCurrentLimit(config.currentLimit);
             motor.SetIdleMode(config.idleMode);
             motor.BurnFlash();
         }
