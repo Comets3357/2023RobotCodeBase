@@ -13,23 +13,11 @@ class TimerSubsystem : public frc2::SubsystemBase
 {
 public:
 
-    TimerSubsystem(TimerData* data) : timerData{data}
-    {
+    TimerSubsystem(TimerData* data);
 
-    }
+    void Periodic() override;
 
-    void Periodic() override
-    {
-        timerData->timeSinceEnabled = (double)timer.Get();
-
-        frc::SmartDashboard::PutNumber("TImE", (double)timer.Get());
-    }
-
-    void ResetAndBeginTimer()
-    {
-        timer.Reset();
-        timer.Start();
-    }
+    void ResetAndBeginTimer();
 
     TimerData* timerData{};
 

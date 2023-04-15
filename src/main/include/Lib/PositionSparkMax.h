@@ -30,137 +30,25 @@ public:
 
     
 
-    PositionSparkMax(const int ID, PositionSparkMaxRunMode mode)
-     : motor{ID, rev::CANSparkMax::MotorType::kBrushless},
-        PIDController{motor.GetPIDController()},
-        relativeEncoder{motor.GetEncoder()},
-        absoluteEncoder{motor.GetAbsoluteEncoder(rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)}
-    {
-        defaultRunMode = mode;
-        runMode = defaultRunMode;
+    PositionSparkMax(const int ID, PositionSparkMaxRunMode mode);
+    void SetConfig(std::string name);
+    void ZeroRelativeEncoder();
+    void ChangeFeedBackDevice(PositionSparkMaxRunMode mode);
+    void SetVelocityPID(PID pid);
+    void SetPositionPID(PID pid);
 
-        ChangeFeedBackDevice(defaultRunMode);
+    void SetPIDOutputRange(double min, double max, int slot);
 
-        if (runMode == POSITION_SPARK_MAX_ABSOLUTE)
-        {
-            absoluteEncoderTask = std::make_unique<std::thread>(&PositionSparkMax::CheckAbsoluteEncoder, this);
-        }
-    };
+    double GetPosition();
 
-    void SetConfig(std::string name)
-    {
-        PositionMotorConfig config = ConfigFiles::getInstance().robot_config.positionMotorConfigs[name];
+    void SetVelocity(double velocity);
 
-        if (
-            motor.GetInverted() != config.invertedRelative || 
-            motor.GetIdleMode() != config.idleMode || 
-            PIDController.GetOutputMin(1) != config.minSpeed ||
-            PIDController.GetOutputMax(1) != config.maxSpeed ||
-            relativeEncoder.GetPositionConversionFactor() != config.relativeConversionFactor;
-            absoluteEncoder.GetInverted() != config.invertedAbsolute ||
-            absoluteEncoder.GetPositionConversionFactor() != config.absoluteConversionFactor ||
-            absoluteEncoder.GetZeroOffset() != config.absoluteZeroOffset
-        )
-        {
-            motor.RestoreFactoryDefaults();
-            motor.SetInverted(config.invertedRelative);
-            motor.SetSmartCurrentLimit(config.currentLimit);
-            motor.SetIdleMode(config.idleMode);
-            PIDController.SetOutputRange(config.minSpeed, config.maxSpeed, 1);
-            SetVelocityPID(config.velocityPID);
-            SetPositionPID(config.positionPID);
-            relativeEncoder.SetPositionConversionFactor(config.relativeConversionFactor);
-            absoluteEncoder.SetInverted(config.invertedAbsolute);
-            absoluteEncoder.SetPositionConversionFactor(config.absoluteConversionFactor);
-            absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
-            motor.BurnFlash();
-        }
-    }
-
-    void ZeroRelativeEncoder()
-    {
-        relativeEncoder.SetPosition(absoluteEncoderPosition);
-    }
-
-    void ChangeFeedBackDevice(PositionSparkMaxRunMode mode)
-    {
-        switch (mode)
-        {
-        case POSITION_SPARK_MAX_ABSOLUTE:
-            PIDController.SetFeedbackDevice(absoluteEncoder);
-            break;
-        case POSITION_SPARK_MAX_RELATIVE:
-            PIDController.SetFeedbackDevice(relativeEncoder);
-            break;
-        default:
-            break;
-        }
-    }
-
-    void SetVelocityPID(PID pid)
-    {
-        PIDController.SetP(pid.P, 0);
-        PIDController.SetI(pid.I, 0);
-        PIDController.SetD(pid.D, 0);
-        PIDController.SetFF(pid.FF, 0);
-
-        velocityPID = pid;
-    }
-
-    void SetPositionPID(PID pid)
-    {
-        PIDController.SetP(pid.P, 1);
-        PIDController.SetI(pid.I, 1);
-        PIDController.SetD(pid.D, 1);
-        PIDController.SetFF(pid.FF, 1);
-
-        positionPID = pid;
-    }
+    void SetPosition(double position);
 
 
-    void SetPIDOutputRange(double min, double max, int slot)
-    {
-        PIDController.SetOutputRange(min, max, slot);
-    }
+    void Periodic();
 
-    double GetPosition()
-    {
-        switch (runMode)
-        {
-        case POSITION_SPARK_MAX_ABSOLUTE:
-            return absoluteEncoderPosition;
-            break;
-        case POSITION_SPARK_MAX_RELATIVE:
-            return relativeEncoderPosition;
-            break;
-        default:
-            return 0;
-            break;
-        }
-    }
-
-    void SetVelocity(double velocity)
-    {
-        PIDController.SetReference(velocity, rev::CANSparkMax::ControlType::kVelocity, 0);
-    }
-
-    void SetPosition(double position)
-    {
-        PIDController.SetReference(position, rev::CANSparkMax::ControlType::kPosition, 1);
-    }
-
-
-    void Periodic()
-    {
-        absoluteEncoderPosition = absoluteEncoder.GetPosition();
-        relativeEncoderPosition = absoluteEncoder.GetPosition();
-    }
-
-    void changeRunMode(PositionSparkMaxRunMode mode)
-    {
-        runMode = mode;
-        ChangeFeedBackDevice(runMode);
-    }
+    void changeRunMode(PositionSparkMaxRunMode mode);
 
     
 
@@ -187,29 +75,6 @@ private:
     int absAttempts = 0;
     double lastPosition;
 
-    void CheckAbsoluteEncoder()
-    {
-        while (true) {
-            if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
-                return;
-            }
-
-
-            if (lastPosition != absoluteEncoderPosition)
-            {
-                absAttempts++;
-            }
-            else
-            {
-                absAttempts = 0;
-            }
-            lastPosition = absoluteEncoderPosition;
-
-            if (absAttempts > 20)
-            {
-                changeRunMode(POSITION_SPARK_MAX_RELATIVE);
-            }
-        }
-    }
+    void CheckAbsoluteEncoder();
 
 };

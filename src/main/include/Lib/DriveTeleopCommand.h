@@ -8,17 +8,9 @@ class DriveTeleopCommand : public frc2::CommandHelper<frc2::CommandBase, DriveTe
 {
 public:
 
-    DriveTeleopCommand(double leftY, double leftX, DrivebaseSubsystem* drivebase)
-    {
-        AddRequirements(drivebase);
-    }
+    DriveTeleopCommand(double leftY, double leftX, DrivebaseSubsystem* drivebase);
 
-private:
-
-    void Execute() override
-    {
-        
-    }
+    void Execute() override;
     
 
 };

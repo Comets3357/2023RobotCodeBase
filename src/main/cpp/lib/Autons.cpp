@@ -2,26 +2,10 @@
 
 Autons::Autons(SwerveSubsystem* drivebase)
 {
-
+    swerveSubsystem = drivebase;
+    
     LoadPaths();
     LoadAutons();
-
-    autons["TestAuton"].drivebaseCommands.AddCommands
-    (
-        SwerveTrajectoryCommand{paths["New Path"], drivebase}
-    );
-
-    autons["TestAuton"].actionCommands.AddCommands
-    (
-        
-    );
-
-    swerveSubsystem = drivebase;
-
-
-
-
-
 }
 
 void Autons::RunAuton(std::string autonName)

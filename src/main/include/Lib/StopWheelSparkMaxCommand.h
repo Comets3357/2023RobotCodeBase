@@ -8,21 +8,11 @@ class StopWheelSparkMaxCommand : public frc2::CommandHelper<frc2::CommandBase, S
 {
 public:
 
-    StopWheelSparkMaxCommand(frc2::Subsystem* subsystem, WheelSparkMax* motor) : wheel{motor}
-    {
-        AddRequirements(subsystem);
-    }
-    
+    StopWheelSparkMaxCommand(frc2::Subsystem* subsystem, WheelSparkMax* motor);
 
-    void Initialize() override
-    {
-        wheel->SetVelocity(0);
-    }
+    void Initialize() override;
 
-    bool IsFinished() override
-    {
-        return true;
-    }
+    bool IsFinished() override;
 
 private:
 

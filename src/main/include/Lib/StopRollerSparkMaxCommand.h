@@ -9,20 +9,11 @@ class StopRollerSparkMaxCommand : public frc2::CommandHelper<frc2::CommandBase, 
 {
 public:
 
-    StopRollerSparkMaxCommand(frc2::Subsystem* subsystem, RollerSparkMax* motor) : roller{motor}
-    {
-        AddRequirements(subsystem);
-    }
+    StopRollerSparkMaxCommand(frc2::Subsystem* subsystem, RollerSparkMax* motor);
 
-    void Initialize() override
-    {
-        roller->SetPower(0);
-    }
+    void Initialize() override;
 
-    bool IsFinished() override
-    {
-        return true;
-    }
+    bool IsFinished() override;
 
 private:
     

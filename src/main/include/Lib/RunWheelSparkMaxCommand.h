@@ -8,20 +8,11 @@ class RunWheelSparkMaxCommand : public frc2::CommandHelper<frc2::CommandBase, Ru
 {
 public:
 
-    RunWheelSparkMaxCommand(frc2::Subsystem* subsystem, double velocity, WheelSparkMax* motor) : motorVelocity{velocity}, wheel{motor}
-    {
-        AddRequirements(subsystem);
-    }
+    RunWheelSparkMaxCommand(frc2::Subsystem* subsystem, double velocity, WheelSparkMax* motor);
 
-    void Initialize() override
-    {
-        wheel->SetVelocity(motorVelocity);
-    }
+    void Initialize() override;
 
-    bool IsFinished() override
-    {
-        return true;
-    }
+    bool IsFinished() override;
 
 private:
 

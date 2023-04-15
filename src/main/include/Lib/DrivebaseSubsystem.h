@@ -50,95 +50,23 @@ class DrivebaseSubsystem : public frc2::SubsystemBase
 {
 public:
 
-    DrivebaseSubsystem(DrivebaseData* data, TimerData* data2) : drivebaseData{data}, timerData{data2}
-    {
-        dbFR.motor.Follow(dbR.motor);
-        dbFL.motor.Follow(dbL.motor);
+    DrivebaseSubsystem(DrivebaseData* data, TimerData* data2);
 
-        dbR.motor.SetSmartCurrentLimit(60);
-        dbL.motor.SetSmartCurrentLimit(60);
-        dbFR.motor.SetSmartCurrentLimit(60);
-        dbFL.motor.SetSmartCurrentLimit(60);
+    void SetTicksToMetersConversion(double wheelDiameterInches, double gearRatio);
 
-        dbR.motor.SetInverted(true);
-        dbL.motor.SetInverted(false);
-        dbFR.motor.SetInverted(true);
-        dbFL.motor.SetInverted(false);
-        
-        pid.FF = 1;
-        pid.P = 1;
+    void SetTicksToMetersConversion(double conversion);
 
-        SetVelocityPID(pid);
+    void SetVelocityPID(PID pid);
 
-    }
+    void SetVelocity(double left, double right);
 
-    void SetTicksToMetersConversion(double wheelDiameterInches, double gearRatio)
-    {
+    void SetPercent(double left, double right);
 
-    }
+    void ResetOdometry(double x, double y, double radians, double gyroYaw);
 
-    void SetTicksToMetersConversion(double conversion)
-    {
+    double getEncoderDistance(double encoderPosition);
 
-    }
-
-    void SetVelocityPID(PID pid)
-    {
-        dbR.SetVelocityPID(pid);
-        dbL.SetVelocityPID(pid);
-        dbFR.SetVelocityPID(pid);
-        dbFL.SetVelocityPID(pid);
-    }
-
-    void SetVelocity(double left, double right)
-    {
-        dbR.SetVelocity(right);
-        dbL.SetVelocity(left);
-        dbFR.SetVelocity(right);
-        dbFL.SetVelocity(left);
-    }
-
-    void SetPercent(double left, double right)
-    {
-        dbR.SetPercent(right);
-        dbL.SetPercent(left);
-        dbFR.SetPercent(right);
-        dbFL.SetPercent(left);
-    }
-
-    void ResetOdometry(double x, double y, double radians, double gyroYaw) 
-    {
-        const units::meter_t meterX{x};
-        const units::meter_t meterY{y};
-
-        const units::radian_t radianYaw{radians};
-        // frc::SmartDashboard::PutNumber("Pi", pi);
-        // frc::SmartDashboard::PutNumber("radian yaw", robotData.gyroData.rawYaw / 180 * pi);
-
-        const units::radian_t gyroRadians{gyroYaw / 180 * M_PI};
-        // frc::SmartDashboard::PutNumber("RORaw Yaw", robotData.gyroData.rawYaw);
-
-        const frc::Rotation2d gyroRotation{gyroRadians};
-        const frc::Pose2d resetPose{meterX, meterY, radianYaw};
-        // zeroEncoders();
-        odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetPosition())}, units::meter_t{getEncoderDistance(dbR.GetPosition())},  resetPose);
-
-        //zeroEncoders();
-    }
-
-    double getEncoderDistance(double encoderPosition)
-    {
-        return encoderPosition*rotationsToMeters;
-    }
-
-    void resetOdometry(const frc::Pose2d &pose, double gyroAngle) 
-    {
-        const units::radian_t gyroRadians{gyroAngle};
-        frc::Rotation2d gyroRotation{gyroRadians};
-
-        odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetPosition())}, units::meter_t{getEncoderDistance(dbR.GetPosition())},  pose);
-        //zeroEncoders();
-    }
+    void resetOdometry(const frc::Pose2d &pose, double gyroAngle);
 
     double rotationsToMeters = 0;
 

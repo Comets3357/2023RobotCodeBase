@@ -12,33 +12,12 @@ class SwerveTrajectoryCommand : public frc2::CommandHelper<frc2::CommandBase, Sw
 {
 public:
 
-    SwerveTrajectoryCommand(frc::Trajectory trajectoryName, SwerveSubsystem* subsystem) : swerveSubsystem{subsystem}, trajectory{trajectoryName} {};
+    SwerveTrajectoryCommand(frc::Trajectory trajectoryName, SwerveSubsystem* subsystem);
 
-    void Initialize() override
-    {
+    void Initialize() override;
+    void Execute() override;
 
-      swerveSubsystem->CheckResetOdometry(trajectory);
-      trajectorySecOffset = units::second_t{swerveSubsystem->timerData->timeSinceEnabled};
-      totalTime = trajectory.TotalTime();
-
-      
-    }
-
-    void Execute() override
-    {
-      sampleSec = units::second_t{swerveSubsystem->timerData->timeSinceEnabled} - trajectorySecOffset;
-      frc::Trajectory::State trajectoryState = trajectory.Sample(sampleSec);
-      chassisSpeed = controller.Calculate(swerveSubsystem->GetPose(), trajectoryState, swerveSubsystem->GetRotation());
-      swerveSubsystem->SetChassisSpeed(chassisSpeed);
-
-
-      
-    }
-
-    bool IsFinished() override
-    {
-      return sampleSec > totalTime;
-    }
+    bool IsFinished() override;
     
 
 
