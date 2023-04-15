@@ -19,7 +19,7 @@ PositionSparkMax::PositionSparkMax(const int ID, PositionSparkMaxRunMode mode)
 
 void PositionSparkMax::SetConfig(std::string name)
 {
-    PositionMotorConfig config = ConfigFiles::getInstance().robot_config.positionMotorConfigs[name];
+    PositionMotorConfig config = ConfigFiles::getInstance().robotConfig.positionMotorConfigs[name];
 
     if (
         motor.GetInverted() != config.invertedRelative || 

@@ -12,8 +12,11 @@
 #include "PID.h"
 
 #include <rev/CANSparkMax.h>
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
 
 struct PositionMotorConfig {
+    int ID;
     bool invertedAbsolute;
     bool invertedRelative;
     double currentLimit;
@@ -43,11 +46,41 @@ struct RollerMotorConfig {
     rev::CANSparkMax::IdleMode idleMode;
 };
 
+struct SwerveModuleConfig
+{
+    int azimuthID;
+    int driveID;
+    double absoluteZeroOffset;
+    double absoluteConversionFactor;
+    double relativeConversionFactor;
+    bool relativeInverted;
+    bool absoluteInverted;
+};
+
+struct SwerveConfig
+{
+    SwerveModuleConfig frontLeftModule{};
+    SwerveModuleConfig frontRightModule{};
+    SwerveModuleConfig backLeftModule{};
+    SwerveModuleConfig backRightModule{};
+    units::meter_t trackWidth{10};
+    units::meter_t wheelBase{10};
+    units::meters_per_second_t xSpeed{5};
+    units::meters_per_second_t ySpeed{5};
+    units::radians_per_second_t maxTurnSpeed{1};
+};
+
+struct DrivebaseConfig
+{
+    
+};
+
 struct RobotConfig {
     std::map<std::string, PositionMotorConfig> positionMotorConfigs;
     std::map<std::string, WheelMotorConfig> wheelMotorConfigs;
     std::map<std::string, RollerMotorConfig> rollerMotorConfigs;
-
+    std::map<std::string, SwerveConfig> swerveConfigs;
+    std::map<std::string, SwerveModuleConfig> swerveModuleConfigs;
 };
 
 
@@ -63,7 +96,7 @@ public:
 
     void LoadConfigFiles(std::string fileName);
 
-    RobotConfig robot_config;
+    RobotConfig robotConfig;
 
     private:
 

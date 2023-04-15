@@ -18,7 +18,6 @@ class RobotData
     EndEffectorRollersData endEffectorRollersData{};
     WristData wristData{};
     DrivebaseData drivebaseData{};
-    SwerveInputData swerveData{};
 
     TimerData timerData{};
 

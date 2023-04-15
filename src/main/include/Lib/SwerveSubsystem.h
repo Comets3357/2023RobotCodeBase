@@ -9,23 +9,9 @@
 #include <frc/geometry/Translation2d.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include "lib/TimerSubsystem.h"
+#include "Lib/ConfigFiles.h"
 
-struct SwerveInputData
-{
-    int azimuthFLID = 1;
-    int azimuthFRID = 2;
-    int azimuthBLID = 3;
-    int azimuthBRID = 4;
-    int driveFLID = 5;
-    int driveFRID = 6;
-    int driveBLID = 7;
-    int driveBRID = 8;
-    units::meter_t trackWidth{10};
-    units::meter_t wheelBase{10};
-    units::meters_per_second_t xSpeed{5};
-    units::meters_per_second_t ySpeed{5};
-    units::radians_per_second_t maxTurnSpeed{1};
-};
+
 
 //temp
 struct GyroData
@@ -36,7 +22,7 @@ struct GyroData
 class SwerveSubsystem : public frc2::SubsystemBase
 {
 public:
-    SwerveSubsystem(SwerveInputData data, TimerData* timer);
+    SwerveSubsystem(std::string configFileName, TimerData* timer);
 
     void SetSpeed(units::meters_per_second_t y, units::meters_per_second_t x, units::radians_per_second_t rotation);
 
@@ -90,5 +76,7 @@ private:
     frc::Pose2d pose;
 
     bool odometryInitialized = false;
+
+    SwerveConfig swerveConfig;
 
 };

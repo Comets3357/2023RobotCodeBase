@@ -7,7 +7,7 @@ WheelSparkMax::WheelSparkMax(const int ID) : motor{ID, rev::CANSparkMax::MotorTy
 
 void WheelSparkMax::SetConfig(std::string name)
 {
-    WheelMotorConfig config = ConfigFiles::getInstance().robot_config.wheelMotorConfigs[name];
+    WheelMotorConfig config = ConfigFiles::getInstance().robotConfig.wheelMotorConfigs[name];
 
     if (
         motor.GetInverted() != config.invertedRelative || 

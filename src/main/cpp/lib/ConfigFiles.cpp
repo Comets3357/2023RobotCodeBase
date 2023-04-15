@@ -19,9 +19,39 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     picojson::array positionMotorConfigs = jsonValue.get("PositionMotorConfigs").get<picojson::array>();
     picojson::array rollerMotorConfigs = jsonValue.get("RollerMotorConfigs").get<picojson::array>();
     picojson::array wheelMotorConfigs = jsonValue.get("WheelMotorConfigs").get<picojson::array>();
+    picojson::array swerveConfigs = jsonValue.get("SwerveConfigs").get<picojson::array>();
+    picojson::array swerveModuleConfigs = jsonValue.get("SwerveModuleConfigs").get<picojson::array>();
+
+    for (auto& config : swerveModuleConfigs)
+    {
+        SwerveModuleConfig moduleConfig;
+        moduleConfig.azimuthID = (int)config.get("AzimuthID").get<double>();
+        moduleConfig.driveID = (int)config.get("DriveID").get<double>();
+
+        moduleConfig.relativeInverted = config.get("RelativeInverted").get<bool>();
+        moduleConfig.absoluteInverted = config.get("AbsoluteInverted").get<bool>();
+        moduleConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
+        moduleConfig.absoluteConversionFactor = config.get("AbsoluteConversionFactor").get<double>();
+    }
+
+    for (auto& config : swerveConfigs)
+    {
+        SwerveConfig swerveConfig;
+        swerveConfig.frontLeftModule = robotConfig.swerveModuleConfigs[config.get("FrontLeftModule").get<std::string>()];
+        swerveConfig.frontRightModule = robotConfig.swerveModuleConfigs[config.get("FrontRightModule").get<std::string>()];
+        swerveConfig.backLeftModule = robotConfig.swerveModuleConfigs[config.get("BackLeftModule").get<std::string>()];
+        swerveConfig.backRightModule = robotConfig.swerveModuleConfigs[config.get("BackRightModule").get<std::string>()];
+
+        swerveConfig.trackWidth = units::meter_t{config.get("TrackWidth").get<double>()};
+        swerveConfig.wheelBase = units::meter_t{config.get("WheelBase").get<double>()};
+        swerveConfig.xSpeed = units::meters_per_second_t{config.get("xSpeed").get<double>()};
+        swerveConfig.xSpeed = units::meters_per_second_t{config.get("ySpeed").get<double>()};
+        swerveConfig.maxTurnSpeed = units::radians_per_second_t{config.get("MaxTurnSpeed").get<double>()};
+    }
 
     for (auto& config : positionMotorConfigs) {
         PositionMotorConfig motorConfig;
+        motorConfig.ID = (int)config.get("ID").get<double>();
         motorConfig.invertedAbsolute = config.get("InvertedAbsolute").get<bool>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
@@ -42,7 +72,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.positionPID.D = config.get("PositionPID").get("D").get<double>();
         motorConfig.positionPID.FF = config.get("PositionPID").get("FF").get<double>();
 
-        robot_config.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
+        robotConfig.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
 
     for (auto& config : wheelMotorConfigs)
@@ -59,7 +89,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
         motorConfig.velocityPID.FF = config.get("VelocityPID").get("FF").get<double>();
 
-        robot_config.wheelMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
+        robotConfig.wheelMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
 
     for (auto& config : rollerMotorConfigs)
@@ -69,8 +99,10 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
-        robot_config.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
+        robotConfig.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
+
+
 
 
 }

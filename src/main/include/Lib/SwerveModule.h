@@ -8,12 +8,13 @@
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/geometry/Translation2d.h>
+#include "Lib/SwerveModule.h"
 
 class SwerveModule
 {
 public:
 
-    SwerveModule(const int AzimuthID, const int DriveID);
+    SwerveModule(SwerveModuleConfig config);
     void DisabledPeriodic();
 
     void SetAsimuthPosition(frc::Rotation2d degree);

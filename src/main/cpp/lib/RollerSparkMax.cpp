@@ -12,7 +12,7 @@ void RollerSparkMax::SetPower(double power)
 
 void RollerSparkMax::SetConfig(std::string name)
 {
-    RollerMotorConfig config = ConfigFiles::getInstance().robot_config.rollerMotorConfigs[name];
+    RollerMotorConfig config = ConfigFiles::getInstance().robotConfig.rollerMotorConfigs[name];
 
     if (
         motor.GetInverted() != config.invertedRelative || 

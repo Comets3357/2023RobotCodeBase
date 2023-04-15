@@ -1,13 +1,14 @@
 #include "Lib/SwerveSubsystem.h"
 
-SwerveSubsystem::SwerveSubsystem(SwerveInputData data, TimerData* timer) : timerData{timer}, trackWidth{data.trackWidth}, wheelBase{data.wheelBase},
-    frontLeftModule{data.azimuthFLID, data.driveFLID}, frontRightModule{data.azimuthFRID, data.driveFRID}, backRightModule{data.azimuthBRID, data.driveBRID}, backLeftModule{data.azimuthBLID, data.driveBLID},
+SwerveSubsystem::SwerveSubsystem(std::string configFileName, TimerData* timer) : swerveConfig{ConfigFiles::getInstance().robotConfig.swerveConfigs[configFileName]},
+timerData{timer}, trackWidth{swerveConfig.trackWidth}, wheelBase{swerveConfig.wheelBase},
+    frontLeftModule{swerveConfig.frontLeftModule}, frontRightModule{swerveConfig.frontRightModule}, backRightModule{swerveConfig.backRightModule}, backLeftModule{swerveConfig.backLeftModule},
     frontLeftLocation{-trackWidth/2, -wheelBase/2},
     frontRightLocation{trackWidth/2, -wheelBase/2},
     backRightLocation{trackWidth/2, wheelBase/2},
     backLeftLocation{-trackWidth/2, wheelBase/2},
     kinematics{frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation},
-    speeds{data.xSpeed, data.ySpeed, data.maxTurnSpeed},
+    speeds{swerveConfig.xSpeed, swerveConfig.ySpeed, swerveConfig.maxTurnSpeed},
     odometry{kinematics, frc::Rotation2d{0_deg}, {frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}}, frc::Pose2d{0_m, 0_m, 0_rad}},
     swerveModuleStates{frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}}
     {}

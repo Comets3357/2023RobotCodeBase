@@ -1,6 +1,6 @@
 #include "Lib/SwerveModule.h"
 
-SwerveModule::SwerveModule(const int AzimuthID, const int DriveID) : azimuthMotor{AzimuthID, POSITION_SPARK_MAX_RELATIVE}, driveMotor{DriveID}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
+SwerveModule::SwerveModule(SwerveModuleConfig config) : azimuthMotor{config.azimuthID, POSITION_SPARK_MAX_RELATIVE}, driveMotor{config.driveID}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
 {
     PID pid;
     pid.FF = 1.0;
@@ -31,7 +31,6 @@ void SwerveModule::SetAsimuthPosition(frc::Rotation2d degree)
 void SwerveModule::SetSpeed(units::meters_per_second_t velocity)
 {
     driveMotor.SetVelocity((double)velocity * speedMultiplier);
-    
 }
 
 void SwerveModule::Periodic()
