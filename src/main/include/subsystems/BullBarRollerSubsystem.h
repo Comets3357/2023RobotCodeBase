@@ -20,6 +20,6 @@ class BullBarRollerSubsystem : public frc2::SubsystemBase {
  public:
   BullBarRollerSubsystem(BullBarRollersData* data);
 
-  RollerSparkMax motor{13};
+  RollerSparkMax motor{"BullBarRoller"};
 
 };

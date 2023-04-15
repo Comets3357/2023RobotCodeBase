@@ -14,9 +14,11 @@
 #include <rev/CANSparkMax.h>
 #include <units/velocity.h>
 #include <units/angular_velocity.h>
+#include "Lib/PositionSparkMaxRunMode.h"
 
 struct PositionMotorConfig {
     int ID;
+    PositionSparkMaxRunMode defaultMode;
     bool invertedAbsolute;
     bool invertedRelative;
     double currentLimit;
@@ -32,6 +34,7 @@ struct PositionMotorConfig {
 };
 
 struct WheelMotorConfig {
+    int ID;
     bool invertedRelative;
     double currentLimit;
     double relativeConversionFactor;
@@ -41,6 +44,7 @@ struct WheelMotorConfig {
 };
 
 struct RollerMotorConfig {
+    int ID;
     bool invertedRelative;
     double currentLimit;
     rev::CANSparkMax::IdleMode idleMode;
@@ -48,13 +52,8 @@ struct RollerMotorConfig {
 
 struct SwerveModuleConfig
 {
-    int azimuthID;
-    int driveID;
-    double absoluteZeroOffset;
-    double absoluteConversionFactor;
-    double relativeConversionFactor;
-    bool relativeInverted;
-    bool absoluteInverted;
+    std::string azimuthConfigName;
+    std::string driveConfigName;
 };
 
 struct SwerveConfig

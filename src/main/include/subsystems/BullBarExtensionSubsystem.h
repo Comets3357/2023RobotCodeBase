@@ -22,6 +22,6 @@ class BullBarExtensionSubsystem : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  PositionSparkMax motor{14, POSITION_SPARK_MAX_NONE};
+  PositionSparkMax motor{"BullBarExtension"};
 
 };

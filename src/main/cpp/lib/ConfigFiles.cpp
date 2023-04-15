@@ -1,4 +1,5 @@
 #include "Lib/ConfigFiles.h"
+#include "Lib/PositionSparkMax.h"
 
 void ConfigFiles::LoadConfigFiles(std::string fileName)
 {
@@ -25,13 +26,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     for (auto& config : swerveModuleConfigs)
     {
         SwerveModuleConfig moduleConfig;
-        moduleConfig.azimuthID = (int)config.get("AzimuthID").get<double>();
-        moduleConfig.driveID = (int)config.get("DriveID").get<double>();
-
-        moduleConfig.relativeInverted = config.get("RelativeInverted").get<bool>();
-        moduleConfig.absoluteInverted = config.get("AbsoluteInverted").get<bool>();
-        moduleConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
-        moduleConfig.absoluteConversionFactor = config.get("AbsoluteConversionFactor").get<double>();
+        moduleConfig.azimuthConfigName = config.get("Azimuth").get<std::string>();
+        moduleConfig.driveConfigName = config.get("Drive").get<std::string>();
 
         robotConfig.swerveModuleConfigs[config.get("Name").get<std::string>()] = moduleConfig;
     }
@@ -56,6 +52,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     for (auto& config : positionMotorConfigs) {
         PositionMotorConfig motorConfig;
         motorConfig.ID = (int)config.get("ID").get<double>();
+        motorConfig.defaultMode = config.get("DefaultRunMode").get<std::string>()=="ABSOLUTE" ? PositionSparkMaxRunMode::POSITION_SPARK_MAX_ABSOLUTE : PositionSparkMaxRunMode::POSITION_SPARK_MAX_RELATIVE;
         motorConfig.invertedAbsolute = config.get("InvertedAbsolute").get<bool>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
@@ -83,6 +80,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     {
     
         WheelMotorConfig motorConfig;
+        motorConfig.ID = (int)config.get("ID").get<double>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
@@ -99,6 +97,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     for (auto& config : rollerMotorConfigs)
     {
         RollerMotorConfig motorConfig;
+        motorConfig.ID = (int)config.get("ID").get<double>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;

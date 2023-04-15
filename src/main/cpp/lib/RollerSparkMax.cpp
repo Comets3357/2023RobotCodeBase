@@ -1,6 +1,6 @@
 #include "Lib/RollerSparkMax.h"
 
-RollerSparkMax::RollerSparkMax(const int ID) : motor{ID, rev::CANSparkMax::MotorType::kBrushless}
+RollerSparkMax::RollerSparkMax(std::string configName) : config{ConfigFiles::getInstance().robotConfig.rollerMotorConfigs[configName]}, motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}
 {
     
 }
@@ -10,9 +10,8 @@ void RollerSparkMax::SetPower(double power)
     motor.Set(power);
 }
 
-void RollerSparkMax::SetConfig(std::string name)
+void RollerSparkMax::RobotInit()
 {
-    RollerMotorConfig config = ConfigFiles::getInstance().robotConfig.rollerMotorConfigs[name];
 
     if (
         motor.GetInverted() != config.invertedRelative || 

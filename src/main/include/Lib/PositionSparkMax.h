@@ -16,13 +16,8 @@
 #include <thread>
 #include "PID.h"
 #include "Lib/ConfigFiles.h"
+#include "Lib/PositionSparkMaxRunMode.h"
 
-enum PositionSparkMaxRunMode
-{
-    POSITION_SPARK_MAX_RELATIVE,
-    POSITION_SPARK_MAX_ABSOLUTE,
-    POSITION_SPARK_MAX_NONE
-};
 
 class PositionSparkMax
 {
@@ -30,8 +25,8 @@ public:
 
     
 
-    PositionSparkMax(const int ID, PositionSparkMaxRunMode mode);
-    void SetConfig(std::string name);
+    PositionSparkMax(std::string configName);
+    void RobotInit();
     void ZeroRelativeEncoder();
     void ChangeFeedBackDevice(PositionSparkMaxRunMode mode);
     void SetVelocityPID(PID pid);
@@ -72,6 +67,8 @@ private:
 
     int absAttempts = 0;
     double lastPosition;
+
+    PositionMotorConfig config;
 
     void CheckAbsoluteEncoder();
 

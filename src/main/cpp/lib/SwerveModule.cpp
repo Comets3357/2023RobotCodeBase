@@ -1,6 +1,6 @@
 #include "Lib/SwerveModule.h"
 
-SwerveModule::SwerveModule(SwerveModuleConfig config) : azimuthMotor{config.azimuthID, POSITION_SPARK_MAX_RELATIVE}, driveMotor{config.driveID}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
+SwerveModule::SwerveModule(SwerveModuleConfig config) : azimuthMotor{config.azimuthConfigName}, driveMotor{config.driveConfigName}, state{0_mps, frc::Rotation2d{units::degree_t{0}}}
 {
     PID pid;
     pid.FF = 1.0;

@@ -9,9 +9,9 @@ class WheelSparkMax
 {
 public:
 
-    WheelSparkMax(const int ID);
+    WheelSparkMax(std::string configName);
 
-    void SetConfig(std::string name);
+    void RobotInit();
     void SetVelocityPID(PID velocityPID);
     void SetVelocity(double velocity);
     void SetPercent(double power);
@@ -27,6 +27,8 @@ private:
 
     rev::SparkMaxRelativeEncoder encoder;
     rev::SparkMaxPIDController PIDController;
+
+    WheelMotorConfig config;
 
     PID pid;
 

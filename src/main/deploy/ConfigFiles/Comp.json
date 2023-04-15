@@ -108,52 +108,26 @@
 	"SwerveModuleConfigs": [
 		{
 			"Name": "Module1",
-			"AzimuthID": 1,
-			"DriveID": 2,
-			"RelativeInverted": false,
-			"AbsoluteInverted": false,
-			"RelativeConversionFactor": 100.0,
-			"AbsoluteConversionFactor": 360.0
+			"Azimuth": "AzimuthMotorFL",
+			"Drive": "DriveMotorFL"
 		},
 
 		{
 			"Name": "Module2",
-			"AzimuthID": 1,
-			"DriveID": 2,
-			"RelativeInverted": false,
-			"AbsoluteInverted": false,
-			"RelativeConversionFactor": 100.0,
-			"AbsoluteConversionFactor": 360.0
+			"Azimuth": "AzimuthMotorFR",
+			"Drive": "DriveMotorFR"
 		},
 
 		{
 			"Name": "Module3",
-			"AzimuthID": 1,
-			"DriveID": 2,
-			"RelativeInverted": false,
-			"AbsoluteInverted": false,
-			"RelativeConversionFactor": 100.0,
-			"AbsoluteConversionFactor": 360.0
+			"Azimuth": "AzimuthMotorBL",
+			"Drive": "DriveMotorBL"
 		},
 
 		{
 			"Name": "Module4",
-			"AzimuthID": 1,
-			"DriveID": 2,
-			"RelativeInverted": false,
-			"AbsoluteInverted": false,
-			"RelativeConversionFactor": 100.0,
-			"AbsoluteConversionFactor": 360.0
-		},
-
-		{
-			"Name": "Module5",
-			"AzimuthID": 1,
-			"DriveID": 2,
-			"RelativeInverted": false,
-			"AbsoluteInverted": false,
-			"RelativeConversionFactor": 100.0,
-			"AbsoluteConversionFactor": 360.0
+			"Azimuth": "AzimuthMotorBR",
+			"Drive": "DriveMotorBR"
 		}
 	]
 }

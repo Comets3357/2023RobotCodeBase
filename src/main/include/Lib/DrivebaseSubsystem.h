@@ -87,10 +87,10 @@ public:
 
     bool odometryInitialized = false;
 
-    WheelSparkMax dbR{1};
-    WheelSparkMax dbL{2};
-    WheelSparkMax dbFR{3};
-    WheelSparkMax dbFL{4};
+    WheelSparkMax dbR{""};
+    WheelSparkMax dbL{""};
+    WheelSparkMax dbFR{""};
+    WheelSparkMax dbFL{""};
 
 
     PID pid{};

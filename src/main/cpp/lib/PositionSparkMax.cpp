@@ -1,22 +1,21 @@
 #include "Lib/PositionSparkMax.h"
 
-PositionSparkMax::PositionSparkMax(const int ID, PositionSparkMaxRunMode mode)
-    : motor{ID, rev::CANSparkMax::MotorType::kBrushless},
+PositionSparkMax::PositionSparkMax(std::string configName)
+    : config{ConfigFiles::getInstance().robotConfig.positionMotorConfigs[configName]},
+     motor{config.ID, rev::CANSparkMax::MotorType::kBrushless},
     PIDController{motor.GetPIDController()},
     relativeEncoder{motor.GetEncoder()},
     absoluteEncoder{motor.GetAbsoluteEncoder(rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)}
 {
-    defaultRunMode = mode;
+    defaultRunMode = config.defaultMode;
     runMode = defaultRunMode;
 
     ChangeFeedBackDevice(defaultRunMode);
 
 };
 
-void PositionSparkMax::SetConfig(std::string name)
+void PositionSparkMax::RobotInit()
 {
-    PositionMotorConfig config = ConfigFiles::getInstance().robotConfig.positionMotorConfigs[name];
-
     if (
         motor.GetInverted() != config.invertedRelative || 
         motor.GetIdleMode() != config.idleMode || 

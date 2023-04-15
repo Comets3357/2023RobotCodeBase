@@ -1,13 +1,13 @@
 #include "Lib/WheelSparkMax.h"
 
-WheelSparkMax::WheelSparkMax(const int ID) : motor{ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}
+WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().robotConfig.wheelMotorConfigs[configName]},
+motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}
 {
     
 }
 
-void WheelSparkMax::SetConfig(std::string name)
+void WheelSparkMax::RobotInit()
 {
-    WheelMotorConfig config = ConfigFiles::getInstance().robotConfig.wheelMotorConfigs[name];
 
     if (
         motor.GetInverted() != config.invertedRelative || 

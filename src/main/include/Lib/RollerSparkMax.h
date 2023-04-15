@@ -7,14 +7,15 @@ class RollerSparkMax
 {
 public:
 
-    RollerSparkMax(const int ID);
+    RollerSparkMax(std::string configName);
 
     void SetPower(double power);
 
-    void SetConfig(std::string name);
+    void RobotInit();
 
 private:
 
     rev::CANSparkMax motor;
+    RollerMotorConfig config;
 
 };
