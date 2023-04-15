@@ -70,8 +70,6 @@ private:
     rev::SparkMaxRelativeEncoder relativeEncoder;
     rev::SparkMaxAbsoluteEncoder absoluteEncoder;
 
-    std::unique_ptr<std::thread> absoluteEncoderTask;
-
     int absAttempts = 0;
     double lastPosition;
 

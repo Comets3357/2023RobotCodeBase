@@ -11,10 +11,6 @@ PositionSparkMax::PositionSparkMax(const int ID, PositionSparkMaxRunMode mode)
 
     ChangeFeedBackDevice(defaultRunMode);
 
-    if (runMode == POSITION_SPARK_MAX_ABSOLUTE)
-    {
-        absoluteEncoderTask = std::make_unique<std::thread>(&PositionSparkMax::CheckAbsoluteEncoder, this);
-    }
 };
 
 void PositionSparkMax::SetConfig(std::string name)
@@ -124,6 +120,8 @@ void PositionSparkMax::Periodic()
 {
     absoluteEncoderPosition = absoluteEncoder.GetPosition();
     relativeEncoderPosition = absoluteEncoder.GetPosition();
+
+    CheckAbsoluteEncoder();
 }
 
 void PositionSparkMax::changeRunMode(PositionSparkMaxRunMode mode)
