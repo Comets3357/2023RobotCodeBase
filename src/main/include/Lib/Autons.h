@@ -8,6 +8,10 @@
 #include "lib/SwerveSubsystem.h"
 #include "lib/SwerveTrajectoryCommand.h"
 #include <frc2/command/WaitCommand.h>
+#include "pathplanner/lib/commands/PPSwerveControllerCommand.h"
+#include "pathplanner/lib/auto/SwerveAutoBuilder.h"
+#include "pathplanner/lib/PathPlanner.h"
+#include <frc2/command/CommandPtr.h>
 
 #include <map>
 #include <string>
@@ -28,21 +32,16 @@ public:
     Autons(SwerveSubsystem* drivebase);
 
     void RunAuton(std::string AutonName);
-    void LoadPaths();
-    void LoadAutons();
+    
 
     //Autons
-    std::map<std::string, autonCommandGroups> autons;
-    std::map<std::string, frc::Trajectory> paths;
-    std::map<std::string, std::function<void(std::string)>> commands;
+    std::map<std::string, frc2::CommandPtr> autons;
+
+    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
 
     SwerveSubsystem* swerveSubsystem;
 
-
-    template <typename Command>
-    void AddAutonAction()
-    {
-        commands[typeid(Command).name()] = [this](std::string pathName) {autons[pathName].actionCommands.AddCommands(Command{});};
-    }
+    void LoadAutons();
+    void AddAutonAction(frc2::CommandPtr* command, std::string name);
 
 };

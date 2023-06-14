@@ -53,6 +53,15 @@ void Autons::LoadAutons()
                         if (paths.contains(line))
                         {
                             autons[entry.path().stem().string()].drivebaseCommands.AddCommands(SwerveTrajectoryCommand(paths[line], swerveSubsystem));
+
+                            // pathplanner::PPSwerveControllerCommand path{
+                            //     pathplanner::PathPlannerTrajectory{},
+                            //     [this]() {return swerveSubsystem->GetPose();},
+                            //     frc::PIDController{0.0, 0.0, 0.0},
+                            //     frc::PIDController{0.0, 0.0, 0.0},
+                            //     frc::PIDController{0.0, 0.0, 0.0},
+                            //     [this](frc::ChassisSpeeds speeds) {swerveSubsystem->SetChassisSpeed(speeds);}
+                            // };
                         }
                     }
                 }
