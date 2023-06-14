@@ -9,7 +9,7 @@ Autons::Autons(SwerveSubsystem* drivebase)
 void Autons::RunAuton(std::string autonName)
 {
     if (autons.contains(autonName))
-    autons[autonName].Schedule();
+    autons[autonName]->Schedule();
 }
 
 
@@ -37,7 +37,8 @@ void Autons::LoadAutons()
         {
             std::string autonName = entry.path().stem().string();
             std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup(autonName, {pathplanner::PathConstraints{4_mps, 3_mps_sq}});
-            autons[autonName] = autoBuilder.fullAuto(pathGroup);
+
+            autons[autonName] = std::make_unique<frc2::CommandPtr>(autoBuilder.fullAuto(pathGroup));
         }
     }
 

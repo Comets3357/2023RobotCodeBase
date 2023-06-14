@@ -79,7 +79,14 @@ public:
 	 *     color? In order for this to work properly, you MUST create your path on the blue side of
 	 *     the field.
 	 */
-	PPSwerveControllerCommand(PathPlannerTrajectory trajectory);
+	PPSwerveControllerCommand(PathPlannerTrajectory trajectory,
+			std::function<frc::Pose2d()> pose,
+			frc::SwerveDriveKinematics<4> kinematics,
+			frc2::PIDController xController, frc2::PIDController yController,
+			frc2::PIDController rotationController,
+			std::function<void(std::array<frc::SwerveModuleState, 4>)> output,
+			std::initializer_list<frc2::Subsystem*> requirements,
+			bool useAllianceColor = false);
 
 	/**
 	 * @brief Constructs a new PPSwerveControllerCommand that when executed will follow the
@@ -103,7 +110,8 @@ public:
 			frc2::PIDController xController, frc2::PIDController yController,
 			frc2::PIDController rotationController,
 			std::function<void(std::array<frc::SwerveModuleState, 4>)> output,
-			std::span<frc2::Subsystem* const > requirements = { });
+			std::span<frc2::Subsystem* const > requirements = { },
+			bool useAllianceColor = false);
 
 	void Initialize() override;
 

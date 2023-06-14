@@ -55,7 +55,7 @@ private:
     //temp
     GyroData gyro{};
 
-    wpi::array<frc::SwerveModuleState, 4> swerveModuleStates{frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}};;
+    wpi::array<frc::SwerveModuleState, 4> swerveModuleStates{frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}, frc::SwerveModuleState{units::meters_per_second_t{0}, frc::Rotation2d{units::degree_t{0}}}};
 
     units::meter_t trackWidth, wheelBase;
     frc::Translation2d frontLeftLocation;
