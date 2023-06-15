@@ -71,7 +71,7 @@ void DrivebaseSubsystem::ResetOdometry(double x, double y, double radians, doubl
     const frc::Rotation2d gyroRotation{gyroRadians};
     const frc::Pose2d resetPose{meterX, meterY, radianYaw};
     // zeroEncoders();
-    odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetPosition())}, units::meter_t{getEncoderDistance(dbR.GetPosition())},  resetPose);
+    odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetRelativePosition())}, units::meter_t{getEncoderDistance(dbR.GetRelativePosition())},  resetPose);
 
     //zeroEncoders();
 }
@@ -86,6 +86,6 @@ void DrivebaseSubsystem::resetOdometry(const frc::Pose2d &pose, double gyroAngle
     const units::radian_t gyroRadians{gyroAngle};
     frc::Rotation2d gyroRotation{gyroRadians};
 
-    odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetPosition())}, units::meter_t{getEncoderDistance(dbR.GetPosition())},  pose);
+    odometry.ResetPosition(gyroRotation, units::meter_t{getEncoderDistance(dbL.GetRelativePosition())}, units::meter_t{getEncoderDistance(dbR.GetRelativePosition())},  pose);
     //zeroEncoders();
 }

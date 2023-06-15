@@ -1,134 +1,185 @@
-#include "Lib/SwerveSubsystem.h"
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
-SwerveSubsystem::SwerveSubsystem(std::string configFileName, TimerData* timer) : swerveConfig{ConfigFiles::getInstance().robotConfig.swerveConfigs[configFileName]},
-timerData{timer}, trackWidth{swerveConfig.trackWidth}, wheelBase{swerveConfig.wheelBase},
-    frontLeftModule{swerveConfig.frontLeftModule}, frontRightModule{swerveConfig.frontRightModule}, backRightModule{swerveConfig.backRightModule}, backLeftModule{swerveConfig.backLeftModule},
-    frontLeftLocation{-trackWidth/2, -wheelBase/2},
-    frontRightLocation{trackWidth/2, -wheelBase/2},
-    backRightLocation{trackWidth/2, wheelBase/2},
-    backLeftLocation{-trackWidth/2, wheelBase/2},
-    kinematics{frontLeftLocation, frontRightLocation, backLeftLocation, backRightLocation},
-    speeds{swerveConfig.xSpeed, swerveConfig.ySpeed, swerveConfig.maxTurnSpeed},
-    odometry{kinematics, frc::Rotation2d{0_deg}, {frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}, frc::SwerveModulePosition{0_m, 0_deg}}, frc::Pose2d{0_m, 0_m, 0_rad}},
-    swerveModuleStates{frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}, frc::SwerveModuleState{}}
-    {}
+#include "lib/SwerveSubsystem.h"
 
-void SwerveSubsystem::SetSpeed(units::meters_per_second_t y, units::meters_per_second_t x, units::radians_per_second_t rotation)
-{
-    speeds = frc::ChassisSpeeds::FromFieldRelativeSpeeds(x, y, rotation, frc::Rotation2d(units::degree_t{gyro.yaw}));
-    SetChassisSpeed(speeds);
+#include <frc/geometry/Rotation2d.h>
+#include <units/angle.h>
+#include <units/angular_velocity.h>
+#include <units/velocity.h>
+
+//#include "Constants.h"
+#include "lib/utils/SwerveUtils.h"
+
+
+SwerveSubsystem::SwerveSubsystem(std::string configFileName)
+    : configuration{ConfigFiles::getInstance().robotConfig.swerveConfigs[configFileName]},
+      m_frontLeft{configuration.frontLeftModule},
+      m_rearLeft{configuration.backLeftModule},
+      m_frontRight{configuration.frontRightModule},
+      m_rearRight{configuration.backRightModule},
+      m_magLimiter{configuration.magnitudeSlewRate / 1_s},
+      m_rotLimiter{configuration.rotationalSlewRate / 1_s},
+      kDriveKinematics{
+      frc::Translation2d{configuration.wheelBase / 2,
+                         configuration.trackWidth / 2},
+      frc::Translation2d{configuration.wheelBase / 2 / 2,
+                         -configuration.trackWidth / 2},
+      frc::Translation2d{-configuration.wheelBase / 2 / 2,
+                         configuration.trackWidth / 2},
+      frc::Translation2d{-configuration.wheelBase / 2 / 2,
+                         -configuration.trackWidth / 2}},
+      m_odometry{kDriveKinematics,
+                 frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
+                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
+                  m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+                 frc::Pose2d{}} {}
+
+void SwerveSubsystem::Periodic() {
+  // Implementation of subsystem periodic method goes here.
+  m_odometry.Update(frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
+                    {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
+                     m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 }
 
-void SwerveSubsystem::CheckResetOdometry(frc::Trajectory trajectory)
-{
-        if (!odometryInitialized)
-    {
-        units::second_t zeroSec{0};
+void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,
+                           units::meters_per_second_t ySpeed,
+                           units::radians_per_second_t rot, bool fieldRelative,
+                           bool rateLimit) {
+  double xSpeedCommanded;
+  double ySpeedCommanded;
 
+  if (rateLimit) {
+    // Convert XY to polar for rate limiting
+    double inputTranslationDir = atan2(ySpeed.value(), xSpeed.value());
+    double inputTranslationMag =
+        sqrt(pow(xSpeed.value(), 2) + pow(ySpeed.value(), 2));
 
-        frc::Trajectory::State trajectoryState = trajectory.Sample(zeroSec);
-        frc::Pose2d firstPose = trajectoryState.pose;
-
-        double firstX = firstPose.X().to<double>();
-        double firstY = firstPose.Y().to<double>();
-        
-        frc::Rotation2d firstRadians = firstPose.Rotation().Radians();
-        // frc::SmartDashboard::PutNumber("firstRadians", firstRadians);
-
-        ResetOdometry(firstRadians, firstPose);
-        // zeroEncoders();s
-        // frc::smartDashboard::PutNumber("autonStep OdoInit", autonData.autonStep);
-
-        odometryInitialized = true;
+    // Calculate the direction slew rate based on an estimate of the lateral
+    // acceleration
+    double directionSlewRate;
+    if (m_currentTranslationMag != 0.0) {
+      directionSlewRate =
+          abs(configuration.directionSlewRate / m_currentTranslationMag);
+    } else {
+      directionSlewRate = 500.0;  // some high number that means the slew rate
+                                  // is effectively instantaneous
     }
-    
+
+    double currentTime = wpi::Now() * 1e-6;
+    double elapsedTime = currentTime - m_prevTime;
+    double angleDif = SwerveUtils::AngleDifference(inputTranslationDir,
+                                                   m_currentTranslationDir);
+    if (angleDif < 0.45 * std::numbers::pi) {
+      m_currentTranslationDir = SwerveUtils::StepTowardsCircular(
+          m_currentTranslationDir, inputTranslationDir,
+          directionSlewRate * elapsedTime);
+      m_currentTranslationMag = m_magLimiter.Calculate(inputTranslationMag);
+    } else if (angleDif > 0.85 * std::numbers::pi) {
+      if (m_currentTranslationMag >
+          1e-4) {  // some small number to avoid floating-point errors with
+                   // equality checking
+        // keep currentTranslationDir unchanged
+        m_currentTranslationMag = m_magLimiter.Calculate(0.0);
+      } else {
+        m_currentTranslationDir =
+            SwerveUtils::WrapAngle(m_currentTranslationDir + std::numbers::pi);
+        m_currentTranslationMag = m_magLimiter.Calculate(inputTranslationMag);
+      }
+    } else {
+      m_currentTranslationDir = SwerveUtils::StepTowardsCircular(
+          m_currentTranslationDir, inputTranslationDir,
+          directionSlewRate * elapsedTime);
+      m_currentTranslationMag = m_magLimiter.Calculate(0.0);
+    }
+    m_prevTime = currentTime;
+
+    xSpeedCommanded = m_currentTranslationMag * cos(m_currentTranslationDir);
+    ySpeedCommanded = m_currentTranslationMag * sin(m_currentTranslationDir);
+    m_currentRotation = m_rotLimiter.Calculate(rot.value());
+
+  } else {
+    xSpeedCommanded = xSpeed.value();
+    ySpeedCommanded = ySpeed.value();
+    m_currentRotation = rot.value();
+  }
+
+  // Convert the commanded speeds into the correct units for the drivetrain
+  units::meters_per_second_t xSpeedDelivered =
+      xSpeedCommanded * configuration.maxSpeed;
+  units::meters_per_second_t ySpeedDelivered =
+      ySpeedCommanded * configuration.maxSpeed;
+  units::radians_per_second_t rotDelivered =
+      m_currentRotation * configuration.maxTurnSpeed;
+
+  auto states = kDriveKinematics.ToSwerveModuleStates(
+      fieldRelative
+          ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
+                xSpeedDelivered, ySpeedDelivered, rotDelivered,
+                frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}))
+          : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
+
+  kDriveKinematics.DesaturateWheelSpeeds(&states, configuration.maxSpeed);
+
+  auto [fl, fr, bl, br] = states;
+
+  m_frontLeft.SetDesiredState(fl);
+  m_frontRight.SetDesiredState(fr);
+  m_rearLeft.SetDesiredState(bl);
+  m_rearRight.SetDesiredState(br);
 }
 
-void SwerveSubsystem::SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desiredStates) {
+void SwerveSubsystem::SetX() {
+  m_frontLeft.SetDesiredState(
+      frc::SwerveModuleState{0_mps, frc::Rotation2d{45_deg}});
+  m_frontRight.SetDesiredState(
+      frc::SwerveModuleState{0_mps, frc::Rotation2d{-45_deg}});
+  m_rearLeft.SetDesiredState(
+      frc::SwerveModuleState{0_mps, frc::Rotation2d{-45_deg}});
+  m_rearRight.SetDesiredState(
+      frc::SwerveModuleState{0_mps, frc::Rotation2d{45_deg}});
+}
 
-    swerveModuleStates[0] = frc::SwerveModuleState::Optimize(desiredStates[0], frontLeftModule.GetPosition().angle);
-    swerveModuleStates[1] = frc::SwerveModuleState::Optimize(desiredStates[1], frontRightModule.GetPosition().angle);
-    swerveModuleStates[2] = frc::SwerveModuleState::Optimize(desiredStates[2], backLeftModule.GetPosition().angle);
-    swerveModuleStates[3] = frc::SwerveModuleState::Optimize(desiredStates[3], backRightModule.GetPosition().angle);
+void SwerveSubsystem::SetModuleStates(
+    wpi::array<frc::SwerveModuleState, 4> desiredStates) {
+  kDriveKinematics.DesaturateWheelSpeeds(&desiredStates,
+                                         configuration.maxSpeed);
+  m_frontLeft.SetDesiredState(desiredStates[0]);
+  m_frontRight.SetDesiredState(desiredStates[1]);
+  m_rearLeft.SetDesiredState(desiredStates[2]);
+  m_rearRight.SetDesiredState(desiredStates[3]);
+}
 
-    frontLeftModule.SetAsimuthPosition(swerveModuleStates[0].angle);
-    frontLeftModule.SetSpeed(swerveModuleStates[0].speed);
-
-    frontRightModule.SetAsimuthPosition(swerveModuleStates[1].angle);
-    frontRightModule.SetSpeed(swerveModuleStates[1].speed);
-
-    backLeftModule.SetAsimuthPosition(swerveModuleStates[2].angle);
-    backLeftModule.SetSpeed(swerveModuleStates[2].speed);
-
-    backRightModule.SetAsimuthPosition(swerveModuleStates[3].angle);
-    backRightModule.SetSpeed(swerveModuleStates[3].speed);
-
-
+void SwerveSubsystem::ResetEncoders() {
+  m_frontLeft.ResetEncoders();
+  m_rearLeft.ResetEncoders();
+  m_frontRight.ResetEncoders();
+  m_rearRight.ResetEncoders();
 }
 
 void SwerveSubsystem::SetChassisSpeed(frc::ChassisSpeeds chassisSpeed)
 {
-    auto [fl, fr, bl, br] = kinematics.ToSwerveModuleStates(chassisSpeed);
+    wpi::array<frc::SwerveModuleState, 4> desiredStates = kDriveKinematics.ToSwerveModuleStates(chassisSpeed);
 
-    swerveModuleStates[0] = frc::SwerveModuleState::Optimize(fl, frontLeftModule.GetPosition().angle);
-    swerveModuleStates[1] = frc::SwerveModuleState::Optimize(fr, frontRightModule.GetPosition().angle);
-    swerveModuleStates[2] = frc::SwerveModuleState::Optimize(bl, backLeftModule.GetPosition().angle);
-    swerveModuleStates[3] = frc::SwerveModuleState::Optimize(br, backRightModule.GetPosition().angle);
-
-    frontLeftModule.SetAsimuthPosition(swerveModuleStates[0].angle);
-    frontLeftModule.SetSpeed(swerveModuleStates[0].speed);
-
-    frontRightModule.SetAsimuthPosition(swerveModuleStates[1].angle);
-    frontRightModule.SetSpeed(swerveModuleStates[1].speed);
-
-    backLeftModule.SetAsimuthPosition(swerveModuleStates[2].angle);
-    backLeftModule.SetSpeed(swerveModuleStates[2].speed);
-
-    backRightModule.SetAsimuthPosition(swerveModuleStates[3].angle);
-    backRightModule.SetSpeed(swerveModuleStates[3].speed);
-
-    frc::SmartDashboard::PutNumber("Degree", (double)swerveModuleStates[3].angle.Degrees());
-    frc::SmartDashboard::PutNumber("Vel", (double)swerveModuleStates[3].speed);
+    SetModuleStates(desiredStates);
 
 }
 
-void SwerveSubsystem::Periodic()
-{
-    odometry.Update(frc::Rotation2d{units::degree_t{gyro.yaw}}, {frontLeftModule.GetPosition(), frontRightModule.GetPosition(), backLeftModule.GetPosition(), backRightModule.GetPosition()});
+units::degree_t SwerveSubsystem::GetHeading() const {
+  return frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}).Degrees();
 }
 
-void SwerveSubsystem::ResetOdometry(frc::Rotation2d angle, frc::Pose2d pose2D)
-{
-    odometry.ResetPosition(angle, {frontLeftModule.GetPosition(), frontRightModule.GetPosition(), backLeftModule.GetPosition(), backRightModule.GetPosition()}, pose2D);
-}
+void SwerveSubsystem::ZeroHeading() { m_gyro.Reset(); }
 
-frc::SwerveDriveKinematics<4> SwerveSubsystem::GetKinematics()
-{
+double SwerveSubsystem::GetTurnRate() { return -m_gyro.GetRate().value(); }
 
-    return kinematics;
-}
+frc::Pose2d SwerveSubsystem::GetPose() { return m_odometry.GetPose(); }
 
-frc::Pose2d SwerveSubsystem::GetPose()
-{
-    return odometry.GetEstimatedPosition();
-}
-
-frc::Rotation2d SwerveSubsystem::GetRotation()
-{
-    return frc::Rotation2d{units::degree_t{gyro.yaw}};
-}
-
-double SwerveSubsystem::GetRobotSpeed()
-{
-    return 0.0;
-}
-
-double SwerveSubsystem::GetRobotStrafe()
-{
-    return 0.0;
-}
-
-double SwerveSubsystem::GetRobotRotation()
-{
-    return 0.0;
+void SwerveSubsystem::ResetOdometry(frc::Pose2d pose) {
+  m_odometry.ResetPosition(
+      GetHeading(),
+      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
+       m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
+      pose);
 }

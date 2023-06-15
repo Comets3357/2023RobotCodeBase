@@ -30,7 +30,6 @@
 #include "Lib/RunWheelSparkMaxCommand.h"
 #include "Lib/StopWheelSparkMaxCommand.h"
 #include "lib/SwerveSubsystem.h"
-#include "lib/SwerveTrajectoryCommand.h"
 
 #include "RobotData.h"
 
@@ -62,7 +61,7 @@ class RobotContainer {
   ElbowSubsystem elbowSubsystem{&robotData.elbowData};
   WristSubsystem wristSubsystem{&robotData.wristData};
   EndEffectorRollersSubsystem endEffectorRollersSubsystem{&robotData.endEffectorRollersData};
-  SwerveSubsystem drivebaseSubsystem{"swerve", &robotData.timerData};
+  SwerveSubsystem drivebaseSubsystem{"swerve"};
   TimerSubsystem timerSubsystem{&robotData.timerData};
 
   // Commands
@@ -73,7 +72,6 @@ class RobotContainer {
 
   RunWheelSparkMaxCommand runCommand{&endEffectorRollersSubsystem, 100, &endEffectorRollersSubsystem.motor2};
   StopWheelSparkMaxCommand stopCommand{&endEffectorRollersSubsystem, &endEffectorRollersSubsystem.motor2};
-  SwerveTrajectoryCommand pathCommand{frc::TrajectoryUtil::FromPathweaverJson(frc::filesystem::GetDeployDirectory() + "\\pathPlanner\\generatedJSON\\New Path.wpilib.json"), &drivebaseSubsystem};
 
 
 

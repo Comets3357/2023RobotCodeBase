@@ -28,6 +28,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         SwerveModuleConfig moduleConfig;
         moduleConfig.azimuthConfigName = config.get("Azimuth").get<std::string>();
         moduleConfig.driveConfigName = config.get("Drive").get<std::string>();
+        moduleConfig.angularOffset = config.get("AngularOffset").get<double>();
 
         robotConfig.swerveModuleConfigs[config.get("Name").get<std::string>()] = moduleConfig;
     }
@@ -42,9 +43,12 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
 
         swerveConfig.trackWidth = units::meter_t{config.get("TrackWidth").get<double>()};
         swerveConfig.wheelBase = units::meter_t{config.get("WheelBase").get<double>()};
-        swerveConfig.xSpeed = units::meters_per_second_t{config.get("xSpeed").get<double>()};
-        swerveConfig.xSpeed = units::meters_per_second_t{config.get("ySpeed").get<double>()};
+        swerveConfig.maxSpeed = units::meters_per_second_t{config.get("MaxSpeed").get<double>()};
         swerveConfig.maxTurnSpeed = units::radians_per_second_t{config.get("MaxTurnSpeed").get<double>()};
+
+        swerveConfig.directionSlewRate = config.get("DirectionSlewRate").get<double>();
+        swerveConfig.magnitudeSlewRate = config.get("MagnitudeSlewRate").get<double>();
+        swerveConfig.rotationalSlewRate = config.get("RotationalSlewRate").get<double>();
 
         robotConfig.swerveConfigs[config.get("Name").get<std::string>()] = swerveConfig;
     }
@@ -56,8 +60,10 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.invertedAbsolute = config.get("InvertedAbsolute").get<bool>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
-        motorConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
-        motorConfig.absoluteConversionFactor = config.get("AbsoluteConversionFactor").get<double>();
+        motorConfig.relativePositionConversionFactor = config.get("RelativePositionConversionFactor").get<double>();
+        motorConfig.relativeVelocityConversionFactor = config.get("RelativeVelocityConversionFactor").get<double>();
+        motorConfig.absolutePositionConversionFactor = config.get("AbsolutePositionConversionFactor").get<double>();
+        motorConfig.absoluteVelocityConversionFactor = config.get("AbsoluteVelocityConversionFactor").get<double>();
         motorConfig.absoluteZeroOffset = config.get("AbsoluteZeroOffset").get<double>();
         motorConfig.maxSpeed = config.get("MaxSpeed").get<double>();
         motorConfig.minSpeed = config.get("MinSpeed").get<double>();
@@ -72,6 +78,10 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.positionPID.I = config.get("PositionPID").get("I").get<double>();
         motorConfig.positionPID.D = config.get("PositionPID").get("D").get<double>();
         motorConfig.positionPID.FF = config.get("PositionPID").get("FF").get<double>();
+
+        motorConfig.positionPIDWrappingEnabled = config.get("PositionPIDWrappingEnabled").get<bool>();
+        motorConfig.turningEncoderPositionPIDMinInput = config.get("TurningEncoderPositionPIDMinInput").get<bool>();
+        motorConfig.turningEncoderPositionPIDMaxInput = config.get("TurningEncoderPositionPIDMaxInput").get<bool>();
 
         robotConfig.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }

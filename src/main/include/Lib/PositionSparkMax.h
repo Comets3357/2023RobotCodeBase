@@ -35,6 +35,11 @@ public:
     void SetPIDOutputRange(double min, double max, int slot);
 
     double GetPosition();
+    double GetRelativePosition();
+    double GetAbsolutePosition();
+
+    double GetRelativeVelocity();
+    double GetAbsoluteVelocity();
 
     void SetVelocity(double velocity);
 

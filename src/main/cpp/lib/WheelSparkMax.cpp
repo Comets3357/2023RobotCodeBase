@@ -39,6 +39,11 @@ void WheelSparkMax::SetVelocity(double velocity)
     PIDController.SetReference(velocity, rev::CANSparkMax::ControlType::kVelocity, 0);
 }
 
+double WheelSparkMax::GetRelativeVelocity()
+{
+    return encoder.GetVelocity();
+}
+
 void WheelSparkMax::SetPercent(double power)
 {
     motor.Set(power);
@@ -49,7 +54,13 @@ PID WheelSparkMax::GetPID()
     return pid;
 }
 
-double WheelSparkMax::GetPosition()
+double WheelSparkMax::GetRelativePosition()
 {
     return encoder.GetPosition();
+}
+
+
+void WheelSparkMax::SetRelativePosition(double position)
+{
+    encoder.SetPosition(position);
 }

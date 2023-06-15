@@ -4,7 +4,6 @@
 #include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryUtil.h>
 #include "lib/SwerveSubsystem.h"
-#include "lib/SwerveTrajectoryCommand.h"
 #include <frc2/command/WaitCommand.h>
 #include "pathplanner/lib/commands/PPSwerveControllerCommand.h"
 #include "pathplanner/lib/auto/SwerveAutoBuilder.h"

@@ -25,7 +25,6 @@ void RobotContainer::ConfigureBindings() {
   exampleCommandController.A().OnTrue(&runCommand);
   exampleCommandController.B().OnTrue(&stopCommand);
 
-  exampleCommandController.X().OnTrue(&pathCommand);
 
 
   
@@ -40,7 +39,6 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::Periodic()
 {
-  drivebaseSubsystem.SetSpeed(units::meters_per_second_t{exampleCommandController.GetRawAxis(0)}, units::meters_per_second_t{exampleCommandController.GetRawAxis(1)}, units::radians_per_second_t{exampleCommandController.GetRawAxis(2)});
   
 }
 

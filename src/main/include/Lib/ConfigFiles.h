@@ -22,12 +22,18 @@ struct PositionMotorConfig {
     bool invertedAbsolute;
     bool invertedRelative;
     double currentLimit;
-    double relativeConversionFactor;
-    double absoluteConversionFactor;
+    double relativePositionConversionFactor;
+    double relativeVelocityConversionFactor;
+    double absolutePositionConversionFactor;
+    double absoluteVelocityConversionFactor;
     double absoluteZeroOffset;
     double maxSpeed;
     double minSpeed;
     rev::CANSparkMax::IdleMode idleMode;
+
+    bool positionPIDWrappingEnabled;
+    double turningEncoderPositionPIDMinInput;
+    double turningEncoderPositionPIDMaxInput;
 
     PID velocityPID;
     PID positionPID;
@@ -54,6 +60,7 @@ struct SwerveModuleConfig
 {
     std::string azimuthConfigName;
     std::string driveConfigName;
+    double angularOffset;
 };
 
 struct SwerveConfig
@@ -64,9 +71,11 @@ struct SwerveConfig
     SwerveModuleConfig backRightModule{};
     units::meter_t trackWidth{10};
     units::meter_t wheelBase{10};
-    units::meters_per_second_t xSpeed{5};
-    units::meters_per_second_t ySpeed{5};
     units::radians_per_second_t maxTurnSpeed{1};
+    double directionSlewRate;
+    units::meters_per_second_t maxSpeed{15};
+    double magnitudeSlewRate;
+    double rotationalSlewRate;
 };
 
 struct DrivebaseConfig

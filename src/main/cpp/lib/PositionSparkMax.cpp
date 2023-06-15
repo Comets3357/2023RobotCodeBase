@@ -21,10 +21,15 @@ void PositionSparkMax::RobotInit()
         motor.GetIdleMode() != config.idleMode || 
         PIDController.GetOutputMin(1) != config.minSpeed ||
         PIDController.GetOutputMax(1) != config.maxSpeed ||
-        relativeEncoder.GetPositionConversionFactor() != config.relativeConversionFactor;
+        relativeEncoder.GetPositionConversionFactor() != config.relativePositionConversionFactor ||
+        relativeEncoder.GetVelocityConversionFactor() != config.relativeVelocityConversionFactor ||
         absoluteEncoder.GetInverted() != config.invertedAbsolute ||
-        absoluteEncoder.GetPositionConversionFactor() != config.absoluteConversionFactor ||
-        absoluteEncoder.GetZeroOffset() != config.absoluteZeroOffset
+        absoluteEncoder.GetPositionConversionFactor() != config.absolutePositionConversionFactor ||
+        absoluteEncoder.GetVelocityConversionFactor() != config.absoluteVelocityConversionFactor ||
+        absoluteEncoder.GetZeroOffset() != config.absoluteZeroOffset ||
+        PIDController.GetPositionPIDWrappingEnabled() != config.positionPIDWrappingEnabled ||
+        PIDController.GetPositionPIDWrappingMinInput() != config.turningEncoderPositionPIDMinInput ||
+        PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput
     )
     {
         motor.RestoreFactoryDefaults();
@@ -34,10 +39,18 @@ void PositionSparkMax::RobotInit()
         PIDController.SetOutputRange(config.minSpeed, config.maxSpeed, 1);
         SetVelocityPID(config.velocityPID);
         SetPositionPID(config.positionPID);
-        relativeEncoder.SetPositionConversionFactor(config.relativeConversionFactor);
+        relativeEncoder.SetPositionConversionFactor(config.relativePositionConversionFactor);
+        relativeEncoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
         absoluteEncoder.SetInverted(config.invertedAbsolute);
-        absoluteEncoder.SetPositionConversionFactor(config.absoluteConversionFactor);
+        absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
+        absoluteEncoder.SetPositionConversionFactor(config.absoluteVelocityConversionFactor);
         absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+
+        PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
+        PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
+        PIDController.SetPositionPIDWrappingMaxInput(config.turningEncoderPositionPIDMaxInput);
+
+
         motor.BurnFlash();
     }
 }
@@ -114,6 +127,25 @@ void PositionSparkMax::SetPosition(double position)
     PIDController.SetReference(position, rev::CANSparkMax::ControlType::kPosition, 1);
 }
 
+double PositionSparkMax::GetRelativePosition()
+{
+    return relativeEncoderPosition;
+}
+
+double PositionSparkMax::GetAbsolutePosition()
+{
+    return absoluteEncoderPosition;
+}
+
+double PositionSparkMax::GetRelativeVelocity()
+{
+    return relativeEncoder.GetVelocity();
+}
+
+double PositionSparkMax::GetAbsoluteVelocity()
+{
+    return absoluteEncoder.GetVelocity();
+}
 
 void PositionSparkMax::Periodic()
 {
@@ -128,6 +160,8 @@ void PositionSparkMax::changeRunMode(PositionSparkMaxRunMode mode)
     runMode = mode;
     ChangeFeedBackDevice(runMode);
 }
+
+
 
 void PositionSparkMax::CheckAbsoluteEncoder()
     {

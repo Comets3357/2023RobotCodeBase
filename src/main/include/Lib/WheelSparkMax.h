@@ -14,13 +14,15 @@ public:
     void RobotInit();
     void SetVelocityPID(PID velocityPID);
     void SetVelocity(double velocity);
+    double GetRelativeVelocity();
     void SetPercent(double power);
 
     PID GetPID();
 
-    double GetPosition();
+    double GetRelativePosition();
+    void SetRelativePosition(double position);
 
-        rev::CANSparkMax motor;
+    rev::CANSparkMax motor;
 
 
 private:
