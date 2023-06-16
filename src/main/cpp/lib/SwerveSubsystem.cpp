@@ -14,7 +14,7 @@
 
 
 SwerveSubsystem::SwerveSubsystem(std::string configFileName)
-    : configuration{ConfigFiles::getInstance().robotConfig.swerveConfigs[configFileName]},
+    : configuration{ConfigFiles::getInstance().GetConfigFiles().swerveConfigs[configFileName]},
       m_frontLeft{configuration.frontLeftModule},
       m_rearLeft{configuration.backLeftModule},
       m_frontRight{configuration.frontRightModule},

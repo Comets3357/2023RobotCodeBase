@@ -17,7 +17,7 @@
 #include "Lib/PositionSparkMaxRunMode.h"
 
 struct PositionMotorConfig {
-    int ID;
+    int ID = 1;
     PositionSparkMaxRunMode defaultMode;
     bool invertedAbsolute;
     bool invertedRelative;
@@ -40,17 +40,18 @@ struct PositionMotorConfig {
 };
 
 struct WheelMotorConfig {
-    int ID;
+    int ID = 100;
     bool invertedRelative;
     double currentLimit;
-    double relativeConversionFactor;
+    double relativePositionConversionFactor;
+    double relativeVelocityConversionFactor;
     rev::CANSparkMax::IdleMode idleMode;
 
     PID velocityPID;
 };
 
 struct RollerMotorConfig {
-    int ID;
+    int ID = 1;
     bool invertedRelative;
     double currentLimit;
     rev::CANSparkMax::IdleMode idleMode;
@@ -106,7 +107,11 @@ public:
 
     RobotConfig robotConfig;
 
+    RobotConfig& GetConfigFiles();
+
     private:
+
+    bool initialized = false;
 
     ConfigFiles() {} // Private constructor to prevent instantiation outside of class
     ConfigFiles(const ConfigFiles&) = delete; // Disable copy constructor

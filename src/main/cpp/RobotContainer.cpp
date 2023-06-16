@@ -10,7 +10,7 @@
 
 
 
-RobotContainer::RobotContainer() {
+RobotContainer::RobotContainer() : swerve{"Swerve"} {
   // Initialize all of your commands and subsystems here
   // Configure the button bindings
   ConfigureBindings();
@@ -22,8 +22,18 @@ void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
 
   // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-  exampleCommandController.A().OnTrue(&runCommand);
-  exampleCommandController.B().OnTrue(&stopCommand);
+   swerve.SetDefaultCommand(frc2::RunCommand(
+      [this] {
+        swerve.Drive(
+            -units::meters_per_second_t{frc::ApplyDeadband(
+                m_driverController.GetLeftY(), 0.05)},
+            -units::meters_per_second_t{frc::ApplyDeadband(
+                m_driverController.GetLeftX(), 0.05)},
+            -units::radians_per_second_t{frc::ApplyDeadband(
+                m_driverController.GetRightX(), 0.05)},
+            true, true);
+      },
+      {&swerve}));
 
 
 

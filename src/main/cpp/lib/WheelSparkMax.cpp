@@ -1,9 +1,12 @@
 #include "Lib/WheelSparkMax.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
-WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().robotConfig.wheelMotorConfigs[configName]},
+
+
+WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs[configName]},
 motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}
 {
-    
+
 }
 
 void WheelSparkMax::RobotInit()
@@ -12,7 +15,8 @@ void WheelSparkMax::RobotInit()
     if (
         motor.GetInverted() != config.invertedRelative || 
         motor.GetIdleMode() != config.idleMode || 
-        encoder.GetPositionConversionFactor() != config.relativeConversionFactor
+        encoder.GetPositionConversionFactor() != config.relativePositionConversionFactor ||
+        encoder.GetVelocityConversionFactor() != config.relativeVelocityConversionFactor
     )
     {
         motor.RestoreFactoryDefaults();
@@ -20,7 +24,8 @@ void WheelSparkMax::RobotInit()
         motor.SetSmartCurrentLimit(config.currentLimit);
         motor.SetIdleMode(config.idleMode);
         SetVelocityPID(config.velocityPID);
-        encoder.SetPositionConversionFactor(config.relativeConversionFactor);
+        encoder.SetPositionConversionFactor(config.relativePositionConversionFactor);
+        encoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
         motor.BurnFlash();
     }
 }

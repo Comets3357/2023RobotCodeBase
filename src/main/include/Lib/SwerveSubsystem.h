@@ -20,6 +20,8 @@ class SwerveSubsystem : public frc2::SubsystemBase {
  public:
   SwerveSubsystem(std::string configFileName);
 
+  SwerveConfig configuration;
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -124,5 +126,5 @@ class SwerveSubsystem : public frc2::SubsystemBase {
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
 
-  SwerveConfig configuration;
+  
 };

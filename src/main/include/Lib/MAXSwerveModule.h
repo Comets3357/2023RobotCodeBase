@@ -25,6 +25,8 @@ class MAXSwerveModule {
    */
   MAXSwerveModule(SwerveModuleConfig config);
 
+  SwerveModuleConfig configuration;
+
   /**
    * Returns the current state of the module.
    *
@@ -73,5 +75,4 @@ class MAXSwerveModule {
   frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
                                         frc::Rotation2d()};
 
-    SwerveModuleConfig configuration;
 };

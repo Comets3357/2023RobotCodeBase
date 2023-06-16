@@ -5,9 +5,12 @@
 #include "PID.h"
 #include "Lib/ConfigFiles.h"
 
+
 class WheelSparkMax
 {
 public:
+
+    WheelMotorConfig config;
 
     WheelSparkMax(std::string configName);
 
@@ -30,7 +33,7 @@ private:
     rev::SparkMaxRelativeEncoder encoder;
     rev::SparkMaxPIDController PIDController;
 
-    WheelMotorConfig config;
+    
 
     PID pid;
 

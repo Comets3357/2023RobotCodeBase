@@ -9,6 +9,8 @@ public:
 
     RollerSparkMax(std::string configName);
 
+    RollerMotorConfig config;
+
     void SetPower(double power);
 
     void RobotInit();
@@ -16,6 +18,6 @@ public:
 private:
 
     rev::CANSparkMax motor;
-    RollerMotorConfig config;
+    
 
 };

@@ -1,7 +1,7 @@
 #include "Lib/PositionSparkMax.h"
 
 PositionSparkMax::PositionSparkMax(std::string configName)
-    : config{ConfigFiles::getInstance().robotConfig.positionMotorConfigs[configName]},
+    : config{ConfigFiles::getInstance().GetConfigFiles().positionMotorConfigs[configName]},
      motor{config.ID, rev::CANSparkMax::MotorType::kBrushless},
     PIDController{motor.GetPIDController()},
     relativeEncoder{motor.GetEncoder()},

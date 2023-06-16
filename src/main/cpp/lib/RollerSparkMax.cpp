@@ -1,6 +1,6 @@
 #include "Lib/RollerSparkMax.h"
 
-RollerSparkMax::RollerSparkMax(std::string configName) : config{ConfigFiles::getInstance().robotConfig.rollerMotorConfigs[configName]}, motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}
+RollerSparkMax::RollerSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().rollerMotorConfigs[configName]}, motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}
 {
     
 }

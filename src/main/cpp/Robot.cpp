@@ -10,10 +10,12 @@
 #include "Lib/SwerveSubsystem.h"
 
 #include "Lib/ConfigFiles.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-ConfigFiles::getInstance().LoadConfigFiles("comp");
-m_container.timerSubsystem.ResetAndBeginTimer();
+// ConfigFiles::getInstance().LoadConfigFiles("Comp");
+// frc::SmartDashboard::PutNumber("A",ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs["DriveMotor1"].ID);
+//m_container.timerSubsystem.ResetAndBeginTimer();
 }
 
 /**

@@ -23,7 +23,7 @@ class PositionSparkMax
 {
 public:
 
-    
+    PositionMotorConfig config;
 
     PositionSparkMax(std::string configName);
     void RobotInit();
@@ -72,8 +72,6 @@ private:
 
     int absAttempts = 0;
     double lastPosition;
-
-    PositionMotorConfig config;
 
     void CheckAbsoluteEncoder();
 

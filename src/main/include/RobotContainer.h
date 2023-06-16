@@ -56,23 +56,13 @@ class RobotContainer {
 
   //Subsystems
 
-  BullBarRollerSubsystem bullBarRollerSubsystem{&robotData.bullBarRollersData};
-  BullBarExtensionSubsystem bullBarExtensionSubsystem{&robotData.bullBarExtensionData};
-  ElbowSubsystem elbowSubsystem{&robotData.elbowData};
-  WristSubsystem wristSubsystem{&robotData.wristData};
-  EndEffectorRollersSubsystem endEffectorRollersSubsystem{&robotData.endEffectorRollersData};
-  SwerveSubsystem drivebaseSubsystem{"swerve"};
-  TimerSubsystem timerSubsystem{&robotData.timerData};
+  SwerveSubsystem swerve;
 
   // Commands
 
 
-  //RunRollerSparkMaxCommand runCommand{ &bullBarRollerSubsystem, 1, &bullBarRollerSubsystem.motor};
-  //StopRollerSparkMaxCommand stopCommand{ &bullBarRollerSubsystem, &bullBarRollerSubsystem.motor};
-
-  RunWheelSparkMaxCommand runCommand{&endEffectorRollersSubsystem, 100, &endEffectorRollersSubsystem.motor2};
-  StopWheelSparkMaxCommand stopCommand{&endEffectorRollersSubsystem, &endEffectorRollersSubsystem.motor2};
-
+ 
+  frc::XboxController m_driverController{0};
 
 
 

@@ -1,10 +1,21 @@
 #include "Lib/ConfigFiles.h"
 #include "Lib/PositionSparkMax.h"
+#include <frc/Filesystem.h>
+
+RobotConfig& ConfigFiles::GetConfigFiles()
+{
+    if (!initialized)
+    {
+        LoadConfigFiles("Comp");
+        initialized = true;
+    }
+    return robotConfig;
+}
 
 void ConfigFiles::LoadConfigFiles(std::string fileName)
 {
 
-    std::ifstream jsonFile("path/to/your/json/file.json");
+    std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + fileName + ".json");
     if (!jsonFile.is_open()) {
         std::cerr << "Failed to open file" << std::endl;
     }
@@ -69,6 +80,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.minSpeed = config.get("MinSpeed").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
+
         motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
         motorConfig.velocityPID.I = config.get("VelocityPID").get("I").get<double>();
         motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
@@ -80,8 +92,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.positionPID.FF = config.get("PositionPID").get("FF").get<double>();
 
         motorConfig.positionPIDWrappingEnabled = config.get("PositionPIDWrappingEnabled").get<bool>();
-        motorConfig.turningEncoderPositionPIDMinInput = config.get("TurningEncoderPositionPIDMinInput").get<bool>();
-        motorConfig.turningEncoderPositionPIDMaxInput = config.get("TurningEncoderPositionPIDMaxInput").get<bool>();
+        motorConfig.turningEncoderPositionPIDMinInput = config.get("TurningEncoderPositionPIDMinInput").get<double>();
+        motorConfig.turningEncoderPositionPIDMaxInput = config.get("TurningEncoderPositionPIDMaxInput").get<double>();
 
         robotConfig.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
@@ -93,7 +105,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.ID = (int)config.get("ID").get<double>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
-        motorConfig.relativeConversionFactor = config.get("RelativeConversionFactor").get<double>();
+        motorConfig.relativePositionConversionFactor = config.get("RelativePositionConversionFactor").get<double>();
+        motorConfig.relativeVelocityConversionFactor = config.get("RelativeVelocityConversionFactor").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
         motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
