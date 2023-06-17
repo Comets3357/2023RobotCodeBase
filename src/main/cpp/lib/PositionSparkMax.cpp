@@ -10,7 +10,7 @@ PositionSparkMax::PositionSparkMax(std::string configName)
     defaultRunMode = config.defaultMode;
     runMode = defaultRunMode;
 
-    ChangeFeedBackDevice(defaultRunMode);
+    changeRunMode(defaultRunMode);
 
 };
 
@@ -165,25 +165,23 @@ void PositionSparkMax::changeRunMode(PositionSparkMaxRunMode mode)
 
 void PositionSparkMax::CheckAbsoluteEncoder()
     {
-        while (true) {
-            if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
-                return;
-            }
+        if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
+            return;
+        }
 
 
-            if (lastPosition != absoluteEncoderPosition)
-            {
-                absAttempts++;
-            }
-            else
-            {
-                absAttempts = 0;
-            }
-            lastPosition = absoluteEncoderPosition;
+        if (lastPosition != absoluteEncoderPosition)
+        {
+            absAttempts++;
+        }
+        else
+        {
+            absAttempts = 0;
+        }
+        lastPosition = absoluteEncoderPosition;
 
-            if (absAttempts > 20)
-            {
-                changeRunMode(POSITION_SPARK_MAX_RELATIVE);
-            }
+        if (absAttempts > 20)
+        {
+            changeRunMode(POSITION_SPARK_MAX_RELATIVE);
         }
     }

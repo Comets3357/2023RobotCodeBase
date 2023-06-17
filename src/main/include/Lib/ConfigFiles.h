@@ -115,11 +115,12 @@ public:
      */
     RobotConfig& GetConfigFiles();
 
+    std::unordered_map<std::string, double> constance;
+
 private:
 
     bool initialized = false;
     RobotConfig robotConfig;
-    std::unordered_map<std::string, double> constance;
 
     ConfigFiles() {} // Private constructor to prevent instantiation outside of class
     ConfigFiles(const ConfigFiles&) = delete; // Disable copy constructor
