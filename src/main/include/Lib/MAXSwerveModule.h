@@ -54,19 +54,6 @@ class MAXSwerveModule {
   void ResetEncoders();
 
  private:
-//   rev::CANSparkMax m_drivingSparkMax;
-//   rev::CANSparkMax m_turningSparkMax;
-
-//   rev::SparkMaxRelativeEncoder m_drivingEncoder =
-//       m_drivingSparkMax.GetEncoder();
-//   rev::SparkMaxAbsoluteEncoder m_turningAbsoluteEncoder =
-//       m_turningSparkMax.GetAbsoluteEncoder(
-//           rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle);
-
-//   rev::SparkMaxPIDController m_drivingPIDController =
-//       m_drivingSparkMax.GetPIDController();
-//   rev::SparkMaxPIDController m_turningPIDController =
-//       m_turningSparkMax.GetPIDController();
 
   WheelSparkMax drivingMotor;
   PositionSparkMax azimuthMotor;

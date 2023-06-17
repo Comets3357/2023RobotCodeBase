@@ -22,19 +22,39 @@ class Autons
 {
 public:
 
-    Autons(SwerveSubsystem* drivebase);
+     /**
+   * Creates a new Autons object that generates and stores each auton located in
+   * the auton directory. It is then able to run each auton on command.
+   *
+   * @param chassis A pointer to the Chassis subsystem that will be performing the auton
+   */
+    Autons(SwerveSubsystem* chassis);
 
+    /**
+   * Runs a selected auton with the auton name
+   *
+   * @param AutonName The name of the auton file that will be ran
+   */
     void RunAuton(std::string AutonName);
-    
 
-    //Autons
-    std::map<std::string, std::unique_ptr<frc2::CommandPtr>> autons;
-
-    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-
-    SwerveSubsystem* swerveSubsystem;
-
+    /**
+   * Goes through the auton directory and generates Commands for each auton
+   */
     void LoadAutons();
-    void AddAutonAction(frc2::CommandPtr* command, std::string name);
+
+     /**
+     * Runs a selected auton with the auton name
+     *
+     * @param command A pointer to the command that will be ran when
+     * the keyword is present in the marker located on path planner
+     * @param keyword The keyword that cooresponds with the command specified
+     */
+    void AddAutonAction(frc2::CommandPtr* command, std::string keyword);
+
+private:
+
+    std::map<std::string, std::unique_ptr<frc2::CommandPtr>> autons;
+    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
+    SwerveSubsystem* swerveSubsystem;
 
 };

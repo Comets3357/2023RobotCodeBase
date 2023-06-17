@@ -97,21 +97,33 @@ class ConfigFiles
 {
 public:
 
+     /**
+     * Returns a static instance of the ConfigFiles which is used
+     * to globally distribute the ConfigFile Data
+     */
     static ConfigFiles& getInstance()
     {
         static ConfigFiles instance;
         return instance;
     }
 
+     /**
+     * Loads data out of the selected config file and loads the data into a 
+     * RobotConfig object which is then distributed out to subsystems
+     *
+     * @param fileName The name of the config file that is being loaded
+     */
     void LoadConfigFiles(std::string fileName);
 
-    RobotConfig robotConfig;
-
+     /**
+     * Returns a reference to the RobotConfig data while making sure that it is generated
+     */
     RobotConfig& GetConfigFiles();
 
-    private:
+private:
 
     bool initialized = false;
+    RobotConfig robotConfig;
 
     ConfigFiles() {} // Private constructor to prevent instantiation outside of class
     ConfigFiles(const ConfigFiles&) = delete; // Disable copy constructor

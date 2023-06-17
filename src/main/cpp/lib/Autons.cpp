@@ -15,7 +15,6 @@ void Autons::RunAuton(std::string autonName)
 
 void Autons::LoadAutons()
 {
-    std::vector<pathplanner::PathPlannerTrajectory> pathGroup = pathplanner::PathPlanner::loadPathGroup("FullAuto", {pathplanner::PathConstraints{4_mps, 3_mps_sq}});
 
     pathplanner::SwerveAutoBuilder autoBuilder(
         [this]() {return swerveSubsystem->GetPose();},

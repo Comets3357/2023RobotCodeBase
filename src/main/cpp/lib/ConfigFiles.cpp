@@ -47,6 +47,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     for (auto& config : swerveConfigs)
     {
         SwerveConfig swerveConfig;
+
         swerveConfig.frontLeftModule = robotConfig.swerveModuleConfigs[config.get("FrontLeftModule").get<std::string>()];
         swerveConfig.frontRightModule = robotConfig.swerveModuleConfigs[config.get("FrontRightModule").get<std::string>()];
         swerveConfig.backLeftModule = robotConfig.swerveModuleConfigs[config.get("BackLeftModule").get<std::string>()];
