@@ -33,6 +33,22 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     picojson::array wheelMotorConfigs = jsonValue.get("WheelMotorConfigs").get<picojson::array>();
     picojson::array swerveConfigs = jsonValue.get("SwerveConfigs").get<picojson::array>();
     picojson::array swerveModuleConfigs = jsonValue.get("SwerveModuleConfigs").get<picojson::array>();
+    picojson::array otherConstants = jsonValue.get("OtherConstants").get<picojson::array>();
+    
+    for (const auto& jsonValue : otherConstants)
+    {
+        if (jsonValue.is<picojson::object>())
+        {
+            const picojson::object& jsonObject = jsonValue.get<picojson::object>();
+
+            for (const auto& pair : jsonObject)
+            {
+                const std::string& key = pair.first;
+                const double value = pair.second.get<double>();
+                constance[key] = value;
+            }
+        }
+    }
 
     for (auto& config : swerveModuleConfigs)
     {

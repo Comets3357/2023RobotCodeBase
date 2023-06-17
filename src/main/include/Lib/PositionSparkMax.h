@@ -140,13 +140,13 @@ public:
     void CheckAbsoluteEncoder();
 
     rev::CANSparkMax motor;
+    PID positionPID{};
+    PID velocityPID{};
 
 private:
 
     double absoluteEncoderPosition = 0;
     double relativeEncoderPosition = 0;
-    PID positionPID{};
-    PID velocityPID{};
     PositionSparkMaxRunMode runMode = POSITION_SPARK_MAX_NONE;
     PositionSparkMaxRunMode runModeRequest = runMode;
     bool requestRunMode = false;

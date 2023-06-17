@@ -1,20 +1,18 @@
 #pragma once
 
-
 #include <iostream>
 #include <fstream>
 #include "Json/picojson.h"
-
 #include <string>
 #include <vector>
 #include <map>
 #include <frc/fileSystem.h>
 #include "PID.h"
-
 #include <rev/CANSparkMax.h>
 #include <units/velocity.h>
 #include <units/angular_velocity.h>
 #include "Lib/PositionSparkMaxRunMode.h"
+#include <unordered_map>
 
 struct PositionMotorConfig {
     int ID = 1;
@@ -30,11 +28,9 @@ struct PositionMotorConfig {
     double maxSpeed;
     double minSpeed;
     rev::CANSparkMax::IdleMode idleMode;
-
     bool positionPIDWrappingEnabled;
     double turningEncoderPositionPIDMinInput;
     double turningEncoderPositionPIDMaxInput;
-
     PID velocityPID;
     PID positionPID;
 };
@@ -46,7 +42,6 @@ struct WheelMotorConfig {
     double relativePositionConversionFactor;
     double relativeVelocityConversionFactor;
     rev::CANSparkMax::IdleMode idleMode;
-
     PID velocityPID;
 };
 
@@ -124,6 +119,7 @@ private:
 
     bool initialized = false;
     RobotConfig robotConfig;
+    std::unordered_map<std::string, double> constance;
 
     ConfigFiles() {} // Private constructor to prevent instantiation outside of class
     ConfigFiles(const ConfigFiles&) = delete; // Disable copy constructor
