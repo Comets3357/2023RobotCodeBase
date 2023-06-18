@@ -8,8 +8,6 @@
 #include <units/angle.h>
 #include <units/angular_velocity.h>
 #include <units/velocity.h>
-
-//#include "Constants.h"
 #include "lib/utils/SwerveUtils.h"
 
 
@@ -38,6 +36,13 @@ SwerveSubsystem::SwerveSubsystem(std::string configFileName)
 
 void SwerveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
+
+  m_frontLeft.Periodic();
+  m_frontRight.Periodic();
+  m_rearLeft.Periodic();
+  m_rearRight.Periodic();
+
+
   m_odometry.Update(frc::Rotation2d(units::radian_t{m_gyro.GetAngle()}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});

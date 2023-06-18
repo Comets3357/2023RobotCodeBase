@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include <filesystem>
+#include <frc/smartdashboard/SendableChooser.h>
 
 
 
@@ -49,10 +50,14 @@ public:
      */
     void AddAutonAction(frc2::CommandPtr* command, std::string keyword);
 
+    void AutonomousInit();
+
 private:
 
     std::map<std::string, std::unique_ptr<frc2::CommandPtr>> autons;
     std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
     SwerveSubsystem* swerveSubsystem;
+    frc::SendableChooser<std::string> autoChooser;
+    pathplanner::SwerveAutoBuilder autoBuilder;
 
 };

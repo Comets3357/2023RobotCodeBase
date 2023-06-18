@@ -17,8 +17,6 @@ MAXSwerveModule::MAXSwerveModule(SwerveModuleConfig config)
       azimuthMotor(config.azimuthConfigName) {
   // Factory reset, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
-  drivingMotor.RobotInit();
-  azimuthMotor.RobotInit();
 
   // Apply position and velocity conversion factors for the driving encoder. The
   // native units for position and velocity are rotations and RPM, respectively,
@@ -51,7 +49,7 @@ MAXSwerveModule::MAXSwerveModule(SwerveModuleConfig config)
   // Set the PID Controller to use the duty cycle encoder on the swerve
   // module instead of the built in NEO550 encoder.
   //m_turningPIDController.SetFeedbackDevice(m_turningAbsoluteEncoder);
-  azimuthMotor.ChangeFeedBackDevice(PositionSparkMaxRunMode::POSITION_SPARK_MAX_ABSOLUTE);
+
 
   // Set the PID gains for the driving motor. Note these are example gains, and
   // you may need to tune them for your own robot!
@@ -125,3 +123,8 @@ void MAXSwerveModule::SetDesiredState(
 }
 
 void MAXSwerveModule::ResetEncoders() { drivingMotor.SetRelativePosition(0); }
+
+void MAXSwerveModule::Periodic()
+{
+  azimuthMotor.Periodic();
+}

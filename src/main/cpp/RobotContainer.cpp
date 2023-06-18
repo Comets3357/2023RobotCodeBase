@@ -10,11 +10,11 @@
 
 
 
-RobotContainer::RobotContainer() : swerve{"Swerve"} {
+RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   // Configure the button bindings
   ConfigureBindings();
-
+  timer.Start();
 
 }
 
@@ -40,7 +40,6 @@ void RobotContainer::ConfigureBindings() {
   
  // exampleCommandController.B().WhileTrue(&stopCommand);
 
-
   // Schedule `ExampleMethodCommand` when the Xbox controller's B button is
   // pressed, cancelling on release.
  // m_driverController.B().WhileTrue(m_subsystem.ExampleMethodCommand());
@@ -49,7 +48,14 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::Periodic()
 {
-  
+  time = timer.Get();
+
+  deltaTime = time - lastTime;
+  frc::SmartDashboard::PutNumber("TicksPerSecond", 1.0/(double)deltaTime);
+
+
+
+  lastTime = time;
 }
 
 // frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

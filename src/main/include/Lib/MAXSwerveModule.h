@@ -53,6 +53,11 @@ class MAXSwerveModule {
    */
   void ResetEncoders();
 
+  /**
+   * Runs every loop
+   */
+  void Periodic();
+
  private:
 
   WheelSparkMax drivingMotor;

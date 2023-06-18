@@ -12,6 +12,8 @@ PositionSparkMax::PositionSparkMax(std::string configName)
 
     changeRunMode(defaultRunMode);
 
+    RobotInit();
+
 };
 
 void PositionSparkMax::RobotInit()

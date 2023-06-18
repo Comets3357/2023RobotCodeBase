@@ -30,6 +30,7 @@
 #include "Lib/RunWheelSparkMaxCommand.h"
 #include "Lib/StopWheelSparkMaxCommand.h"
 #include "lib/SwerveSubsystem.h"
+#include "lib/Autons.h"
 
 #include "RobotData.h"
 
@@ -56,7 +57,8 @@ class RobotContainer {
 
   //Subsystems
 
-  SwerveSubsystem swerve;
+  SwerveSubsystem swerve{"Swerve"};
+  Autons autos{&swerve};
 
   // Commands
 
@@ -71,4 +73,9 @@ class RobotContainer {
 
 
   void ConfigureBindings();
+
+  frc::Timer timer{};
+  units::second_t time = 0_s;
+  units::second_t lastTime = 0_s;
+  units::second_t deltaTime = 0_s;
 };

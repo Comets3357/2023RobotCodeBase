@@ -109,6 +109,7 @@
     "xlocmon": "cpp",
     "xloctime": "cpp",
     "xtree": "cpp",
-    "ranges": "cpp"
+    "ranges": "cpp",
+    "xhash": "cpp"
   }
 }
