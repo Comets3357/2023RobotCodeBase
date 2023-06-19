@@ -115,7 +115,7 @@ public:
      */
     RobotConfig& GetConfigFiles();
 
-    std::unordered_map<std::string, double> constance;
+    std::unordered_map<std::string, double> positions;
 
 private:
 

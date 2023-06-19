@@ -11,7 +11,7 @@
 
 class RobotData
 {
-    public:
+public:
     BullBarExtensionData bullBarExtensionData{};
     BullBarRollersData bullBarRollersData{};
     ElbowData elbowData{};
@@ -20,8 +20,4 @@ class RobotData
     DrivebaseData drivebaseData{};
 
     TimerData timerData{};
-
-
-    
-    
 };

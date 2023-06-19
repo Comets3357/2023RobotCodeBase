@@ -28,9 +28,6 @@ void Autons::AutonomousInit()
 void Autons::LoadAutons()
 {
 
-    
-
-
     std::string const filePath = frc::filesystem::GetDeployDirectory() + "/pathplanner/";
     
     for (const auto& entry : std::filesystem::directory_iterator(filePath))
@@ -46,7 +43,6 @@ void Autons::LoadAutons()
     }
 
     frc::SmartDashboard::PutData("Autonomous Mode", &autoChooser);
-
 
 }
 

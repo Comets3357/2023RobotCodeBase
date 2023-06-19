@@ -53,8 +53,6 @@ void RobotContainer::Periodic()
   deltaTime = time - lastTime;
   frc::SmartDashboard::PutNumber("TicksPerSecond", 1.0/(double)deltaTime);
 
-
-
   lastTime = time;
 }
 
