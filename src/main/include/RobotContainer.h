@@ -49,27 +49,18 @@ class RobotContainer {
 
   void Periodic();
 
-  //frc2::CommandPtr GetAutonomousCommand();
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
+  {
+    // {"kajsdlas", std::make_shared<RunRollerSparkMaxCommand>()},
+    // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
+  };
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  
-  RobotData robotData{};
-
-  //Subsystems
 
   SwerveSubsystem swerve{"Swerve"};
-  Autons autos{&swerve};
+  Autons autos{&swerve, actionMap};
 
-  // Commands
-
-
+  frc2::CommandXboxController exampleCommandController{0};
  
-  frc::XboxController m_driverController{0};
-
-
-
-
-  frc2::CommandXboxController exampleCommandController{1}; // Creates a CommandXboxController on port 1
 
 
   void ConfigureBindings();

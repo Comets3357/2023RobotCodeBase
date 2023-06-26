@@ -95,7 +95,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.absoluteZeroOffset = config.get("AbsoluteZeroOffset").get<double>();
         motorConfig.maxSpeed = config.get("MaxSpeed").get<double>();
         motorConfig.minSpeed = config.get("MinSpeed").get<double>();
-        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
 
         motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
@@ -124,7 +124,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.relativePositionConversionFactor = config.get("RelativePositionConversionFactor").get<double>();
         motorConfig.relativeVelocityConversionFactor = config.get("RelativeVelocityConversionFactor").get<double>();
-        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
         motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
         motorConfig.velocityPID.I = config.get("VelocityPID").get("I").get<double>();
@@ -140,7 +140,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.ID = (int)config.get("ID").get<double>();
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
-        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Break" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+        motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
 
         robotConfig.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }

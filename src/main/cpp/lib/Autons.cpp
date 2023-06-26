@@ -1,12 +1,13 @@
 #include "Lib/Autons.h"
+#include "Lib/ControllerMap.h"
 
-Autons::Autons(SwerveSubsystem* drivebase) : swerveSubsystem{drivebase}, autoBuilder(
+Autons::Autons(SwerveSubsystem* drivebase, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap) : swerveSubsystem{drivebase}, autoBuilder(
         [this]() {return swerveSubsystem->GetPose();},
         [this](auto initPose) {swerveSubsystem->ResetOdometry(initPose);},
         pathplanner::PIDConstants(5.0, 0.0, 0.0),
         pathplanner::PIDConstants(0.5, 0.0, 0.0),
         [this](auto speeds) {swerveSubsystem->SetChassisSpeed(speeds);},
-        eventMap,
+        actionMap,
         {swerveSubsystem},
         false
     )

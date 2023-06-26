@@ -27,7 +27,7 @@ public:
    *
    * @param chassis A pointer to the Chassis subsystem that will be performing the auton
    */
-    Autons(SwerveSubsystem* chassis);
+    Autons(SwerveSubsystem* chassis, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap);
 
     /**
    * Runs a selected auton with the auton name
@@ -48,14 +48,12 @@ public:
      * the keyword is present in the marker located on path planner
      * @param keyword The keyword that cooresponds with the command specified
      */
-    void AddAutonAction(frc2::CommandPtr* command, std::string keyword);
 
     void AutonomousInit();
 
 private:
 
     std::map<std::string, std::unique_ptr<frc2::CommandPtr>> autons;
-    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
     SwerveSubsystem* swerveSubsystem;
     frc::SendableChooser<std::string> autoChooser;
     pathplanner::SwerveAutoBuilder autoBuilder;

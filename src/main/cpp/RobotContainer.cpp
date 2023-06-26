@@ -5,7 +5,7 @@
 #include "RobotContainer.h"
 #include <frc2/command/RunCommand.h>
 #include <frc2/command/button/Trigger.h>
-#include <frc2/command/RunCommand.h>
+
 
 
 
@@ -26,19 +26,19 @@ void RobotContainer::ConfigureBindings() {
       [this] {
         swerve.Drive(
             -units::meters_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetLeftY(), 0.05)},
+                exampleCommandController.GetLeftY(), 0.05)},
             -units::meters_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetLeftX(), 0.05)},
+                exampleCommandController.GetLeftX(), 0.05)},
             -units::radians_per_second_t{frc::ApplyDeadband(
-                m_driverController.GetRightX(), 0.05)},
+                exampleCommandController.GetRightX(), 0.05)},
             true, true);
       },
       {&swerve}));
 
 
 
-  
- // exampleCommandController.B().WhileTrue(&stopCommand);
+
+  //exampleCommandController.B().WhileTrue(&stopCommand);
 
   // Schedule `ExampleMethodCommand` when the Xbox controller's B button is
   // pressed, cancelling on release.
