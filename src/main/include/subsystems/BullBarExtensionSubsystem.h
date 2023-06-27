@@ -7,7 +7,7 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
-#include "Lib/PositionSparkMax.h"
+#include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
 #include "Constants.h"
 

@@ -7,8 +7,8 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
-#include "Lib/RollerSparkMax.h"
-#include "Lib/WheelSparkMax.h"
+#include "COMETS3357/Subsystems/SparkMax/RollerSparkMax.h"
+#include "COMETS3357/Subsystems/SparkMax/WheelSparkMax.h"
 
 #include "Constants.h"
 

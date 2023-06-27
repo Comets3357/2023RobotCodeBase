@@ -8,9 +8,6 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/button/Trigger.h>
 
-#include "Constants.h"
-#include "Lib/PositionSparkMaxTrapCommand.h"
-
 #include <frc/controller/ProfiledPIDController.h>
 #include <frc/trajectory/TrapezoidProfile.h>
 #include <frc/controller/ArmFeedforward.h>
@@ -24,15 +21,13 @@
 #include <units/angle.h>
 #include <math.h>
 
-#include "subsystems/ElbowSubsystem.h"
-#include "Lib/RunRollerSparkMaxCommand.h"
-#include "Lib/StopRollerSparkMaxCommand.h"
-#include "Lib/RunWheelSparkMaxCommand.h"
-#include "Lib/StopWheelSparkMaxCommand.h"
-#include "lib/SwerveSubsystem.h"
-#include "lib/Autons.h"
+#include "COMETS3357/Subsystems/Chassis/SwerveSubsystem.h"
+#include "COMETS3357/Auton/Autons.h"
+#include "COMETS3357/Configs/ControllerMap.h"
 
 #include "RobotData.h"
+
+#include "commands/test.h"
 
 
 
@@ -49,17 +44,29 @@ class RobotContainer {
 
   void Periodic();
 
+  RobotData robotData{};
+
+
+  //Subsystems
+  GyroSubsystem gyro{robotData.gyroData};
+  SwerveSubsystem swerve{"Swerve", robotData.gyroData};
+
+
+
+
+
+
+
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
   {
-    // {"kajsdlas", std::make_shared<RunRollerSparkMaxCommand>()},
+    {"Test", std::make_shared<Test>()}
     // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
   };
 
-
-  SwerveSubsystem swerve{"Swerve"};
+  ControllerMap controllerMap{actionMap, "CompControllerMap"};
   Autons autos{&swerve, actionMap};
 
-  frc2::CommandXboxController exampleCommandController{0};
+  //frc2::CommandXboxController exampleCommandController{0};
  
 
 

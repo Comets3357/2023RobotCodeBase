@@ -12,6 +12,9 @@
 #include "RobotContainer.h"
 
 #include <rev/CANSparkMax.h>
+#include "COMETS3357/Subsystems/Chassis/SwerveSubsystem.h"
+
+#include "COMETS3357/Configs/ConfigFiles.h"
 
 
 class Robot : public frc::TimedRobot {

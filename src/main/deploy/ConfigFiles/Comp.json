@@ -126,11 +126,11 @@
       }
     }
   ],
-  "Positions": {
+  "Positions":[ {
     "Position1": 0,
     "position2": 0,
     "position3": 0
-  },
+  }],
   "RollerMotorConfigs": [],
   "SwerveConfigs": [
     {
@@ -150,25 +150,25 @@
   ],
   "SwerveModuleConfigs": [
     {
-      "AngularOffset": 1,
+      "AngularOffset": -1.57079633,
       "Azimuth": "AzimuthMotor1",
       "Drive": "DriveMotor1",
       "Name": "Module1"
     },
     {
-      "AngularOffset": 1,
+      "AngularOffset": 0,
       "Azimuth": "AzimuthMotor2",
       "Drive": "DriveMotor2",
       "Name": "Module2"
     },
     {
-      "AngularOffset": 1,
+      "AngularOffset": 3.1415926,
       "Azimuth": "AzimuthMotor3",
       "Drive": "DriveMotor3",
       "Name": "Module3"
     },
     {
-      "AngularOffset": 1,
+      "AngularOffset": 1.57079633,
       "Azimuth": "AzimuthMotor4",
       "Drive": "DriveMotor4",
       "Name": "Module4"

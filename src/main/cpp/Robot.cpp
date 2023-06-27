@@ -7,9 +7,7 @@
 #include <frc2/command/CommandScheduler.h>
 
 
-#include "Lib/SwerveSubsystem.h"
 
-#include "Lib/ConfigFiles.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {

@@ -22,18 +22,18 @@ void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
 
   // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-   swerve.SetDefaultCommand(frc2::RunCommand(
-      [this] {
-        swerve.Drive(
-            -units::meters_per_second_t{frc::ApplyDeadband(
-                exampleCommandController.GetLeftY(), 0.05)},
-            -units::meters_per_second_t{frc::ApplyDeadband(
-                exampleCommandController.GetLeftX(), 0.05)},
-            -units::radians_per_second_t{frc::ApplyDeadband(
-                exampleCommandController.GetRightX(), 0.05)},
-            true, true);
-      },
-      {&swerve}));
+  //  swerve.SetDefaultCommand(frc2::RunCommand(
+  //     [this] {
+  //       swerve.Drive(
+  //           -units::meters_per_second_t{frc::ApplyDeadband(
+  //               exampleCommandController.GetLeftY(), 0.05)},
+  //           -units::meters_per_second_t{frc::ApplyDeadband(
+  //               exampleCommandController.GetLeftX(), 0.05)},
+  //           -units::radians_per_second_t{frc::ApplyDeadband(
+  //               exampleCommandController.GetRightX(), 0.05)},
+  //           true, true);
+  //     },
+  //     {&swerve}));
 
 
 
