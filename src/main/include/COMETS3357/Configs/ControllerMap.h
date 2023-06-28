@@ -15,65 +15,68 @@
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/Command.h>
 
-
-class Controller
+namespace COMETS3357
 {
+
+    class Controller
+    {
     public:
 
-    int slot;
+        int slot;
 
-    Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions);
+        Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions);
 
-    frc2::CommandXboxController controller;
-    std::map<std::string, std::map<std::string, std::map<std::string, frc2::Trigger>>> controllerMap;
-    std::string currentMode = "SemiAuto";
-    std::string currentController = "XBOX";
+        frc2::CommandXboxController controller;
+        std::map<std::string, std::map<std::string, std::map<std::string, frc2::Trigger>>> controllerMap;
+        std::string currentMode = "SemiAuto";
+        std::string currentController = "XBOX";
 
-    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap;
+        std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap;
 
-    frc2::Trigger controllerConnectionTrigger{[this]() {return controller.IsConnected();}};
+        frc2::Trigger controllerConnectionTrigger{[this]() {return controller.IsConnected();}};
 
-    void LoadConfig(picojson::value &controllers);
+        void LoadConfig(picojson::value &controllers);
 
-    bool LoadControls();
+        bool LoadControls();
 
-    frc2::CommandPtr wrappedEventCommand(std::shared_ptr<frc2::Command> command);
+        frc2::CommandPtr wrappedEventCommand(std::shared_ptr<frc2::Command> command);
+
+    };
+
+
+    class ControllerMap
+    {
+    public:
+
+
+        /**
+         * Returns a static instance of the ControllerMap which is used
+         * to globally distribute the ConfigFile Data
+         */
+        ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName);
+
+
+        Controller primary;
+        Controller secondary;
+        Controller test;
+        /**
+         * Loads data out of the selected config file and loads the data into a 
+         * RobotConfig object which is then distributed out to subsystems
+         *
+         * @param fileName The name of the config file that is being loaded
+         */
+        void LoadControllerMap(std::string fileName);
+
+        /**
+         * Returns a reference to the RobotConfig data while making sure that it is generated
+         */
+
+
+    private:
+
+
+
+        
+    };
 
 };
-
-
-class ControllerMap
-{
-public:
-
-
-     /**
-     * Returns a static instance of the ControllerMap which is used
-     * to globally distribute the ConfigFile Data
-     */
-    ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName);
-
-
-    Controller primary;
-    Controller secondary;
-    Controller test;
-     /**
-     * Loads data out of the selected config file and loads the data into a 
-     * RobotConfig object which is then distributed out to subsystems
-     *
-     * @param fileName The name of the config file that is being loaded
-     */
-    void LoadControllerMap(std::string fileName);
-
-     /**
-     * Returns a reference to the RobotConfig data while making sure that it is generated
-     */
-
-
-private:
-
-
-
-    
-};
-

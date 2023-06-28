@@ -2,6 +2,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DriverStation.h>
 
+using namespace COMETS3357;
+
 Controller::Controller(int controllerSlot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions) : slot{controllerSlot}, controller{controllerSlot}, actionMap{actions} 
 {
 

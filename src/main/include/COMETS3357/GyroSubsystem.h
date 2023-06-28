@@ -6,23 +6,26 @@
 #include <frc/geometry/Rotation2d.h>
 #include <frc/SPI.h>
 
-struct GyroData
+namespace COMETS3357
 {
-    double angle = 0;
-    double angleRate = 0;
-};
+    struct GyroData
+    {
+        double angle = 0;
+        double angleRate = 0;
+    };
 
-class GyroSubsystem : public frc2::SubsystemBase
-{
+    class GyroSubsystem : public frc2::SubsystemBase
+    {
 
-public:
-    GyroSubsystem(GyroData& data);
-    void Periodic() override;
+    public:
+        GyroSubsystem(GyroData& data);
+        void Periodic() override;
 
-private:
-    frc::ADXRS450_Gyro m_navx;
+    private:
+        frc::ADXRS450_Gyro m_navx;
 
 
-    GyroData& gyroData;
+        COMETS3357::GyroData& gyroData;
 
+    };
 };

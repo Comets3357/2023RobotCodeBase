@@ -1,5 +1,6 @@
 #include "COMETS3357/Auton/Autons.h"
 
+using namespace COMETS3357;
 
 Autons::Autons(SwerveSubsystem* drivebase, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap) : swerveSubsystem{drivebase}, autoBuilder(
         [this]() {return swerveSubsystem->GetPose();},

@@ -5,36 +5,38 @@
 #include "COMETS3357/PID.h"
 #include "COMETS3357/Configs/ConfigFiles.h"
 
-
-class WheelSparkMax
+namespace COMETS3357
 {
-public:
+    class WheelSparkMax
+    {
+    public:
 
-    WheelMotorConfig config;
+        COMETS3357::WheelMotorConfig config;
 
-    WheelSparkMax(std::string configName);
+        WheelSparkMax(std::string configName);
 
-    void RobotInit();
-    void SetVelocityPID(PID velocityPID);
-    void SetVelocity(double velocity);
-    double GetRelativeVelocity();
-    void SetPercent(double power);
+        void RobotInit();
+        void SetVelocityPID(PID velocityPID);
+        void SetVelocity(double velocity);
+        double GetRelativeVelocity();
+        void SetPercent(double power);
 
-    PID GetPID();
+        PID GetPID();
 
-    double GetRelativePosition();
-    void SetRelativePosition(double position);
+        double GetRelativePosition();
+        void SetRelativePosition(double position);
 
-    rev::CANSparkMax motor;
+        rev::CANSparkMax motor;
 
 
-private:
+    private:
 
-    rev::SparkMaxRelativeEncoder encoder;
-    rev::SparkMaxPIDController PIDController;
+        rev::SparkMaxRelativeEncoder encoder;
+        rev::SparkMaxPIDController PIDController;
 
-    
+        
 
-    PID pid;
+        COMETS3357::PID pid;
 
+    };
 };

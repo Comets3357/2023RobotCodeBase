@@ -11,56 +11,61 @@
 #include "COMETS3357/Subsystems/SparkMax/WheelSparkMax.h"
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
-class MAXSwerveModule {
- public:
-  /**
-   * Constructs a MAXSwerveModule and configures the driving and turning motor,
-   * encoder, and PID controller. This configuration is specific to the REV
-   * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
-   * Encoder.
-   */
-  MAXSwerveModule(SwerveModuleConfig config);
+namespace COMETS3357
+{
 
-  SwerveModuleConfig configuration;
+    class MAXSwerveModule {
+    public:
+    /**
+     * Constructs a MAXSwerveModule and configures the driving and turning motor,
+     * encoder, and PID controller. This configuration is specific to the REV
+     * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
+     * Encoder.
+     */
+    MAXSwerveModule(SwerveModuleConfig config);
 
-  /**
-   * Returns the current state of the module.
-   *
-   * @return The current state of the module.
-   */
-  frc::SwerveModuleState GetState() ;
+    COMETS3357::SwerveModuleConfig configuration;
 
-  /**
-   * Returns the current position of the module.
-   *
-   * @return The current position of the module.
-   */
-  frc::SwerveModulePosition GetPosition() ;
+    /**
+     * Returns the current state of the module.
+     *
+     * @return The current state of the module.
+     */
+    frc::SwerveModuleState GetState() ;
 
-  /**
-   * Sets the desired state for the module.
-   *
-   * @param desiredState Desired state with speed and angle.
-   */
-  void SetDesiredState(const frc::SwerveModuleState& state);
+    /**
+     * Returns the current position of the module.
+     *
+     * @return The current position of the module.
+     */
+    frc::SwerveModulePosition GetPosition() ;
 
-  /**
-   * Zeroes all the SwerveModule encoders.
-   */
-  void ResetEncoders();
+    /**
+     * Sets the desired state for the module.
+     *
+     * @param desiredState Desired state with speed and angle.
+     */
+    void SetDesiredState(const frc::SwerveModuleState& state);
 
-  /**
-   * Runs every loop
-   */
-  void Periodic();
+    /**
+     * Zeroes all the SwerveModule encoders.
+     */
+    void ResetEncoders();
 
- private:
+    /**
+     * Runs every loop
+     */
+    void Periodic();
 
-  WheelSparkMax drivingMotor;
-  PositionSparkMax azimuthMotor;
+    private:
 
-  double m_chassisAngularOffset = 0;
-  frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
-                                        frc::Rotation2d()};
+    COMETS3357::WheelSparkMax drivingMotor;
+    COMETS3357::PositionSparkMax azimuthMotor;
+
+    double m_chassisAngularOffset = 0;
+    frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
+                                            frc::Rotation2d()};
+
+    };
 
 };

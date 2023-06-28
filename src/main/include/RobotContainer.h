@@ -48,8 +48,8 @@ class RobotContainer {
 
 
   //Subsystems
-  GyroSubsystem gyro{robotData.gyroData};
-  SwerveSubsystem swerve{"Swerve", robotData.gyroData};
+  COMETS3357::GyroSubsystem gyro{robotData.gyroData};
+  COMETS3357::SwerveSubsystem swerve{"Swerve", robotData.gyroData};
 
 
 
@@ -63,8 +63,8 @@ class RobotContainer {
     // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
   };
 
-  ControllerMap controllerMap{actionMap, "CompControllerMap"};
-  Autons autos{&swerve, actionMap};
+  COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
+  COMETS3357::Autons autos{&swerve, actionMap};
 
   //frc2::CommandXboxController exampleCommandController{0};
  

@@ -22,6 +22,6 @@ class BullBarExtensionSubsystem : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  PositionSparkMax motor{"BullBarExtension"};
+  COMETS3357::PositionSparkMax motor{"BullBarExtension"};
 
 };

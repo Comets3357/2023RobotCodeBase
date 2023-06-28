@@ -3,21 +3,24 @@
 #include <rev/CANSparkMax.h>
 #include "COMETS3357/Configs/ConfigFiles.h"
 
-class RollerSparkMax
+namespace COMETS3357
 {
-public:
+    class RollerSparkMax
+    {
+    public:
 
-    RollerSparkMax(std::string configName);
+        RollerSparkMax(std::string configName);
 
-    RollerMotorConfig config;
+        COMETS3357::RollerMotorConfig config;
 
-    void SetPower(double power);
+        void SetPower(double power);
 
-    void RobotInit();
+        void RobotInit();
 
-private:
+    private:
 
-    rev::CANSparkMax motor;
-    
+        rev::CANSparkMax motor;
+        
 
+    };
 };

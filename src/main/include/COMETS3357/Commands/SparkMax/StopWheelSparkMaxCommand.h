@@ -4,18 +4,23 @@
 
 #include "COMETS3357/Subsystems/SparkMax/WheelSparkMax.h"
 
-class StopWheelSparkMaxCommand : public frc2::CommandHelper<frc2::CommandBase, StopWheelSparkMaxCommand>
+namespace COMETS3357
 {
-public:
 
-    StopWheelSparkMaxCommand(frc2::Subsystem* subsystem, WheelSparkMax* motor);
+    class StopWheelSparkMaxCommand : public frc2::CommandHelper<frc2::CommandBase, StopWheelSparkMaxCommand>
+    {
+    public:
 
-    void Initialize() override;
+        StopWheelSparkMaxCommand(frc2::Subsystem* subsystem, WheelSparkMax* motor);
 
-    bool IsFinished() override;
+        void Initialize() override;
 
-private:
+        bool IsFinished() override;
 
-    WheelSparkMax* wheel;
+    private:
+
+        WheelSparkMax* wheel;
+
+    };
 
 };

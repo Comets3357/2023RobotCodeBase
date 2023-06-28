@@ -21,8 +21,8 @@ class EndEffectorRollersSubsystem : public frc2::SubsystemBase {
  public:
   EndEffectorRollersSubsystem(EndEffectorRollersData* data);
 
-  RollerSparkMax motor{"EndEffectorMotor"};
+  COMETS3357::RollerSparkMax motor{"EndEffectorMotor"};
 
-  WheelSparkMax motor2{"EndEffectorWheel"};
+  COMETS3357::WheelSparkMax motor2{"EndEffectorWheel"};
 
 };

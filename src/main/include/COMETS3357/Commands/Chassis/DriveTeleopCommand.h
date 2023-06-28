@@ -4,13 +4,18 @@
 
 #include "COMETS3357/Subsystems/Chassis/DrivebaseSubsystem.h"
 
-class DriveTeleopCommand : public frc2::CommandHelper<frc2::CommandBase, DriveTeleopCommand>
+namespace COMETS3357
 {
-public:
 
-    DriveTeleopCommand(double leftY, double leftX, DrivebaseSubsystem* drivebase);
+    class DriveTeleopCommand : public frc2::CommandHelper<frc2::CommandBase, DriveTeleopCommand>
+    {
+    public:
 
-    void Execute() override;
-    
+        DriveTeleopCommand(double leftY, double leftX, DrivebaseSubsystem* drivebase);
+
+        void Execute() override;
+        
+
+    };
 
 };

@@ -1,6 +1,8 @@
 #include "COMETS3357/Configs/ConfigFiles.h"
 #include <frc/Filesystem.h>
 
+using namespace COMETS3357;
+
 RobotConfig& ConfigFiles::GetConfigFiles()
 {
     if (!initialized)

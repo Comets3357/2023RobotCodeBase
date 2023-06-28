@@ -1,5 +1,7 @@
 #include "COMETS3357/Subsystems/SparkMax/RollerSparkMax.h"
 
+using namespace COMETS3357;
+
 RollerSparkMax::RollerSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().rollerMotorConfigs[configName]}, motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}
 {
     

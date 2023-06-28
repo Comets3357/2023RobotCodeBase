@@ -8,6 +8,6 @@ class RobotData
 {
 public:
 
-    GyroData gyroData{};
-    TimerData timerData{};
+    COMETS3357::GyroData gyroData{};
+    COMETS3357::TimerData timerData{};
 };

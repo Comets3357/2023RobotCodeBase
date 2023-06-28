@@ -4,25 +4,28 @@
 #include <frc/Timer.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-struct TimerData
+namespace COMETS3357
 {
-    double timeSinceEnabled = 0;
-};
+    struct TimerData
+    {
+        double timeSinceEnabled = 0;
+    };
 
-class TimerSubsystem : public frc2::SubsystemBase
-{
-public:
+    class TimerSubsystem : public frc2::SubsystemBase
+    {
+    public:
 
-    TimerSubsystem(TimerData* data);
+        TimerSubsystem(TimerData* data);
 
-    void Periodic() override;
+        void Periodic() override;
 
-    void ResetAndBeginTimer();
+        void ResetAndBeginTimer();
 
-    TimerData* timerData{};
+        COMETS3357::TimerData* timerData{};
 
-    private:
+        private:
 
-    frc::Timer timer{};
+        frc::Timer timer{};
 
+    };
 };

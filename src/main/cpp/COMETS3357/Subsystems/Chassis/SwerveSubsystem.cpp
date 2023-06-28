@@ -10,6 +10,7 @@
 #include <units/velocity.h>
 #include "COMETS3357/utils/SwerveUtils.h"
 
+using namespace COMETS3357;
 
 SwerveSubsystem::SwerveSubsystem(std::string configFileName, GyroData& data)
     : configuration{ConfigFiles::getInstance().GetConfigFiles().swerveConfigs[configFileName]},

@@ -22,6 +22,6 @@ class WristSubsystem : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  PositionSparkMax motor{"WristMotor"};
+  COMETS3357::PositionSparkMax motor{"WristMotor"};
 
 };

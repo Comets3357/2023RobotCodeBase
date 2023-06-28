@@ -1,5 +1,6 @@
 #include "COMETS3357/Configs/ControllerMap.h"
 
+using namespace COMETS3357;
 
 ControllerMap::ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName) : primary{0, actionMap}, secondary{1, actionMap}, test{2, actionMap}
 {

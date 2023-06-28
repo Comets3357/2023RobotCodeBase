@@ -1,5 +1,7 @@
 #include "COMETS3357/Subsystems/Chassis/DrivebaseSubsystem.h"
 
+using namespace COMETS3357;
+
 DrivebaseSubsystem::DrivebaseSubsystem(DrivebaseData* data, TimerData* data2) : drivebaseData{data}, timerData{data2}
 {
     dbFR.motor.Follow(dbR.motor);

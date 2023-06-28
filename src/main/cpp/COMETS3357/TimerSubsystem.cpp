@@ -1,5 +1,7 @@
 #include "COMETS3357/TimerSubsystem.h"
 
+using namespace COMETS3357;
+
 TimerSubsystem::TimerSubsystem(TimerData* data) : timerData{data}
 {
 

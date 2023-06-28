@@ -1,5 +1,7 @@
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
+using namespace COMETS3357;
+
 PositionSparkMax::PositionSparkMax(std::string configName)
     : config{ConfigFiles::getInstance().GetConfigFiles().positionMotorConfigs[configName]},
      motor{config.ID, rev::CANSparkMax::MotorType::kBrushless},

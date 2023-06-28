@@ -1,7 +1,7 @@
 #include "COMETS3357/Subsystems/SparkMax/WheelSparkMax.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
-
+using namespace COMETS3357;
 
 WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs[configName]},
 motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}

@@ -41,60 +41,65 @@
 
 #define M_PI 3.14159265358979323846
 
-struct DrivebaseData
+namespace COMETS3357
 {
 
-};
+    struct DrivebaseData
+    {
 
-class DrivebaseSubsystem : public frc2::SubsystemBase
-{
-public:
+    };
 
-    DrivebaseSubsystem(DrivebaseData* data, TimerData* data2);
+    class DrivebaseSubsystem : public frc2::SubsystemBase
+    {
+    public:
 
-    void SetTicksToMetersConversion(double wheelDiameterInches, double gearRatio);
+        DrivebaseSubsystem(DrivebaseData* data, TimerData* data2);
 
-    void SetTicksToMetersConversion(double conversion);
+        void SetTicksToMetersConversion(double wheelDiameterInches, double gearRatio);
 
-    void SetVelocityPID(PID pid);
+        void SetTicksToMetersConversion(double conversion);
 
-    void SetVelocity(double left, double right);
+        void SetVelocityPID(PID pid);
 
-    void SetPercent(double left, double right);
+        void SetVelocity(double left, double right);
 
-    void ResetOdometry(double x, double y, double radians, double gyroYaw);
+        void SetPercent(double left, double right);
 
-    double getEncoderDistance(double encoderPosition);
+        void ResetOdometry(double x, double y, double radians, double gyroYaw);
 
-    void resetOdometry(const frc::Pose2d &pose, double gyroAngle);
+        double getEncoderDistance(double encoderPosition);
 
-    double rotationsToMeters = 0;
+        void resetOdometry(const frc::Pose2d &pose, double gyroAngle);
 
-    frc::RamseteController ramseteController{};
+        double rotationsToMeters = 0;
 
-    const units::radian_t kZeroAngle{0.0};
-    units::meter_t meterX{0};
-    units::meter_t meterY{0};
-    const frc::Translation2d testTrans{meterX, meterY};
-    units::radian_t zeroRadians{0};
-    const frc::Rotation2d testRot{zeroRadians};
-    const frc::Pose2d kZeroPose{testTrans, testRot};
+        frc::RamseteController ramseteController{};
 
-    const units::meter_t kTrackWidth{0.48};
-    frc::DifferentialDriveKinematics kinematics{kTrackWidth};
+        const units::radian_t kZeroAngle{0.0};
+        units::meter_t meterX{0};
+        units::meter_t meterY{0};
+        const frc::Translation2d testTrans{meterX, meterY};
+        units::radian_t zeroRadians{0};
+        const frc::Rotation2d testRot{zeroRadians};
+        const frc::Pose2d kZeroPose{testTrans, testRot};
 
-    frc::DifferentialDrivePoseEstimator odometry{kinematics, testRot, units::meter_t{0.0}, units::meter_t{0.0}, kZeroPose};   
+        const units::meter_t kTrackWidth{0.48};
+        frc::DifferentialDriveKinematics kinematics{kTrackWidth};
 
-    bool odometryInitialized = false;
+        frc::DifferentialDrivePoseEstimator odometry{kinematics, testRot, units::meter_t{0.0}, units::meter_t{0.0}, kZeroPose};   
 
-    WheelSparkMax dbR{""};
-    WheelSparkMax dbL{""};
-    WheelSparkMax dbFR{""};
-    WheelSparkMax dbFL{""};
+        bool odometryInitialized = false;
+
+        COMETS3357::WheelSparkMax dbR{""};
+        COMETS3357::WheelSparkMax dbL{""};
+        COMETS3357::WheelSparkMax dbFR{""};
+        COMETS3357::WheelSparkMax dbFL{""};
 
 
-    PID pid{};
+        COMETS3357::PID pid{};
 
-    TimerData* timerData;
-    DrivebaseData* drivebaseData;
+        COMETS3357::TimerData* timerData;
+        COMETS3357::DrivebaseData* drivebaseData;
+    };
+
 };

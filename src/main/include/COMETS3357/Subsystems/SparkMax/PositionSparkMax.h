@@ -18,145 +18,148 @@
 #include "COMETS3357/Configs/ConfigFiles.h"
 #include "COMETS3357/PositionSparkMaxRunMode.h"
 
-
-class PositionSparkMax
+namespace COMETS3357
 {
-public:
 
-    PositionMotorConfig config;
+    class PositionSparkMax
+    {
+    public:
 
-    /**
-     * Creates a new PositionSparkMax that has the capability of running a motor
-     * to a specific position using either relative or absolute encoders.
-     *
-     * @param configName The name of the config linked to this specific motor
-     */
-    PositionSparkMax(std::string configName);
+        PositionMotorConfig config;
 
-    /**
-     * The initialization of the PositionSparkMax
-     */
-    void RobotInit();
+        /**
+         * Creates a new PositionSparkMax that has the capability of running a motor
+         * to a specific position using either relative or absolute encoders.
+         *
+         * @param configName The name of the config linked to this specific motor
+         */
+        PositionSparkMax(std::string configName);
 
-    /**
-     * Zeros the relative encoder positions
-     */
-    void ZeroRelativeEncoder();
+        /**
+         * The initialization of the PositionSparkMax
+         */
+        void RobotInit();
 
-    /**
-     * Changes the PID feedback device
-     *
-     * @param mode The runmode that cooresponds with the FeedbackDevice
-     */
-    void ChangeFeedBackDevice(PositionSparkMaxRunMode mode);
+        /**
+         * Zeros the relative encoder positions
+         */
+        void ZeroRelativeEncoder();
 
-    /**
-     * Changes the current velocity PID to a new velocity PID that is specified
-     *
-     * @param pid The velocity PID
-     */
-    void SetVelocityPID(PID pid);
+        /**
+         * Changes the PID feedback device
+         *
+         * @param mode The runmode that cooresponds with the FeedbackDevice
+         */
+        void ChangeFeedBackDevice(PositionSparkMaxRunMode mode);
 
-    /**
-     * Changes the current position PID to a new position PID that is specified
-     *
-     * @param pid The position PID
-     */
-    void SetPositionPID(PID pid);
+        /**
+         * Changes the current velocity PID to a new velocity PID that is specified
+         *
+         * @param pid The velocity PID
+         */
+        void SetVelocityPID(PID pid);
 
-    /**
-     * Sets the PID min speed and max speed with a specified PID slot
-     *
-     * @param min The Minimum percent output that the PID is allowed to run at
-     * @param max The Maximum percent output that the PID is allowed to tun at
-     * @param slot The slot of the PID that needs to be changed
-     */
-    void SetPIDOutputRange(double min, double max, int slot);
+        /**
+         * Changes the current position PID to a new position PID that is specified
+         *
+         * @param pid The position PID
+         */
+        void SetPositionPID(PID pid);
 
-    /**
-     * Gets the position of the current encoder depending on the current feedback device
-     *
-     * @return The current position depending on the current feedback device
-     */
-    double GetPosition();
+        /**
+         * Sets the PID min speed and max speed with a specified PID slot
+         *
+         * @param min The Minimum percent output that the PID is allowed to run at
+         * @param max The Maximum percent output that the PID is allowed to tun at
+         * @param slot The slot of the PID that needs to be changed
+         */
+        void SetPIDOutputRange(double min, double max, int slot);
 
-    /**
-     * Gets the current encoder position of the Relative Encoder
-     *
-     * @return The current encoder position of the Relative Encoder
-     */
-    double GetRelativePosition();
+        /**
+         * Gets the position of the current encoder depending on the current feedback device
+         *
+         * @return The current position depending on the current feedback device
+         */
+        double GetPosition();
 
-    /**
-     * Gets the current encoder position of rthe Absolute Encoder
-     *
-     * @return The current encoder position for the Absolute Encoder
-     */
-    double GetAbsolutePosition();
+        /**
+         * Gets the current encoder position of the Relative Encoder
+         *
+         * @return The current encoder position of the Relative Encoder
+         */
+        double GetRelativePosition();
 
-    /**
-     * Gets the current velocity for the Relative Encoder
-     *
-     * @return The current velocity of the Relative Encoder
-     */
-    double GetRelativeVelocity();
+        /**
+         * Gets the current encoder position of rthe Absolute Encoder
+         *
+         * @return The current encoder position for the Absolute Encoder
+         */
+        double GetAbsolutePosition();
 
-    /**
-     * Gets the current velocity for the Absolute Encoder
-     *
-     * @return The current velocity of the Absolute Encoder
-     */
-    double GetAbsoluteVelocity();
+        /**
+         * Gets the current velocity for the Relative Encoder
+         *
+         * @return The current velocity of the Relative Encoder
+         */
+        double GetRelativeVelocity();
 
-    /**
-     * Sets a new target velocity for the motor using the Velocity PID
-     *
-     * @param velocity The new target velocity
-     */
-    void SetVelocity(double velocity);
+        /**
+         * Gets the current velocity for the Absolute Encoder
+         *
+         * @return The current velocity of the Absolute Encoder
+         */
+        double GetAbsoluteVelocity();
 
-    /**
-     * Wraps an angle until it lies within the range from 0 to 2*PI (exclusive).
-     *
-     * @param velocity The new target velocity for the motor using PIDs
-     */
-    void SetPosition(double position);
+        /**
+         * Sets a new target velocity for the motor using the Velocity PID
+         *
+         * @param velocity The new target velocity
+         */
+        void SetVelocity(double velocity);
 
-    /**
-     * Runs ever loop
-     */
-    void Periodic();
+        /**
+         * Wraps an angle until it lies within the range from 0 to 2*PI (exclusive).
+         *
+         * @param velocity The new target velocity for the motor using PIDs
+         */
+        void SetPosition(double position);
 
-    /**
-     * Changes the current runmode (running on Absolute or Relative encoder)
-     *
-     * @param mode The runmode to change to
-     */
-    void changeRunMode(PositionSparkMaxRunMode mode);
+        /**
+         * Runs ever loop
+         */
+        void Periodic();
 
-    /**
-     * Checks to make sure that the Absolute Encoder is plugged in 
-     */
-    void CheckAbsoluteEncoder();
+        /**
+         * Changes the current runmode (running on Absolute or Relative encoder)
+         *
+         * @param mode The runmode to change to
+         */
+        void changeRunMode(PositionSparkMaxRunMode mode);
 
-    rev::CANSparkMax motor;
-    PID positionPID{};
-    PID velocityPID{};
+        /**
+         * Checks to make sure that the Absolute Encoder is plugged in 
+         */
+        void CheckAbsoluteEncoder();
 
-private:
+        rev::CANSparkMax motor;
+        COMETS3357::PID positionPID{};
+        COMETS3357::PID velocityPID{};
 
-    double absoluteEncoderPosition = 0;
-    double relativeEncoderPosition = 0;
-    PositionSparkMaxRunMode runMode = POSITION_SPARK_MAX_NONE;
-    PositionSparkMaxRunMode runModeRequest = runMode;
-    bool requestRunMode = false;
-    PositionSparkMaxRunMode defaultRunMode = POSITION_SPARK_MAX_ABSOLUTE;
-    rev::SparkMaxPIDController PIDController;
-    rev::SparkMaxRelativeEncoder relativeEncoder;
-    rev::SparkMaxAbsoluteEncoder absoluteEncoder;
-    int absAttempts = 0;
-    double lastPosition;
+    private:
 
-    
+        double absoluteEncoderPosition = 0;
+        double relativeEncoderPosition = 0;
+        COMETS3357::PositionSparkMaxRunMode runMode = POSITION_SPARK_MAX_NONE;
+        COMETS3357::PositionSparkMaxRunMode runModeRequest = runMode;
+        bool requestRunMode = false;
+        COMETS3357::PositionSparkMaxRunMode defaultRunMode = POSITION_SPARK_MAX_ABSOLUTE;
+        rev::SparkMaxPIDController PIDController;
+        rev::SparkMaxRelativeEncoder relativeEncoder;
+        rev::SparkMaxAbsoluteEncoder absoluteEncoder;
+        int absAttempts = 0;
+        double lastPosition;
 
+        
+
+    };
 };

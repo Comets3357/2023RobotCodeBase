@@ -9,9 +9,14 @@
 
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
-class PositionSparkMaxTrapCommand : public frc2::CommandHelper<frc2::ProfiledPIDCommand<units::degrees>,PositionSparkMaxTrapCommand> {
-    public:
-    PositionSparkMaxTrapCommand(double goal, double acceleration, double velocity, frc2::SubsystemBase* drive, PositionSparkMax* motor);
-  
-  bool IsFinished() override;
+namespace COMETS3357
+{
+
+  class PositionSparkMaxTrapCommand : public frc2::CommandHelper<frc2::ProfiledPIDCommand<units::degrees>,PositionSparkMaxTrapCommand> {
+      public:
+      PositionSparkMaxTrapCommand(double goal, double acceleration, double velocity, frc2::SubsystemBase* drive, PositionSparkMax* motor);
+    
+    bool IsFinished() override;
+  };
+
 };

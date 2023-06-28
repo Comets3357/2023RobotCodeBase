@@ -1,5 +1,7 @@
 #include "COMETS3357/Commands/SparkMax/PositionSparkMaxTrapCommand.h"
 
+using namespace COMETS3357;
+
 PositionSparkMaxTrapCommand::PositionSparkMaxTrapCommand(double goal, double acceleration, double velocity, frc2::SubsystemBase* drive, PositionSparkMax* motor)
       : CommandHelper{
       frc::ProfiledPIDController<units::degrees>{

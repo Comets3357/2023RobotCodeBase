@@ -22,6 +22,6 @@ class ElbowSubsystem : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  PositionSparkMax motor{"Elbow"};
+  COMETS3357::PositionSparkMax motor{"Elbow"};
 
 };

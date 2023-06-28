@@ -10,6 +10,7 @@
 
 #include "Constants.h"
 
+using namespace COMETS3357;
 
 MAXSwerveModule::MAXSwerveModule(SwerveModuleConfig config)
     : configuration{config},

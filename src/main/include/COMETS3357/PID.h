@@ -1,9 +1,13 @@
 #pragma once
 
-struct PID
+namespace COMETS3357
 {
-    double P = 0;
-    double I = 0;
-    double D = 0;
-    double FF = 0;
+
+    struct PID
+    {
+        double P = 0;
+        double I = 0;
+        double D = 0;
+        double FF = 0;
+    };
 };
