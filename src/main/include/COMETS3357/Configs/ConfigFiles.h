@@ -36,6 +36,13 @@ namespace COMETS3357
         double turningEncoderPositionPIDMaxInput;
         PID velocityPID;
         PID positionPID;
+
+        bool forwardSoftLimitEnabled;
+        bool reverseSoftLimitEnabled;
+        double forwardSoftLimit;
+        double reverseSoftLimit;
+
+        std::map<std::string, double> positions;
     };
 
     struct WheelMotorConfig {
@@ -46,6 +53,8 @@ namespace COMETS3357
         double relativeVelocityConversionFactor;
         rev::CANSparkMax::IdleMode idleMode;
         PID velocityPID;
+
+        std::map<std::string, double> velocities;
     };
 
     struct RollerMotorConfig {
@@ -53,6 +62,8 @@ namespace COMETS3357
         bool invertedRelative;
         double currentLimit;
         rev::CANSparkMax::IdleMode idleMode;
+
+        std::map<std::string, double> percents;
     };
 
     struct SwerveModuleConfig

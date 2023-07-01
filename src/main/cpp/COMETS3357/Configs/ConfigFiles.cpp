@@ -34,22 +34,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     picojson::array wheelMotorConfigs = jsonValue.get("WheelMotorConfigs").get<picojson::array>();
     picojson::array swerveConfigs = jsonValue.get("SwerveConfigs").get<picojson::array>();
     picojson::array swerveModuleConfigs = jsonValue.get("SwerveModuleConfigs").get<picojson::array>();
-    picojson::array positionsConfigs = jsonValue.get("Positions").get<picojson::array>();
-    
-    for (const auto& jsonValue : positionsConfigs)
-    {
-        if (jsonValue.is<picojson::object>())
-        {
-            const picojson::object& jsonObject = jsonValue.get<picojson::object>();
 
-            for (const auto& pair : jsonObject)
-            {
-                const std::string& key = pair.first;
-                const double value = pair.second.get<double>();
-                positions[key] = value;
-            }
-        }
-    }
 
     for (auto& config : swerveModuleConfigs)
     {
@@ -113,7 +98,19 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.turningEncoderPositionPIDMinInput = config.get("TurningEncoderPositionPIDMinInput").get<double>();
         motorConfig.turningEncoderPositionPIDMaxInput = config.get("TurningEncoderPositionPIDMaxInput").get<double>();
 
+        motorConfig.forwardSoftLimitEnabled = config.get("ForwardSoftLimitEnabled").get<bool>();
+        motorConfig.reverseSoftLimitEnabled = config.get("ReverseSoftLimitEnabled").get<bool>();
+        motorConfig.forwardSoftLimit = config.get("ForwardSoftLimit").get<double>();
+        motorConfig.reverseSoftLimit = config.get("ReverseSoftLimit").get<double>();
+
+        picojson::object positions = config.get("Positions").get<picojson::object>();
+        for (auto& position : positions)
+        {
+            motorConfig.positions[position.first] = position.second.get<double>();
+        }
+
         robotConfig.positionMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
+
     }
 
     for (auto& config : wheelMotorConfigs)
@@ -132,6 +129,12 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
         motorConfig.velocityPID.FF = config.get("VelocityPID").get("FF").get<double>();
 
+        picojson::object velocities = config.get("Velocities").get<picojson::object>();
+        for (auto& velocity : velocities)
+        {
+            motorConfig.velocities[velocity.first] = velocity.second.get<double>();
+        }
+
         robotConfig.wheelMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
 
@@ -142,6 +145,12 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
+
+        picojson::object percents = config.get("Percents").get<picojson::object>();
+        for (auto& percent : percents)
+        {
+            motorConfig.percents[percent.first] = percent.second.get<double>();
+        }
 
         robotConfig.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
