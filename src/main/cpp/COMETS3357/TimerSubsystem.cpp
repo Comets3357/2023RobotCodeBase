@@ -2,20 +2,21 @@
 
 using namespace COMETS3357;
 
-TimerSubsystem::TimerSubsystem(TimerData* data) : timerData{data}
-{
-
-}
-
 void TimerSubsystem::Periodic()
 {
-    timerData->timeSinceEnabled = (double)timer.Get();
+    m_data.timeSinceEnabled = timer.Get();
 
-    frc::SmartDashboard::PutNumber("TImE", (double)timer.Get());
+    frc::SmartDashboard::PutNumber("Time", (double)m_data.timeSinceEnabled);
+
+    m_data.deltaTime = m_data.timeSinceEnabled - m_data.lastTime;
+    frc::SmartDashboard::PutNumber("TicksPerSecond", 1.0/(double)m_data.deltaTime);
+
+    m_data.lastTime = m_data.timeSinceEnabled;
 }
 
 void TimerSubsystem::ResetAndBeginTimer()
 {
+    
     timer.Reset();
     timer.Start();
 }

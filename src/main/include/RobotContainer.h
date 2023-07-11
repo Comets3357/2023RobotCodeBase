@@ -24,8 +24,7 @@
 #include "COMETS3357/Subsystems/Chassis/SwerveSubsystem.h"
 #include "COMETS3357/Auton/Autons.h"
 #include "COMETS3357/Configs/ControllerMap.h"
-
-#include "RobotData.h"
+#include "COMETS3357/TimerSubsystem.h"
 
 #include "commands/test.h"
 
@@ -44,12 +43,11 @@ class RobotContainer {
 
   void Periodic();
 
-  RobotData robotData{};
-
 
   //Subsystems
-  COMETS3357::GyroSubsystem gyro{robotData.gyroData};
-  COMETS3357::SwerveSubsystem swerve{"Swerve", robotData.gyroData};
+  COMETS3357::TimerSubsystem timer{};
+  COMETS3357::GyroSubsystem gyro{};
+  COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
 
 
 
@@ -66,14 +64,5 @@ class RobotContainer {
   COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
   COMETS3357::Autons autos{&swerve, actionMap};
 
-  //frc2::CommandXboxController exampleCommandController{0};
- 
-
-
   void ConfigureBindings();
-
-  frc::Timer timer{};
-  units::second_t time = 0_s;
-  units::second_t lastTime = 0_s;
-  units::second_t deltaTime = 0_s;
 };

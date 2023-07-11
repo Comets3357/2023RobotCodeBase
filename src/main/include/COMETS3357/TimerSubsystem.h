@@ -3,29 +3,32 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/Timer.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <COMETS3357/Subsystems/Subsystem.h>
 
 namespace COMETS3357
 {
     struct TimerData
     {
-        double timeSinceEnabled = 0;
+        units::second_t timeSinceEnabled{0};
+        units::second_t deltaTime{0};
+        units::second_t lastTime{0};
     };
 
-    class TimerSubsystem : public frc2::SubsystemBase
+    enum TimerState
+    {
+        TIMER_RUNNING
+    };
+
+    class TimerSubsystem : public COMETS3357::Subsystem<TimerState, TimerData>
     {
     public:
-
-        TimerSubsystem(TimerData* data);
 
         void Periodic() override;
 
         void ResetAndBeginTimer();
 
-        COMETS3357::TimerData* timerData{};
-
         private:
 
         frc::Timer timer{};
-
     };
 };

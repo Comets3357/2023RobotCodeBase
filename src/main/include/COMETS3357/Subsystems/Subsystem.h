@@ -1,22 +1,30 @@
 #pragma once
 
-
+#include <frc2/Command/SubsystemBase.h>
 
 namespace COMETS3357
 {
-    template <typename State>
-    class Subsystem
+    template <typename state, typename data>
+    class Subsystem : public frc2::SubsystemBase
     {
+    protected:
+
+    state m_state;
+    data m_data;
+
+
+
     public:
 
-        void SetState(State state)
+        data& Data()
         {
-            m_state = state;
+            return m_data;
         }
 
-    private:
-
-        State m_state;
+        state& State()
+        {
+            return m_state;
+        }
 
     };
 };

@@ -5,6 +5,8 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/SPI.h>
+#include <COMETS3357/Subsystems/Subsystem.h>
+#include "AHRS.h"
 
 namespace COMETS3357
 {
@@ -14,18 +16,20 @@ namespace COMETS3357
         double angleRate = 0;
     };
 
-    class GyroSubsystem : public frc2::SubsystemBase
+    enum GyroState
+    {
+        GYRO_RUNNING
+    };
+
+    class GyroSubsystem : public COMETS3357::Subsystem<GyroState, GyroData>
     {
 
     public:
-        GyroSubsystem(GyroData& data);
+        GyroSubsystem();
         void Periodic() override;
 
     private:
-        frc::ADXRS450_Gyro m_navx;
-
-
-        COMETS3357::GyroData& gyroData;
+        AHRS m_navx;
 
     };
 };
