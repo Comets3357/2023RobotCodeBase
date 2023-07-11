@@ -1,6 +1,7 @@
 #include "COMETS3357/Configs/ControllerMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DriverStation.h>
+#include <COMETS3357/Commands/ChangeModeCommand.h>
 
 using namespace COMETS3357;
 
@@ -46,6 +47,17 @@ void Controller::LoadConfig(picojson::value &controllers)
                 controllerMap[controllerType.first][mode.first][mode.second.get("RightBumperPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightBumperPressed();}};
                 controllerMap[controllerType.first][mode.first][mode.second.get("StartButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetStartButtonPressed();}};
                 controllerMap[controllerType.first][mode.first][mode.second.get("BackButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBackButtonPressed();}};
+
+                controllerMap[controllerType.first][mode.first][mode.second.get("RightStickButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightStickButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("LeftStickButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftStickButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("XButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetXButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("YButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetYButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("AButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetAButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("BButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("LeftBumperReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftBumperReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("RightBumperReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightBumperReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("StartButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetStartButtonReleased();}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("BackButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBackButtonReleased();}};
             }
             else if (controller.GetName() == "Taranus")
             {
@@ -68,7 +80,13 @@ bool Controller::LoadControls()
             for (auto& action : mode.second)
             {
                 if (actionMap.find(action.first) != actionMap.end())
-                action.second.WhileTrue(wrappedEventCommand(actionMap.at(action.first)));
+                {
+                    action.second.WhileTrue(wrappedEventCommand(actionMap.at(action.first)));
+                }
+                if (controllerMap["XBOX"].find(action.first) != controllerMap["XBOX"].end())
+                {
+                    action.second.WhenActive([this, action] {currentMode = action.first;});
+                }
             }
         }
         return true;

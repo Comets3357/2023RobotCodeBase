@@ -16,12 +16,26 @@
 #include "units/time.h"
 #include "COMETS3357/GyroSubsystem.h"
 
+class RobotContainer;
+
+struct SwerveData
+{
+
+};
+
+enum SwerveState
+{
+  SWERVE_AUTONOMOUS,
+  SWERVE_TELEOP
+};
+
 namespace COMETS3357
 {
 
-  class SwerveSubsystem : public frc2::SubsystemBase {
+  class SwerveSubsystem : public COMETS3357::Subsystem<SwerveState, SwerveData>
+  {
   public:
-    SwerveSubsystem(std::string configFileName, GyroData& data);
+    SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer);
 
     SwerveConfig configuration;
 

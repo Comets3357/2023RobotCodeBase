@@ -10,11 +10,13 @@
 #include <units/velocity.h>
 #include "COMETS3357/utils/SwerveUtils.h"
 
+#include "RobotContainer.h"
+
 using namespace COMETS3357;
 
-SwerveSubsystem::SwerveSubsystem(std::string configFileName, GyroData& data)
+SwerveSubsystem::SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer)
     : configuration{ConfigFiles::getInstance().GetConfigFiles().swerveConfigs[configFileName]},
-      gyroData{data},
+      gyroData{robotContainer.gyro.Data()},
       m_frontLeft{configuration.frontLeftModule},
       m_rearLeft{configuration.backLeftModule},
       m_frontRight{configuration.frontRightModule},
