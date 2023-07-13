@@ -7,7 +7,7 @@
       "AbsoluteZeroOffset": 0,
       "CurrentLimit": 60,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 1,
+      "ID": 2,
       "IdleMode": "Break",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
@@ -30,6 +30,14 @@
         "FF": 0,
         "I": 0,
         "P": 1
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
@@ -38,7 +46,7 @@
       "AbsoluteZeroOffset": 0,
       "CurrentLimit": 60,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 3,
+      "ID": 4,
       "IdleMode": "Break",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
@@ -61,6 +69,14 @@
         "FF": 0,
         "I": 0,
         "P": 1
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
@@ -69,7 +85,7 @@
       "AbsoluteZeroOffset": 0,
       "CurrentLimit": 60,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 5,
+      "ID": 6,
       "IdleMode": "Break",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
@@ -92,6 +108,14 @@
         "FF": 0,
         "I": 0,
         "P": 1
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
@@ -100,7 +124,7 @@
       "AbsoluteZeroOffset": 0,
       "CurrentLimit": 60,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 7,
+      "ID": 8,
       "IdleMode": "Break",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
@@ -123,14 +147,17 @@
         "FF": 0,
         "I": 0,
         "P": 1
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     }
   ],
-  "Positions":[ {
-    "Position1": 0,
-    "position2": 0,
-    "position3": 0
-  }],
   "RollerMotorConfigs": [],
   "SwerveConfigs": [
     {
@@ -177,7 +204,7 @@
   "WheelMotorConfigs": [
     {
       "CurrentLimit": 60,
-      "ID": 2,
+      "ID": 1,
       "IdleMode": "Break",
       "InvertedRelative": false,
       "Name": "DriveMotor1",
@@ -188,11 +215,15 @@
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 4,
+      "ID": 3,
       "IdleMode": "Break",
       "InvertedRelative": false,
       "Name": "DriveMotor2",
@@ -203,11 +234,15 @@
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 6,
+      "ID": 5,
       "IdleMode": "Break",
       "InvertedRelative": false,
       "Name": "DriveMotor3",
@@ -218,11 +253,15 @@
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 8,
+      "ID": 7,
       "IdleMode": "Break",
       "InvertedRelative": false,
       "Name": "DriveMotor4",
@@ -233,6 +272,10 @@
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     }
   ]

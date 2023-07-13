@@ -33,7 +33,7 @@ SwerveSubsystem::SwerveSubsystem(std::string configFileName, RobotContainer& rob
       frc::Translation2d{-configuration.wheelBase / 2 / 2,
                          -configuration.trackWidth / 2}},
       m_odometry{kDriveKinematics,
-                 frc::Rotation2d(units::radian_t{gyroData.angle}),
+                 frc::Rotation2d(units::radian_t{0}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
                  frc::Pose2d{}} {}

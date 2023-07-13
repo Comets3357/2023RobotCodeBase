@@ -9,8 +9,8 @@ namespace COMETS3357
     {
     protected:
 
-    state m_state;
-    data m_data;
+    state m_state{};
+    data m_data{};
 
 
 

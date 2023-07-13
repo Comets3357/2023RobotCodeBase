@@ -15,8 +15,8 @@ RobotConfig& ConfigFiles::GetConfigFiles()
 
 void ConfigFiles::LoadConfigFiles(std::string fileName)
 {
-
-    std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + fileName + ".json");
+   
+    std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "/ConfigFiles/" + fileName + ".json");
     if (!jsonFile.is_open()) {
         std::cerr << "Failed to open file" << std::endl;
     }

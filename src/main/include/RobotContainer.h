@@ -51,18 +51,17 @@ class RobotContainer {
 
 
 
+  frc2::CommandXboxController exampleCommandController{0};
 
 
+  // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
+  // {
+  //   {"Test", std::make_shared<Test>()}
+  //   // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
+  // };
 
-
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
-  {
-    {"Test", std::make_shared<Test>()}
-    // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
-  };
-
-  COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
-  COMETS3357::Autons autos{&swerve, actionMap};
+  // //COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
+  // COMETS3357::Autons autos{&swerve, actionMap};
 
   void ConfigureBindings();
 };
