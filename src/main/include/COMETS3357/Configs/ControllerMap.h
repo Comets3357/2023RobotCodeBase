@@ -48,7 +48,6 @@ namespace COMETS3357
         std::string currentController = "XBOX";
         std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap;
         frc2::Trigger controllerConnectionTrigger{[this]() {return controller.IsConnected();}};
-        frc2::CommandPtr wrappedEventCommand(std::shared_ptr<frc2::Command> command);
 
     };
 

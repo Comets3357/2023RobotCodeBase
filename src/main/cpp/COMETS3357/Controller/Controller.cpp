@@ -90,7 +90,7 @@ bool Controller::LoadControls()
                 {
                     if (actionMap.find(action.first) != actionMap.end())
                     {
-                        action.second.WhileTrue(wrappedEventCommand(actionMap.at(action.first)));
+                        action.second.WhileTrue(actionMap.at(action.first).get());
                     }
                     if (controllerMap["XBOX"].find(action.first) != controllerMap["XBOX"].end())
                     {
@@ -115,24 +115,3 @@ bool Controller::LoadControls()
     }
     return true;
 }
-
-frc2::CommandPtr Controller::wrappedEventCommand(
-        std::shared_ptr<frc2::Command> command) {
-    frc2::FunctionalCommand wrapped([command]() {
-        command->Initialize();
-    },
-    [command]() {
-        command->Execute();
-    },
-    [command](bool interrupted) {
-        command->End(interrupted);
-    },
-    [command]() {
-        return command->IsFinished();
-    }
-    );
-    wrapped.AddRequirements(command->GetRequirements());
-
-    return std::move(wrapped).ToPtr();
-}
-
