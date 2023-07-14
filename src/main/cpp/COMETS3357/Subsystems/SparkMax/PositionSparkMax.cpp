@@ -22,6 +22,7 @@ PositionSparkMax::PositionSparkMax(std::string configName)
 
 void PositionSparkMax::RobotInit()
 {
+
     if (
         motor.GetInverted() != config.invertedRelative || 
         motor.GetIdleMode() != config.idleMode || 
@@ -49,39 +50,20 @@ void PositionSparkMax::RobotInit()
         relativeEncoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
         absoluteEncoder.SetInverted(config.invertedAbsolute);
         absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
-        absoluteEncoder.SetPositionConversionFactor(config.absoluteVelocityConversionFactor);
-        absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
-
-        PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
-        PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
-        PIDController.SetPositionPIDWrappingMaxInput(config.turningEncoderPositionPIDMaxInput);
-
-
-        motor.BurnFlash();
-    }
-
-    motor.RestoreFactoryDefaults();
-        motor.SetInverted(config.invertedRelative);
-        motor.SetSmartCurrentLimit(config.currentLimit);
-        motor.SetIdleMode(config.idleMode);
-        PIDController.SetOutputRange(config.minSpeed, config.maxSpeed, 1);
-        frc::SmartDashboard::PutNumber("asdasdasd", config.minSpeed);
-        
-        SetVelocityPID(config.velocityPID);
-        SetPositionPID(config.positionPID);
-        relativeEncoder.SetPositionConversionFactor(config.relativePositionConversionFactor);
-        relativeEncoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
-        absoluteEncoder.SetInverted(config.invertedAbsolute);
-        absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
         absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
         absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
 
         PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
         PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
         PIDController.SetPositionPIDWrappingMaxInput(config.turningEncoderPositionPIDMaxInput);
-        
 
         motor.BurnFlash();
+        
+    }
+
+
+        
+
 }
 
 void PositionSparkMax::ZeroRelativeEncoder()
@@ -201,24 +183,24 @@ void PositionSparkMax::changeRunMode(PositionSparkMaxRunMode mode)
 
 
 void PositionSparkMax::CheckAbsoluteEncoder()
-    {
-        // if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
-        //     return;
-        // }
+{
+    // if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
+    //     return;
+    // }
 
 
-        // if (lastPosition != absoluteEncoderPosition)
-        // {
-        //     absAttempts++;
-        // }
-        // else
-        // {
-        //     absAttempts = 0;
-        // }
-        // lastPosition = absoluteEncoderPosition;
+    // if (lastPosition != absoluteEncoderPosition)
+    // {
+    //     absAttempts++;
+    // }
+    // else
+    // {
+    //     absAttempts = 0;
+    // }
+    // lastPosition = absoluteEncoderPosition;
 
-        // if (absAttempts > 20)
-        // {
-        //     changeRunMode(POSITION_SPARK_MAX_RELATIVE);
-        // }
-    }
+    // if (absAttempts > 20)
+    // {
+    //     changeRunMode(POSITION_SPARK_MAX_RELATIVE);
+    // }
+}

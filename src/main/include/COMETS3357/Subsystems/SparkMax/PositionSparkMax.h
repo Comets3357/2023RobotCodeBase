@@ -17,6 +17,7 @@
 #include "COMETS3357/PID.h"
 #include "COMETS3357/Configs/ConfigFiles.h"
 #include "COMETS3357/PositionSparkMaxRunMode.h"
+#include <wpi/raw_ostream.h>
 
 namespace COMETS3357
 {
