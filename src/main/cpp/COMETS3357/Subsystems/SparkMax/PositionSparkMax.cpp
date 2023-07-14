@@ -20,6 +20,24 @@ PositionSparkMax::PositionSparkMax(std::string configName)
 
 };
 
+PositionSparkMax::PositionSparkMax(std::string configName, bool setAbsoluteOffset)
+    : config{ConfigFiles::getInstance().GetConfigFiles().positionMotorConfigs[configName]},
+     motor{config.ID, rev::CANSparkMax::MotorType::kBrushless},
+    PIDController{motor.GetPIDController()},
+    relativeEncoder{motor.GetEncoder()},
+    absoluteEncoder{motor.GetAbsoluteEncoder(rev::SparkMaxAbsoluteEncoder::Type::kDutyCycle)}
+{
+    defaultRunMode = config.defaultMode;
+    runMode = defaultRunMode;
+
+    changeRunMode(defaultRunMode);
+
+    setAbsPos = setAbsoluteOffset;
+
+    RobotInit();
+
+};
+
 void PositionSparkMax::RobotInit()
 {
 
@@ -33,7 +51,6 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.GetInverted() != config.invertedAbsolute ||
         absoluteEncoder.GetPositionConversionFactor() != config.absolutePositionConversionFactor ||
         absoluteEncoder.GetVelocityConversionFactor() != config.absoluteVelocityConversionFactor ||
-        absoluteEncoder.GetZeroOffset() != config.absoluteZeroOffset ||
         PIDController.GetPositionPIDWrappingEnabled() != config.positionPIDWrappingEnabled ||
         PIDController.GetPositionPIDWrappingMinInput() != config.turningEncoderPositionPIDMinInput ||
         PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput
@@ -51,6 +68,7 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.SetInverted(config.invertedAbsolute);
         absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
         absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
+        if (setAbsPos)
         absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
 
         PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);

@@ -15,7 +15,7 @@ using namespace COMETS3357;
 MAXSwerveModule::MAXSwerveModule(SwerveModuleConfig config)
     : configuration{config},
       drivingMotor(config.driveConfigName),
-      azimuthMotor(config.azimuthConfigName) {
+      azimuthMotor(config.azimuthConfigName, false) {
   // Factory reset, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
 

@@ -37,6 +37,15 @@ namespace COMETS3357
         PositionSparkMax(std::string configName);
 
         /**
+         * Creates a new PositionSparkMax that has the capability of running a motor
+         * to a specific position using either relative or absolute encoders.
+         *
+         * @param configName The name of the config linked to this specific motor
+         * @param setAbsoluteOffset Should the motor set the absolute offset or leave it be.
+         */
+        PositionSparkMax(std::string configName, bool setAbsoluteOffset);
+
+        /**
          * The initialization of the PositionSparkMax
          */
         void RobotInit();
@@ -161,6 +170,7 @@ namespace COMETS3357
         rev::SparkMaxAbsoluteEncoder absoluteEncoder;
         int absAttempts = 0;
         double lastPosition;
+        bool setAbsPos = true;
 
         
 
