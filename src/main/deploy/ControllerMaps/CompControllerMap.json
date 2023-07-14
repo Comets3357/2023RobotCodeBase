@@ -16,10 +16,10 @@
                 "RightStickX": "NONE",
                 "RightStickY": "NONE",
                 "RightStickButton": "NONE",
-                "AButton": "Test",
+                "AButton": "Down",
                 "BButton": "NONE",
                 "XButton": "NONE",
-                "YButton": "NONE",
+                "YButton": "Up",
                 "LeftBumper": "NONE",
                 "RightBumper": "NONE",
                 "BackButton": "NONE",
@@ -39,7 +39,20 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         },
 
@@ -81,7 +94,20 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         }
     },
@@ -125,7 +151,20 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             },
             "Manual":
             {
@@ -162,7 +201,20 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         }
     }

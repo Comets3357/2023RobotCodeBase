@@ -1,5 +1,7 @@
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 using namespace COMETS3357;
 
 PositionSparkMax::PositionSparkMax(std::string configName)
@@ -57,6 +59,29 @@ void PositionSparkMax::RobotInit()
 
         motor.BurnFlash();
     }
+
+    motor.RestoreFactoryDefaults();
+        motor.SetInverted(config.invertedRelative);
+        motor.SetSmartCurrentLimit(config.currentLimit);
+        motor.SetIdleMode(config.idleMode);
+        PIDController.SetOutputRange(config.minSpeed, config.maxSpeed, 1);
+        frc::SmartDashboard::PutNumber("asdasdasd", config.minSpeed);
+        
+        SetVelocityPID(config.velocityPID);
+        SetPositionPID(config.positionPID);
+        relativeEncoder.SetPositionConversionFactor(config.relativePositionConversionFactor);
+        relativeEncoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
+        absoluteEncoder.SetInverted(config.invertedAbsolute);
+        absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
+        absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
+        absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+
+        PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
+        PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
+        PIDController.SetPositionPIDWrappingMaxInput(config.turningEncoderPositionPIDMaxInput);
+        
+
+        motor.BurnFlash();
 }
 
 void PositionSparkMax::ZeroRelativeEncoder()
@@ -131,6 +156,11 @@ void PositionSparkMax::SetPosition(double position)
     PIDController.SetReference(position, rev::CANSparkMax::ControlType::kPosition, 1);
 }
 
+void PositionSparkMax::SetPosition(std::string position)
+{
+    PIDController.SetReference(config.positions[position], rev::CANSparkMax::ControlType::kPosition, 1);
+}
+
 double PositionSparkMax::GetRelativePosition()
 {
     return relativeEncoderPosition;
@@ -156,6 +186,9 @@ void PositionSparkMax::Periodic()
     absoluteEncoderPosition = absoluteEncoder.GetPosition();
     relativeEncoderPosition = absoluteEncoder.GetPosition();
 
+    frc::SmartDashboard::PutNumber("abs", absoluteEncoderPosition);
+    frc::SmartDashboard::PutNumber("relative", relativeEncoderPosition);
+
     CheckAbsoluteEncoder();
 }
 
@@ -169,23 +202,23 @@ void PositionSparkMax::changeRunMode(PositionSparkMaxRunMode mode)
 
 void PositionSparkMax::CheckAbsoluteEncoder()
     {
-        if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
-            return;
-        }
+        // if (runMode != POSITION_SPARK_MAX_ABSOLUTE) {
+        //     return;
+        // }
 
 
-        if (lastPosition != absoluteEncoderPosition)
-        {
-            absAttempts++;
-        }
-        else
-        {
-            absAttempts = 0;
-        }
-        lastPosition = absoluteEncoderPosition;
+        // if (lastPosition != absoluteEncoderPosition)
+        // {
+        //     absAttempts++;
+        // }
+        // else
+        // {
+        //     absAttempts = 0;
+        // }
+        // lastPosition = absoluteEncoderPosition;
 
-        if (absAttempts > 20)
-        {
-            changeRunMode(POSITION_SPARK_MAX_RELATIVE);
-        }
+        // if (absAttempts > 20)
+        // {
+        //     changeRunMode(POSITION_SPARK_MAX_RELATIVE);
+        // }
     }

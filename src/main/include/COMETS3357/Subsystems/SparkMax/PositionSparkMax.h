@@ -124,6 +124,8 @@ namespace COMETS3357
          */
         void SetPosition(double position);
 
+        void SetPosition(std::string position);
+
         /**
          * Runs ever loop
          */

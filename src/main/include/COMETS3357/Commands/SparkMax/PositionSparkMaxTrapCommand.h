@@ -8,6 +8,7 @@
 #include <units/length.h>
 
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
+#include <COMETS3357/Subsystems/Subsystem.h>
 
 namespace COMETS3357
 {

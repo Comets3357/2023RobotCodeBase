@@ -2,6 +2,53 @@
   "ControllerMap": "CompControllerMap",
   "PositionMotorConfigs": [
     {
+      "AbsolutePositionConversionFactor": 360,
+      "AbsoluteVelocityConversionFactor": 1,
+      "AbsoluteZeroOffset": 339.156818,
+      "CurrentLimit": 45,
+      "DefaultRunMode": "RELATIVE",
+      "ID": 31,
+      "IdleMode": "Brake",
+      "InvertedAbsolute": true,
+      "InvertedRelative": false,
+      "MaxSpeed": 0.1,
+      "MinSpeed": -0.1,
+      "Name": "PivotMotor",
+      "PositionPID": {
+        "D": 0,
+        "FF": 0,
+        "I": 0,
+        "P": 0.08
+      },
+      "PositionPIDWrappingEnabled": false,
+      "RelativePositionConversionFactor": 1.5428571428,
+      "RelativeVelocityConversionFactor": 1,
+      "TurningEncoderPositionPIDMaxInput": 6.2831853072000001,
+      "TurningEncoderPositionPIDMinInput": 0,
+      "VelocityPID": {
+        "D": 0,
+        "FF": 0,
+        "I": 0,
+        "P": 1
+      },
+      "ForwardSoftLimitEnabled": true,
+      "ReverseSoftLimitEnabled": true,
+      "ForwardSoftLimit": 165,
+      "ReverseSoftLimit": 15,
+      "Positions":
+      {
+        "PivotHomePosition": 11,
+        "PivotConeMidPosition": 154,
+        "PivotConeHighPosition": 150,
+        "PivotCubeMidPosition": 146,
+        "PivotCubeHighPosition": 135,
+        "PivotConeIntakePosition": 12,
+        "PivotUprightConePosition": 24.5,
+        "PivotCubeIntakePosition": 39,
+        "PivotLowPosition": 16
+      }
+    },
+    {
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,

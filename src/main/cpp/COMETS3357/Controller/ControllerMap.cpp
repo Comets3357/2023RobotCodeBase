@@ -10,7 +10,7 @@ ControllerMap::ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc
 void ControllerMap::LoadControllerMap(std::string fileName)
     {
         
-        std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "\\ControllerMaps\\" + fileName + ".json");
+        std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "/ControllerMaps/" + fileName + ".json");
         if (!jsonFile.is_open()) {
             std::cerr << "Failed to open file" << std::endl;
         }
