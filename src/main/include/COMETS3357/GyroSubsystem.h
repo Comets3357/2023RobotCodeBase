@@ -25,6 +25,7 @@ namespace COMETS3357
     {
 
     public:
+
         GyroSubsystem();
         void Periodic() override;
 
