@@ -18,7 +18,11 @@ void Controller::LoadConfig(picojson::value &controllers)
     {
         for (auto& mode : controllerType.second.get<picojson::object>())
         {
-            if (true)//controller.GetName() == "XBOX")
+            if (frc::DriverStation::GetJoystickName(slot) == "FrSky Taranis Joystick")
+            {
+               
+            }
+            else
             {
                 controllerMap[controllerType.first][mode.first][mode.second.get("D-padLeft").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 270;}};
                 controllerMap[controllerType.first][mode.first][mode.second.get("D-padRight").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 90;}};
@@ -58,10 +62,6 @@ void Controller::LoadConfig(picojson::value &controllers)
                 controllerMap[controllerType.first][mode.first][mode.second.get("RightBumperReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightBumperReleased();}};
                 controllerMap[controllerType.first][mode.first][mode.second.get("StartButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetStartButtonReleased();}};
                 controllerMap[controllerType.first][mode.first][mode.second.get("BackButtonReleased").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBackButtonReleased();}};
-            }
-            else if (controller.GetName() == "Taranus")
-            {
-
             }
             
         }
