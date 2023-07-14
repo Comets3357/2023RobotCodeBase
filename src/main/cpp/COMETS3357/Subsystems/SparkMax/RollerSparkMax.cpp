@@ -4,7 +4,7 @@ using namespace COMETS3357;
 
 RollerSparkMax::RollerSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().rollerMotorConfigs[configName]}, motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}
 {
-    
+    RobotInit();
 }
 
 void RollerSparkMax::SetPower(double power)

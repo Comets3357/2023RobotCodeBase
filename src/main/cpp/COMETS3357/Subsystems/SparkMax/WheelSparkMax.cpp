@@ -6,7 +6,7 @@ using namespace COMETS3357;
 WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs[configName]},
 motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}
 {
-
+    RobotInit();
 }
 
 void WheelSparkMax::RobotInit()
