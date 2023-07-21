@@ -41,7 +41,6 @@ void Robot::DisabledInit() {}
 
 void Robot::DisabledPeriodic() {
 
-  m_container.arm.Elbow.ZeroRelativeEncoder();
 }
 
 /**
@@ -51,7 +50,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
   //m_autonomousCommand = m_container.GetAutonomousCommand();
 
-  // m_container.autos.AutonomousInit();
+  m_container.autos.AutonomousInit();
 }
 
 void Robot::AutonomousPeriodic() {}

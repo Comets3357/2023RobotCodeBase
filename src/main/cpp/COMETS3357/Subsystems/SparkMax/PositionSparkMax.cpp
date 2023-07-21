@@ -53,7 +53,7 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.GetVelocityConversionFactor() != config.absoluteVelocityConversionFactor ||
         PIDController.GetPositionPIDWrappingEnabled() != config.positionPIDWrappingEnabled ||
         PIDController.GetPositionPIDWrappingMinInput() != config.turningEncoderPositionPIDMinInput ||
-        PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput
+        PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput || 1==1
     )
     {
         motor.RestoreFactoryDefaults();
@@ -68,8 +68,8 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.SetInverted(config.invertedAbsolute);
         absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
         absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
-        if (setAbsPos)
-        absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+      //  if (setAbsPos)
+        //absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
 
         PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
         PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
@@ -153,6 +153,7 @@ void PositionSparkMax::SetVelocity(double velocity)
 
 void PositionSparkMax::SetPosition(double position)
 {
+    frc::SmartDashboard::PutNumber("POSITION", position);
     PIDController.SetReference(position, rev::CANSparkMax::ControlType::kPosition, 1);
 }
 
@@ -188,6 +189,8 @@ void PositionSparkMax::Periodic()
 
     frc::SmartDashboard::PutNumber("abs", absoluteEncoderPosition);
     frc::SmartDashboard::PutNumber("relative", relativeEncoderPosition);
+
+    
 
     CheckAbsoluteEncoder();
 }

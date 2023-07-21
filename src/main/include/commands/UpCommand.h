@@ -16,7 +16,7 @@
 
 #include "Subsystems/ArmSubsystem.h"
 
-
+#include "Robot.h"
 class UpCommand : public frc2::CommandHelper<frc2::CommandBase, UpCommand>
 {
 
@@ -24,7 +24,7 @@ public:
 
 UpCommand(ArmSubsystem* armSubsystem) : arm{armSubsystem}
 {
-
+    
 }
 
 

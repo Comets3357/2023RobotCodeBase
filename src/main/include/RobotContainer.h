@@ -28,9 +28,6 @@
 
 #include "commands/test.h"
 
-#include "commands/UpCommand.h"
-#include "commands/DownCommand.h"
-#include "Subsystems/ArmSubsystem.h"
 #include <COMETS3357/Commands/SparkMax/PositionSparkMaxTrapCommand.h>
 
 
@@ -53,22 +50,19 @@ class RobotContainer {
   COMETS3357::GyroSubsystem gyro{};
   COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
  
-  ArmSubsystem arm{};
 
 
 
   frc2::CommandXboxController exampleCommandController{0};
 
 
-  // std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
-  // {
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
+  {
   
-  //   {"Up", std::make_shared<UpCommand>(&arm)},
-  //   {"Down", std::make_shared<DownCommand>(&arm)}
-  // };
+  };
 
   //COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
-  // COMETS3357::Autons autos{&swerve, actionMap};
+  COMETS3357::Autons autos{&swerve, actionMap};
 
   void ConfigureBindings();
 };

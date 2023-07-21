@@ -50,6 +50,9 @@ void SwerveSubsystem::Periodic() {
   m_odometry.Update(frc::Rotation2d(units::radian_t{gyroData.angle}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
+
+  frc::SmartDashboard::PutNumber("Swerve Odometry X", (double)GetPose().X());
+  frc::SmartDashboard::PutNumber("Swerve Odometry Y", (double)GetPose().Y());
 }
 
 void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,

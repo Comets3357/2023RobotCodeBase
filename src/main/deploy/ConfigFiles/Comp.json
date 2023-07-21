@@ -52,7 +52,7 @@
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
       "ID": 2,
       "IdleMode": "Brake",
@@ -65,7 +65,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -76,7 +76,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
       },
       "ForwardSoftLimitEnabled": false,
       "ReverseSoftLimitEnabled": false,
@@ -91,7 +91,7 @@
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
       "ID": 4,
       "IdleMode": "Brake",
@@ -104,7 +104,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -115,7 +115,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
       },
       "ForwardSoftLimitEnabled": false,
       "ReverseSoftLimitEnabled": false,
@@ -130,7 +130,7 @@
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
       "ID": 6,
       "IdleMode": "Brake",
@@ -143,7 +143,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -154,7 +154,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
       },
       "ForwardSoftLimitEnabled": false,
       "ReverseSoftLimitEnabled": false,
@@ -169,7 +169,7 @@
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
       "ID": 8,
       "IdleMode": "Brake",
@@ -182,7 +182,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -193,7 +193,7 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
       },
       "ForwardSoftLimitEnabled": false,
       "ReverseSoftLimitEnabled": false,
@@ -213,9 +213,9 @@
       "DirectionSlewRate": 1.2,
       "FrontLeftModule": "Module1",
       "FrontRightModule": "Module2",
-      "MagnitudeSlewRate": 1.8,
-      "MaxSpeed": 3,
-      "MaxTurnSpeed": 3.1419999999999999,
+      "MagnitudeSlewRate": 5,
+      "MaxSpeed": 5,
+      "MaxTurnSpeed": 6.2829999999999999,
       "Name": "Swerve",
       "RotationalSlewRate": 2,
       "TrackWidth": 0.67310000000000003,

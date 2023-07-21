@@ -9,7 +9,6 @@ Controller::Controller(int controllerSlot, std::unordered_map<std::string, std::
 {
 
 }
-//
 
 
 void Controller::LoadConfig(picojson::value &controllers)
@@ -34,8 +33,8 @@ void Controller::LoadConfig(picojson::value &controllers)
                 controllerMap[controllerType.first][mode.first][mode.second.get("BButton").get<std::string>()] = controller.B();
                 controllerMap[controllerType.first][mode.first][mode.second.get("XButton").get<std::string>()] = controller.X();
                 controllerMap[controllerType.first][mode.first][mode.second.get("YButton").get<std::string>()] = controller.Y();
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftTrigger").get<std::string>()] = frc2::Trigger([this]() {return frc::ApplyDeadband(controller.GetLeftTriggerAxis(), 0.08) != 0;});
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightTrigger").get<std::string>()] = frc2::Trigger{[this]() {return frc::ApplyDeadband(controller.GetLeftTriggerAxis(), 0.08) != 0;}};
+                controllerMap[controllerType.first][mode.first][mode.second.get("LeftTrigger").get<std::string>()] = controller.LeftTrigger();
+                controllerMap[controllerType.first][mode.first][mode.second.get("RightTrigger").get<std::string>()] = controller.RightTrigger();
                 controllerMap[controllerType.first][mode.first][mode.second.get("LeftBumper").get<std::string>()] = controller.LeftBumper();
                 controllerMap[controllerType.first][mode.first][mode.second.get("RightBumper").get<std::string>()] = controller.RightBumper();
                 controllerMap[controllerType.first][mode.first][mode.second.get("StartButton").get<std::string>()] = controller.Start();

@@ -9,6 +9,7 @@
 #include <numbers>
 
 #include "Constants.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace COMETS3357;
 
@@ -87,18 +88,19 @@ MAXSwerveModule::MAXSwerveModule(SwerveModuleConfig config)
 
 frc::SwerveModuleState MAXSwerveModule::GetState()  {
   return {units::meters_per_second_t{drivingMotor.GetRelativeVelocity()},
-          units::radian_t{azimuthMotor.GetRelativePosition() -
+          units::radian_t{azimuthMotor.GetAbsolutePosition() -
                           m_chassisAngularOffset}};
 }
 
 frc::SwerveModulePosition MAXSwerveModule::GetPosition() {
   return {units::meter_t{drivingMotor.GetRelativePosition()},
-          units::radian_t{azimuthMotor.GetRelativePosition() -
+          units::radian_t{azimuthMotor.GetAbsolutePosition() -
                           m_chassisAngularOffset}};
 }
 
 void MAXSwerveModule::SetDesiredState(
     const frc::SwerveModuleState& desiredState) {
+      frc::SmartDashboard::PutNumber("AJKSLDNKSAD", desiredState.angle.Radians().value());
   // Apply chassis angular offset to the desired state.
   frc::SwerveModuleState correctedDesiredState{};
   correctedDesiredState.speed = desiredState.speed;
@@ -109,7 +111,7 @@ void MAXSwerveModule::SetDesiredState(
   // Optimize the reference state to avoid spinning further than 90 degrees.
   frc::SwerveModuleState optimizedDesiredState{frc::SwerveModuleState::Optimize(
       correctedDesiredState, frc::Rotation2d(units::radian_t{
-                                 azimuthMotor.GetRelativePosition()}))};
+                                 azimuthMotor.GetAbsolutePosition()}))};
 
   // Command driving and turning SPARKS MAX towards their respective setpoints.
 //   m_drivingPIDController.SetReference((double)optimizedDesiredState.speed,
