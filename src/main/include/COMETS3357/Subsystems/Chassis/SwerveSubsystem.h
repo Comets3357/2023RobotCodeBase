@@ -61,6 +61,10 @@ namespace COMETS3357
     void Drive(units::meters_per_second_t xSpeed,
               units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
               bool fieldRelative, bool rateLimit);
+    
+    void Drive(units::meters_per_second_t xSpeed,
+              units::meters_per_second_t ySpeed, double directionX, double directionY,
+              bool fieldRelative, bool rateLimit);
 
     /**
      * Sets the wheels into an X formation to prevent movement.
