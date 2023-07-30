@@ -1,6 +1,7 @@
 #include "COMETS3357/Subsystems/SparkMax/PositionSparkMax.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <COMETS3357/Subsystems/SubsystemManager.h>
 
 using namespace COMETS3357;
 
@@ -15,8 +16,9 @@ PositionSparkMax::PositionSparkMax(std::string configName)
     runMode = defaultRunMode;
 
     changeRunMode(defaultRunMode);
+    config.motor = &motor;
 
-    RobotInit();
+   COMETS3357::SubsystemManager::GetInstance().AddInit([this]{RobotInit();});
 
 };
 
@@ -33,8 +35,9 @@ PositionSparkMax::PositionSparkMax(std::string configName, bool setAbsoluteOffse
     changeRunMode(defaultRunMode);
 
     setAbsPos = setAbsoluteOffset;
+    config.motor = &motor;
 
-    RobotInit();
+    COMETS3357::SubsystemManager::GetInstance().AddInit([this]{RobotInit();});
 
 };
 
@@ -53,7 +56,7 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.GetVelocityConversionFactor() != config.absoluteVelocityConversionFactor ||
         PIDController.GetPositionPIDWrappingEnabled() != config.positionPIDWrappingEnabled ||
         PIDController.GetPositionPIDWrappingMinInput() != config.turningEncoderPositionPIDMinInput ||
-        PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput || 1==1
+        PIDController.GetPositionPIDWrappingMaxInput() != config.turningEncoderPositionPIDMaxInput
     )
     {
         motor.RestoreFactoryDefaults();
@@ -68,12 +71,17 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.SetInverted(config.invertedAbsolute);
         absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
         absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
-      //  if (setAbsPos)
-        //absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+       if (setAbsPos)
+        absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
 
         PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
         PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);
         PIDController.SetPositionPIDWrappingMaxInput(config.turningEncoderPositionPIDMaxInput);
+
+        if (config.follow != "NONE")
+        {
+            motor.Follow(*COMETS3357::ConfigFiles::getInstance().GetConfigFiles().positionMotorConfigs[config.follow].motor);
+        }
 
         motor.BurnFlash();
         

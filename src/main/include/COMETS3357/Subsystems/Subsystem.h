@@ -1,6 +1,7 @@
 #pragma once
 
 #include <frc2/Command/SubsystemBase.h>
+#include <COMETS3357/Subsystems/SubsystemManager.h>
 
 namespace COMETS3357
 {
@@ -8,6 +9,32 @@ namespace COMETS3357
     class Subsystem : public frc2::SubsystemBase
     {
     public:
+
+        Subsystem()
+        {
+            COMETS3357::SubsystemManager::GetInstance().AddInit([this]{Initialize();});
+        }
+
+        template <typename T>
+        std::shared_ptr<T> GetSubsystem(std::string name)
+        {
+            return COMETS3357::SubsystemManager::GetInstance().GetSubsystem<T>(name);
+        }
+
+        /**
+         * @brief An Initialization function for a Subsystem
+        */
+        virtual void Initialize() {}
+
+        /**
+         * @brief Registers the Subsystem in a place that is accesible everywhere
+         * 
+         * @param name The name of the subsystem
+        */
+        void Register(std::string name)
+        {
+            COMETS3357::SubsystemManager::GetInstance().RegisterSubsystem(name, this);
+        }
 
         /**
          * @brief Gets the Subsystem Data

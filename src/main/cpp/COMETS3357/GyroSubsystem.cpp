@@ -4,7 +4,7 @@ using namespace COMETS3357;
 
 GyroSubsystem::GyroSubsystem() : m_navx{frc::SPI::Port::kMXP}
 {
-
+    Register("GyroSubsystem");
 }
 
 void GyroSubsystem::Periodic()

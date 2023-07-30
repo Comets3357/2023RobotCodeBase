@@ -17,7 +17,7 @@ enum EndEffectorState
     END_EFFECTOR_NONE
 };
 
-class ArmSubsystem : public COMETS3357::Subsystem<EndEffectorState, EndEffectorData>
+class EndEffector : public COMETS3357::Subsystem<EndEffectorState, EndEffectorData>
 {
 public:
 

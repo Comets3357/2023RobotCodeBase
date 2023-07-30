@@ -39,6 +39,8 @@ namespace COMETS3357
 
     SwerveConfig configuration;
 
+    void Initialize() override;
+
     /**
      * Will be called periodically whenever the CommandScheduler runs.
      */
@@ -145,7 +147,7 @@ namespace COMETS3357
     // 4 defines the number of modules
     frc::SwerveDriveOdometry<4> m_odometry;
 
-    GyroData& gyroData;
+    std::shared_ptr<GyroData> gyroData;
 
     
   };

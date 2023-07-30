@@ -19,7 +19,7 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
 
-  // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+ // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
    swerve.SetDefaultCommand(frc2::RunCommand(
       [this] {
         swerve.Drive(

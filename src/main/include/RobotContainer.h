@@ -30,6 +30,9 @@
 
 #include <COMETS3357/Commands/SparkMax/PositionSparkMaxTrapCommand.h>
 
+#include "Subsystems/ArmSubsystem.h"
+#include "Subsystems/BullBarSubsystem.h"
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -48,7 +51,10 @@ class RobotContainer {
   //Subsystems
   COMETS3357::TimerSubsystem timer{};
   COMETS3357::GyroSubsystem gyro{};
-  COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
+   COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
+
+  ArmSubsystem arm{};
+  BullBarSubsystem buyll{};
  
 
 
@@ -62,7 +68,7 @@ class RobotContainer {
   };
 
   //COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
-  COMETS3357::Autons autos{&swerve, actionMap};
+ // COMETS3357::Autons autos{&swerve, actionMap};
 
   void ConfigureBindings();
 };

@@ -23,6 +23,8 @@ namespace COMETS3357
     {
     public:
 
+        TimerSubsystem();
+
         void Periodic() override;
 
         void ResetAndBeginTimer();

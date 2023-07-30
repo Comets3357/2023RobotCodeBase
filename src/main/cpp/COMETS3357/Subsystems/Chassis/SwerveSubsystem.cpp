@@ -16,7 +16,6 @@ using namespace COMETS3357;
 
 SwerveSubsystem::SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer)
     : configuration{ConfigFiles::getInstance().GetConfigFiles().swerveConfigs[configFileName]},
-      gyroData{robotContainer.gyro.Data()},
       m_frontLeft{configuration.frontLeftModule},
       m_rearLeft{configuration.backLeftModule},
       m_frontRight{configuration.frontRightModule},
@@ -36,7 +35,15 @@ SwerveSubsystem::SwerveSubsystem(std::string configFileName, RobotContainer& rob
                  frc::Rotation2d(units::radian_t{0}),
                  {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                   m_rearLeft.GetPosition(), m_rearRight.GetPosition()},
-                 frc::Pose2d{}} {}
+                 frc::Pose2d{}}
+{
+  Register("SwerveSubsystem");
+}
+
+void SwerveSubsystem::Initialize()
+{
+  gyroData = &GetSubsystem<GyroSubsystem>("GyroSubsystem")->Data();
+}
 
 void SwerveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
@@ -47,7 +54,7 @@ void SwerveSubsystem::Periodic() {
   m_rearRight.Periodic();
 
 
-  m_odometry.Update(frc::Rotation2d(units::radian_t{gyroData.angle}),
+  m_odometry.Update(frc::Rotation2d(units::radian_t{gyroData->angle}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
 
@@ -60,7 +67,7 @@ void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,
               bool fieldRelative, bool rateLimit)
 {
 
-  units::radians_per_second_t rot = units::radians_per_second_t{(atan2(directionX, directionY) - gyroData.angle) * 1 * sqrt(pow(directionX, 2) + pow(directionY, 2))};
+  units::radians_per_second_t rot = units::radians_per_second_t{(atan2(directionX, directionY) - gyroData->angle) * 0.6 * sqrt(pow(directionX, 2) + pow(directionY, 2))};
 
   double xSpeedCommanded;
   double ySpeedCommanded;
@@ -132,7 +139,7 @@ void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,
       fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                frc::Rotation2d(units::radian_t{gyroData.angle}))
+                frc::Rotation2d(units::radian_t{gyroData->angle}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, configuration.maxSpeed);
@@ -219,7 +226,7 @@ void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,
       fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                frc::Rotation2d(units::radian_t{gyroData.angle}))
+                frc::Rotation2d(units::radian_t{gyroData->angle}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   kDriveKinematics.DesaturateWheelSpeeds(&states, configuration.maxSpeed);
@@ -269,12 +276,12 @@ void SwerveSubsystem::SetChassisSpeed(frc::ChassisSpeeds chassisSpeed)
 }
 
 units::degree_t SwerveSubsystem::GetHeading() const {
-  return frc::Rotation2d(units::radian_t{gyroData.angle}).Degrees();
+  return frc::Rotation2d(units::radian_t{gyroData->angle}).Degrees();
 }
 
 void SwerveSubsystem::ZeroHeading() { }//m_gyro.Reset(); }
 
-double SwerveSubsystem::GetTurnRate() { return -gyroData.angleRate; }
+double SwerveSubsystem::GetTurnRate() { return -gyroData->angleRate; }
 
 frc::Pose2d SwerveSubsystem::GetPose() { return m_odometry.GetPose(); }
 

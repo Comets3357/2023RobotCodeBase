@@ -30,7 +30,6 @@ UpCommand(ArmSubsystem* armSubsystem) : arm{armSubsystem}
 
 void Initialize() override
 {
-    arm->Elbow.SetPosition(100);
 }
 
 ArmSubsystem* arm;

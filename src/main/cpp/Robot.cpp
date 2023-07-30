@@ -14,6 +14,8 @@ void Robot::RobotInit() {
 // ConfigFiles::getInstance().LoadConfigFiles("Comp");
 // frc::SmartDashboard::PutNumber("A",ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs["DriveMotor1"].ID);
 //m_container.timerSubsystem.ResetAndBeginTimer();
+COMETS3357::SubsystemManager::GetInstance().Init();
+
 }
 
 /**
@@ -50,7 +52,7 @@ void Robot::DisabledPeriodic() {
 void Robot::AutonomousInit() {
   //m_autonomousCommand = m_container.GetAutonomousCommand();
 
-  m_container.autos.AutonomousInit();
+ // m_container.autos.AutonomousInit();
 }
 
 void Robot::AutonomousPeriodic() {}

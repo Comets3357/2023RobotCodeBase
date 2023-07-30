@@ -4,6 +4,7 @@ using namespace COMETS3357;
 
 LimelightSubsystem::LimelightSubsystem() {
     // Retrieve the Limelight network table instance
+    Register("LimelightSubsystem");
     nt::NetworkTableInstance inst = nt::NetworkTableInstance::GetDefault();
     table = inst.GetTable("limelight");
 }

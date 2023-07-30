@@ -4,7 +4,9 @@
 #include <COMETS3357/Subsystems/Subsystem.h>
 #include <COMETS3357/Subsystems/SparkMax/PositionSparkMax.h>
 #include <COMETS3357/Subsystems/SparkMax/RollerSparkMax.h>
-
+#include "Subsystems/ArmSubsystem.h"
+#include "COMETS3357/Subsystems/SubsystemManager.h"
+#include <frc/smartDashboard/SmartDashboard.h>
 
 struct BullBarData
 {
@@ -23,7 +25,22 @@ class BullBarSubsystem : public COMETS3357::Subsystem<BullBarState, BullBarData>
 {
 public:
 
-    COMETS3357::PositionSparkMax bullBarExtension{"BullBarExtension"};
-    COMETS3357::RollerSparkMax bullBarRoller{"BullBarRoller"};
+    BullBarSubsystem()
+    {
+        COMETS3357::SubsystemManager::GetInstance().GetSubsystem<ArmSubsystem>("ArmSubsystem");
+    }
+
+    void Initialize() override
+    {
+        arm = COMETS3357::SubsystemManager::GetInstance().GetSubsystem<ArmSubsystem>("ArmSubsystem");
+    }
+
+    void Periodic() override{
+        frc::SmartDashboard::PutNumber("ADSASD", arm->k);
+    }
+
+    std::shared_ptr<ArmSubsystem> arm;
+
+
 
 };

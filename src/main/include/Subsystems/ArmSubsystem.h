@@ -21,14 +21,14 @@ class ArmSubsystem : public COMETS3357::Subsystem<ArmState, ArmData>
 {
 public:
 
-    bool IsBullBarSafePosition();
-
-    void Periodic() override
+    ArmSubsystem()
     {
-        Elbow.Periodic();
+        Register("ArmSubsystem");
     }
 
-    COMETS3357::PositionSparkMax Elbow{"PivotMotor"};
-    //COMETS3357::PositionSparkMax Wrist{"Wrist"};
+
+    int k = 100;
+
+  
 
 };
