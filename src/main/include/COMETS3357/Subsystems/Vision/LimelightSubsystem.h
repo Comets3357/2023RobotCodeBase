@@ -9,18 +9,13 @@
 namespace COMETS3357
 {
 
-    struct LimelightData
-    {
-
-    };
-
     enum LimelightState
     {
         LIMELIGHT_APRIL_TAGS
     };
 
 
-    class LimelightSubsystem : public COMETS3357::Subsystem<LimelightState, LimelightData>
+    class LimelightSubsystem : public COMETS3357::Subsystem<LimelightState>
     {
     public:
 

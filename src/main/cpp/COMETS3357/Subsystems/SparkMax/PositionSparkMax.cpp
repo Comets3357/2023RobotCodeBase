@@ -71,8 +71,10 @@ void PositionSparkMax::RobotInit()
         absoluteEncoder.SetInverted(config.invertedAbsolute);
         absoluteEncoder.SetPositionConversionFactor(config.absolutePositionConversionFactor);
         absoluteEncoder.SetVelocityConversionFactor(config.absoluteVelocityConversionFactor);
-       if (setAbsPos)
-        absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+        if (setAbsPos)
+        {
+            absoluteEncoder.SetZeroOffset(config.absoluteZeroOffset);
+        }
 
         PIDController.SetPositionPIDWrappingEnabled(config.positionPIDWrappingEnabled);
         PIDController.SetPositionPIDWrappingMinInput(config.turningEncoderPositionPIDMinInput);

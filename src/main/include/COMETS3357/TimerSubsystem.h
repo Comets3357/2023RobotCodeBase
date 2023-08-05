@@ -7,19 +7,13 @@
 
 namespace COMETS3357
 {
-    struct TimerData
-    {
-        units::second_t timeSinceEnabled{0};
-        units::second_t deltaTime{0};
-        units::second_t lastTime{0};
-    };
 
     enum TimerState
     {
         TIMER_RUNNING
     };
 
-    class TimerSubsystem : public COMETS3357::Subsystem<TimerState, TimerData>
+    class TimerSubsystem : public COMETS3357::Subsystem<TimerState>
     {
     public:
 
@@ -32,5 +26,11 @@ namespace COMETS3357
         private:
 
         frc::Timer timer{};
+
+    private:
+
+        units::second_t timeSinceEnabled{0};
+        units::second_t deltaTime{0};
+        units::second_t lastTime{0};
     };
 };

@@ -4,50 +4,34 @@
 #include <COMETS3357/Subsystems/SubsystemManager.h>
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
+#include <string>
 
 namespace COMETS3357
 {
-    template <typename state, typename data>
+    template <typename state>
     class Subsystem : public frc2::SubsystemBase
     {
     public:
 
-        Subsystem()
+        Subsystem(std::string_view name)
         {
             COMETS3357::SubsystemManager::GetInstance().AddInit([this]{Initialize();});
+            SetName(name);
+            subsystemData = nt::NetworkTableInstance::GetDefault().GetTable(name);
 
         }
 
-        template <typename T>
-        std::shared_ptr<T> GetSubsystem(std::string name)
+    
+        std::shared_ptr<nt::NetworkTable> GetSubsystemData(std::string_view name)
         {
-            return COMETS3357::SubsystemManager::GetInstance().GetSubsystem<T>(name);
+            return nt::NetworkTableInstance::GetDefault().GetTable(name);
         }
+
 
         /**
          * @brief An Initialization function for a Subsystem
         */
         virtual void Initialize() {}
-
-        /**
-         * @brief Registers the Subsystem in a place that is accesible everywhere
-         * 
-         * @param name The name of the subsystem
-        */
-        void Register(std::string name)
-        {
-            COMETS3357::SubsystemManager::GetInstance().RegisterSubsystem(name, this);
-        }
-
-        /**
-         * @brief Gets the Subsystem Data
-         * 
-         * @return Subsystem Data Struct
-        */
-        data& Data()
-        {
-            return m_data;
-        }
 
         /**
          * @brief Gets the Subsystem State
@@ -59,12 +43,17 @@ namespace COMETS3357
             return m_state;
         }
 
+        
+
     protected:
 
         state m_state{};
-        data m_data{};
+        std::shared_ptr<nt::NetworkTable> subsystemData;
+
 
     private:
+
+        
     
 
     };

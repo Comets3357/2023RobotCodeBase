@@ -24,7 +24,7 @@ namespace COMETS3357
         GYRO_RUNNING
     };
 
-    class GyroSubsystem : public COMETS3357::Subsystem<GyroState, GyroData>
+    class GyroSubsystem : public COMETS3357::Subsystem<GyroState>
     {
 
     public:

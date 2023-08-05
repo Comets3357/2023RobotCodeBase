@@ -18,11 +18,6 @@
 
 class RobotContainer;
 
-struct SwerveData
-{
-
-};
-
 enum SwerveState
 {
   SWERVE_AUTONOMOUS,
@@ -32,7 +27,7 @@ enum SwerveState
 namespace COMETS3357
 {
 
-  class SwerveSubsystem : public COMETS3357::Subsystem<SwerveState, SwerveData>
+  class SwerveSubsystem : public COMETS3357::Subsystem<SwerveState>
   {
   public:
     SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer);
@@ -147,7 +142,7 @@ namespace COMETS3357
     // 4 defines the number of modules
     frc::SwerveDriveOdometry<4> m_odometry;
 
-    GyroData* gyroData;
+    std::shared_ptr<nt::NetworkTable> gyroSubsystemData;
 
     
   };

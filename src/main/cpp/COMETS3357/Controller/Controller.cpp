@@ -17,24 +17,36 @@ void Controller::SetButton(frc2::Trigger trigger, std::string button, std::pair<
     if (mode.second.get(button).get<std::string>() != "NONE")
     {
         if (buttonActionMap.contains(mode.second.get(button).get<std::string>()))
-        (trigger && modeTriggers[mode.first]).WhenActive(buttonActionMap[mode.second.get(button).get<std::string>()].get());
+        {
+            (trigger && modeTriggers[mode.first]).WhileTrue(buttonActionMap[mode.second.get(button).get<std::string>()].get());
+        }
         else if (modeTriggers.contains(mode.second.get(button).get<std::string>()))
-        (trigger && modeTriggers[mode.first]).WhenActive([this, mode, button] {currentMode = mode.second.get(button).get<std::string>();});
+        {
+            (trigger && modeTriggers[mode.first]).WhileTrue(new frc2::RunCommand{[this, mode, button] {currentMode = mode.second.get(button).get<std::string>();}, {}});
+        }
     }
 
     if (mode.second.get(button + "Pressed").get<std::string>() != "NONE")
     {
         if (buttonActionMap.contains(mode.second.get(button + "Pressed").get<std::string>()))
-        (trigger && modeTriggers[mode.first]).OnTrue(buttonActionMap.at(mode.second.get(button + "Pressed").get<std::string>()).get());
+        {
+            (trigger && modeTriggers[mode.first]).OnTrue(buttonActionMap.at(mode.second.get(button + "Pressed").get<std::string>()).get());
+        }
         else if (modeTriggers.contains(mode.second.get(button + "Pressed").get<std::string>()))
-        (trigger && modeTriggers[mode.first]).WhenActive([this, mode, button] {currentMode = mode.second.get(button + "Pressed").get<std::string>();});
+        {
+            (trigger && modeTriggers[mode.first]).OnTrue(new frc2::InstantCommand{[this, mode, button] {currentMode = mode.second.get(button + "Pressed").get<std::string>();}, {}});
+        }
     }
     if (mode.second.get(button + "Released").get<std::string>() != "NONE")
     {
         if (buttonActionMap.contains(mode.second.get(button + "Pressed").get<std::string>()))
-        (trigger && modeTriggers[mode.first]).OnFalse(buttonActionMap.at(mode.second.get(button + "Released").get<std::string>()).get());
+        {
+            (trigger && modeTriggers[mode.first]).OnFalse(buttonActionMap.at(mode.second.get(button + "Released").get<std::string>()).get());
+        }
         else if (modeTriggers.contains(mode.second.get(button + "Released").get<std::string>()))
-        (trigger && modeTriggers[mode.first]).WhenActive([this, mode, button] {currentMode = mode.second.get(button + "Released").get<std::string>();});
+        {
+            (trigger && modeTriggers[mode.first]).OnFalse(new frc2::InstantCommand{[this, mode, button] {currentMode = mode.second.get(button + "Released").get<std::string>();}, {}});
+        }
     }
 }
 
@@ -60,8 +72,22 @@ void Controller::SetJoysticks(std::map<std::string, frc2::Trigger>& joystickTrig
 {
     for (auto& joystickTrigger : joystickTriggers)
     {
+        if (std::get<2>(joystickActionMap[joystickTrigger.first]) == JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND)
+        {
+            frc2::Subsystem* sub = std::get<1>(joystickActionMap[joystickTrigger.first]);
+            std::function<void(double, double, double, double)> function = std::get<0>(joystickActionMap[joystickTrigger.first]);
+            (joystickTrigger.second && modeTriggers[mode.first]).WhileTrue(new frc2::RunCommand{[this, sub, function]{function(controller.GetLeftX(),controller.GetLeftY(),controller.GetRightX(),controller.GetRightY());},{sub}});
+        }
+    }
 
-        (joystickTrigger.second && modeTriggers[mode.first]).WhileTrue(new frc2::RunCommand{[this, joystickTrigger]{std::get<0>(joystickActionMap[joystickTrigger.first])(controller.GetLeftX(),controller.GetLeftY(),controller.GetRightX(),controller.GetRightY());},{std::get<1>(joystickActionMap[joystickTrigger.first])}});
+    for (auto& defaultCommand : joystickActionMap)
+    {
+        if (std::get<2>(defaultCommand.second) == JoystickCommandMode::JOYSTICK_DEFAULT_COMMAND)
+        {
+            frc2::Subsystem* sub = std::get<1>(defaultCommand.second);
+            std::function<void(double, double, double, double)> function = std::get<0>(defaultCommand.second);
+            modeTriggers[mode.first].OnTrue(new frc2::InstantCommand{[this, sub, function]{sub->SetDefaultCommand(frc2::RunCommand{[this, function]{function(controller.GetLeftX(), controller.GetLeftY(), controller.GetRightX(), controller.GetRightY());},{sub}});},{}});
+        }
     }
 }
 
@@ -87,6 +113,7 @@ void Controller::InitController(picojson::value &controllers)
     {
         currentMode = controllers.get<picojson::object>().at("XBOX").get("DefaultMode").get<std::string>();
     }
+
 }
 
 void Controller::LoadConfig(picojson::value &controllers)
@@ -119,7 +146,7 @@ bool Controller::LoadControls(picojson::value &controllers)
 
                     if (frc::DriverStation::GetJoystickName(slot) == "FrSky Taranis Joystick")
                     {
-                    
+                        
                     }
                     else
                     {

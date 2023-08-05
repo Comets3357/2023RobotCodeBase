@@ -53,7 +53,7 @@ namespace COMETS3357
     {
     public:
 
-        DrivebaseSubsystem(DrivebaseData* data, TimerData* data2);
+        DrivebaseSubsystem();
 
         void SetTicksToMetersConversion(double wheelDiameterInches, double gearRatio);
 
@@ -98,8 +98,6 @@ namespace COMETS3357
 
         COMETS3357::PID pid{};
 
-        COMETS3357::TimerData* timerData;
-        COMETS3357::DrivebaseData* drivebaseData;
     };
 
 };

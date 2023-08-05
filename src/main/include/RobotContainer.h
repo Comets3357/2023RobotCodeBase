@@ -30,9 +30,7 @@
 
 #include <COMETS3357/Commands/SparkMax/PositionSparkMaxTrapCommand.h>
 
-#include "Subsystems/ArmSubsystem.h"
-#include "Subsystems/BullBarSubsystem.h"
-#include "Subsystems/ElevatorSubsystem.h"
+
 
 
 /**
@@ -52,16 +50,11 @@ class RobotContainer {
   //Subsystems
   COMETS3357::TimerSubsystem timer{};
   COMETS3357::GyroSubsystem gyro{};
-   COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
-
-  ArmSubsystem arm{};
-  BullBarSubsystem buyll{};
-  ElevatorSubsystem elevator{};
+  COMETS3357::SwerveSubsystem swerve{"Swerve", *this};
  
 
 
 
-frc2::CommandXboxController controller{1};
 
   std::unordered_map<std::string, std::shared_ptr<frc2::Command>> buttonActionMap 
   {
@@ -70,10 +63,11 @@ frc2::CommandXboxController controller{1};
       {"Test3", std::make_shared<Test>(3)}
   };
 
+
   std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, COMETS3357::Controller::JoystickCommandMode>> joystickActionMap
   {
-    {"Set1", {[this](auto leftX, auto leftY, auto rightX, auto rightY){elevator.SetOutput(leftX, leftY, 0, 0);}, &elevator, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}},
-    {"Set2", {[this](auto leftX, auto leftY, auto rightX, auto rightY){elevator.SetOutput(leftX, leftY, 0, 0);}, &elevator, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}}
+    {"SwerveDefaultCommand", {[this](auto leftX, auto leftY, auto rightX, auto rightY){swerve.Drive(-units::meters_per_second_t{leftY}, -units::meters_per_second_t{leftX}, -units::radians_per_second_t{rightX}, true, true);}, &swerve, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}}
+
   };
 
   COMETS3357::ControllerMap controllerMap{buttonActionMap, joystickActionMap, "CompControllerMap", };
