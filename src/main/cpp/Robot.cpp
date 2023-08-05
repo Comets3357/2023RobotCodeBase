@@ -31,7 +31,8 @@ void Robot::RobotPeriodic() {
   
   frc2::CommandScheduler::GetInstance().Run();
   m_container.Periodic();
-
+frc::SmartDashboard::PutBoolean("0 CONNECTED", frc::DriverStation::IsJoystickConnected(0));
+frc::SmartDashboard::PutBoolean("1 CONNECTED", frc::DriverStation::IsJoystickConnected(1));
 }
 
 /**

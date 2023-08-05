@@ -22,12 +22,21 @@ namespace COMETS3357
     {
     public:
 
+        enum JoystickCommandMode
+        {
+            JOYSTICK_DEFAULT_COMMAND,
+            JOYSTICK_DEADZONE_COMMAND
+        };
+
+        void InitController(picojson::value &controllers);
+        void InitController(std::string xboxDefaultMode, std::string taranusDefaultMode);
+
         /**
          * @brief Contructs a new controller
          * @param slot the slot of the controller
          * @param actions an event list of actions to pair to control bindings
         */
-        Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions);
+        Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActions, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActions);
 
         /**
          * @brief Loads the config of the controller
@@ -39,15 +48,19 @@ namespace COMETS3357
          * @brief Loads the controls from the json file
          * @return Did the controls load Successfully
         */
-        bool LoadControls();
+        bool LoadControls(picojson::value &controllers);
 
         int slot;
         frc2::CommandXboxController controller;
-        std::map<std::string, std::map<std::string, std::map<std::string, frc2::Trigger>>> controllerMap;
-        std::string currentMode = "SemiAuto";
-        std::string currentController = "XBOX";
-        std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap;
-        frc2::Trigger controllerConnectionTrigger{[this]() {return controller.IsConnected();}};
+        std::map<std::string, frc2::Trigger> modeTriggers;
+        std::string currentMode = "XBOXSemiAuto";
+        std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActionMap;
+        std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActionMap;
+        frc2::Trigger controllerConnectionTrigger;
+
+        void SetButton(frc2::Trigger trigger, std::string button, std::pair<const std::string, picojson::value>& mode);
+        void SetJoystickTrigger(frc2::Trigger trigger, std::string joystick, std::pair<const std::string, picojson::value>& mode, std::map<std::string, frc2::Trigger>& joystickTriggers);
+        void SetJoysticks(std::map<std::string, frc2::Trigger>& joystickTriggers, std::pair<const std::string, picojson::value>& mode);
 
     };
 
@@ -63,7 +76,7 @@ namespace COMETS3357
          * @param actionMap This is the action map that contains each action being paired
          * @param fileName This is the filename of the Controller Config file
          */
-        ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName);
+        ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActionMap, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, Controller::JoystickCommandMode>>& joystickActionMap, std::string fileName);
 
 
         Controller primary;

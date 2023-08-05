@@ -32,6 +32,7 @@
 
 #include "Subsystems/ArmSubsystem.h"
 #include "Subsystems/BullBarSubsystem.h"
+#include "Subsystems/ElevatorSubsystem.h"
 
 
 /**
@@ -55,19 +56,27 @@ class RobotContainer {
 
   ArmSubsystem arm{};
   BullBarSubsystem buyll{};
+  ElevatorSubsystem elevator{};
  
 
 
 
-  frc2::CommandXboxController exampleCommandController{0};
+frc2::CommandXboxController controller{1};
 
-
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> buttonActionMap 
   {
-  
+      {"Test1", std::make_shared<Test>(1)},
+      {"Test2", std::make_shared<Test>(2)},
+      {"Test3", std::make_shared<Test>(3)}
   };
 
-  //COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
+  std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, COMETS3357::Controller::JoystickCommandMode>> joystickActionMap
+  {
+    {"Set1", {[this](auto leftX, auto leftY, auto rightX, auto rightY){elevator.SetOutput(leftX, leftY, 0, 0);}, &elevator, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}},
+    {"Set2", {[this](auto leftX, auto leftY, auto rightX, auto rightY){elevator.SetOutput(leftX, leftY, 0, 0);}, &elevator, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}}
+  };
+
+  COMETS3357::ControllerMap controllerMap{buttonActionMap, joystickActionMap, "CompControllerMap", };
  // COMETS3357::Autons autos{&swerve, actionMap};
 
   void ConfigureBindings();

@@ -60,6 +60,8 @@ void SwerveSubsystem::Periodic() {
 
   frc::SmartDashboard::PutNumber("Swerve Odometry X", (double)GetPose().X());
   frc::SmartDashboard::PutNumber("Swerve Odometry Y", (double)GetPose().Y());
+
+  
 }
 
 void SwerveSubsystem::Drive(units::meters_per_second_t xSpeed,

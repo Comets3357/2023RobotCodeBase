@@ -19,8 +19,7 @@ class ElevatorSubsystem : public COMETS3357::Subsystem<ElevatorState, ElevatorDa
 {
 public:
 
+    void SetOutput(double leftX, double leftY, double rightX, double rightY);
 
-
-    COMETS3357::PositionSparkMax elevator{"Elevator"};
 
 };

@@ -14,6 +14,7 @@
       "MaxSpeed": 0.1,
       "MinSpeed": -0.1,
       "Name": "PivotMotor",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
@@ -61,6 +62,7 @@
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor1",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
@@ -100,6 +102,7 @@
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor2",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
@@ -139,6 +142,7 @@
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor3",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
@@ -178,6 +182,7 @@
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor4",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
@@ -257,6 +262,7 @@
       "Name": "DriveMotor1",
       "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
@@ -276,6 +282,7 @@
       "Name": "DriveMotor2",
       "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
@@ -295,6 +302,7 @@
       "Name": "DriveMotor3",
       "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
@@ -314,6 +322,7 @@
       "Name": "DriveMotor4",
       "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,

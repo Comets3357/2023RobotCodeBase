@@ -2,6 +2,8 @@
 
 #include <frc2/Command/SubsystemBase.h>
 #include <COMETS3357/Subsystems/SubsystemManager.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
 
 namespace COMETS3357
 {
@@ -13,6 +15,7 @@ namespace COMETS3357
         Subsystem()
         {
             COMETS3357::SubsystemManager::GetInstance().AddInit([this]{Initialize();});
+
         }
 
         template <typename T>
@@ -60,6 +63,9 @@ namespace COMETS3357
 
         state m_state{};
         data m_data{};
+
+    private:
+    
 
     };
 };

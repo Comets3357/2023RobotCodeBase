@@ -8,6 +8,9 @@
 #include <COMETS3357/Subsystems/Subsystem.h>
 #include "AHRS.h"
 
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
+
 namespace COMETS3357
 {
     struct GyroData
@@ -31,6 +34,8 @@ namespace COMETS3357
 
     private:
         AHRS m_navx;
+
+        std::shared_ptr<nt::NetworkTable> driveTable;
 
     };
 };

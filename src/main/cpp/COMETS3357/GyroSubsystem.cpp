@@ -11,4 +11,6 @@ void GyroSubsystem::Periodic()
 {
     m_data.angle = -m_navx.GetAngle() * 3.14159 / 180;
     m_data.angleRate = m_navx.GetRate() * 3.14159 / 180;
+
+
 }

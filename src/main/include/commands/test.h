@@ -20,9 +20,17 @@ class Test : public frc2::CommandHelper<frc2::CommandBase, Test>
 
 public:
 
+Test(int t) : num{t} {}
 
 void Initialize() override
 {
-frc::SmartDashboard::PutNumber("ASJDH", 123);
+frc::SmartDashboard::PutNumber("ASJDH", num);
+}
+
+int num;
+
+bool IsFinished() override
+{
+    return true;
 }
 };
