@@ -13,17 +13,13 @@
 
 namespace COMETS3357
 {
-    struct AutoDriveData
-    {
-
-    };
 
     enum AutoDriveState
     {
 
     };
 
-    class AutoDrive : public COMETS3357::Subsystem<AutoDriveState, AutoDriveData>
+    class AutoDrive : public COMETS3357::Subsystem<AutoDriveState>
     {
     public:
         AutoDrive();

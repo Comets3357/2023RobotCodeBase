@@ -17,17 +17,24 @@ namespace COMETS3357
     {
     public:
 
+        /**
+         * @brief Constructs a TimerSubsystem
+        */
         TimerSubsystem();
 
+        /**
+         * @brief The Periodic Function for the TimerSubsystem
+        */
         void Periodic() override;
 
+        /**
+         * @brief Restarts the Timer
+        */
         void ResetAndBeginTimer();
 
-        private:
+    private:
 
         frc::Timer timer{};
-
-    private:
 
         units::second_t timeSinceEnabled{0};
         units::second_t deltaTime{0};

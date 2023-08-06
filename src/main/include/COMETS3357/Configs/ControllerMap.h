@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "Json/picojson.h"
+#include "COMETS3357/Json/picojson.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -14,6 +14,10 @@
 #include <frc/MathUtil.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/Command.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
+#include <COMETS3357/Commands/ChangeModeCommand.h>
+#include <frc2/command/RunCommand.h>
 
 namespace COMETS3357
 {

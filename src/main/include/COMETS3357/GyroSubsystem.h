@@ -29,12 +29,18 @@ namespace COMETS3357
 
     public:
 
+        /**
+         * @brief Constructs a Gyro Function
+        */
         GyroSubsystem();
+
+        /**
+         * @brief The Periodic function for the GyroSubsystem
+        */
         void Periodic() override;
 
     private:
         AHRS m_navx;
-
         std::shared_ptr<nt::NetworkTable> driveTable;
 
     };

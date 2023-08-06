@@ -13,6 +13,11 @@ namespace COMETS3357
     {
     public:
 
+        /**
+         * @brief Constructs the Subsystem object
+         * 
+         * @param name The name of the subsystem
+        */
         Subsystem(std::string_view name)
         {
             COMETS3357::SubsystemManager::GetInstance().AddInit([this]{Initialize();});
@@ -21,12 +26,15 @@ namespace COMETS3357
 
         }
 
-    
+        /**
+         * @brief Gets the netork table for a different subsystem
+         * 
+         * @param name The name of the subsystem
+        */
         std::shared_ptr<nt::NetworkTable> GetSubsystemData(std::string_view name)
         {
             return nt::NetworkTableInstance::GetDefault().GetTable(name);
         }
-
 
         /**
          * @brief An Initialization function for a Subsystem
@@ -49,12 +57,5 @@ namespace COMETS3357
 
         state m_state{};
         std::shared_ptr<nt::NetworkTable> subsystemData;
-
-
-    private:
-
-        
-    
-
     };
 };

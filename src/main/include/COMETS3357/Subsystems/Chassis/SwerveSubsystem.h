@@ -11,7 +11,6 @@
 
 #include "COMETS3357/Configs/ConfigFiles.h"
 
-#include "Constants.h"
 #include "COMETS3357/Subsystems/Chassis/MAXSwerveModule.h"
 #include "units/time.h"
 #include "COMETS3357/GyroSubsystem.h"
@@ -30,7 +29,7 @@ namespace COMETS3357
   class SwerveSubsystem : public COMETS3357::Subsystem<SwerveState>
   {
   public:
-    SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer);
+    SwerveSubsystem(std::string configFileName);
 
     SwerveConfig configuration;
 

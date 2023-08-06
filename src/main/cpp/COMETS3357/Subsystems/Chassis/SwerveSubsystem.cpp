@@ -10,11 +10,9 @@
 #include <units/velocity.h>
 #include "COMETS3357/utils/SwerveUtils.h"
 
-#include "RobotContainer.h"
-
 using namespace COMETS3357;
 
-SwerveSubsystem::SwerveSubsystem(std::string configFileName, RobotContainer& robotContainer)
+SwerveSubsystem::SwerveSubsystem(std::string configFileName)
     : configuration{ConfigFiles::getInstance().GetConfigFiles().swerveConfigs[configFileName]},
       Subsystem<SwerveState>("SwerveSubsystem"),
       gyroSubsystemData{GetSubsystemData("GyroSubsystem")},
@@ -59,10 +57,6 @@ void SwerveSubsystem::Periodic() {
   m_odometry.Update(frc::Rotation2d(units::radian_t{gyroSubsystemData->GetEntry("angle").GetDouble(0)}),
                     {m_frontLeft.GetPosition(), m_rearLeft.GetPosition(),
                      m_frontRight.GetPosition(), m_rearRight.GetPosition()});
-
-  frc::SmartDashboard::PutNumber("Swerve Odometry X", (double)GetPose().X());
-  frc::SmartDashboard::PutNumber("Swerve Odometry Y", (double)GetPose().Y());
-
   
 }
 

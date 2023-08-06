@@ -14,12 +14,18 @@ namespace COMETS3357
     {
     public:
 
+        /**
+         * @brief Gets a static instance of the SubsystemManagerClass
+        */
         static SubsystemManager& GetInstance()
         {
             static SubsystemManager instance;
             return instance;
         }
 
+        /**
+         * @brief Runs all of the init functions in the subsystems
+        */
         void Init()
         {
             for (const auto& lamda : initFunctions)
@@ -29,6 +35,11 @@ namespace COMETS3357
             initFunctions.clear();
         }
 
+        /**
+         * @brief Adds an init function to the list of init functions
+         * 
+         * @param func The function adding to the list of init functions
+        */
         void AddInit(std::function<void()> func)
         {
             initFunctions.emplace_back(func);

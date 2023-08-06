@@ -1,10 +1,5 @@
 #include "COMETS3357/Configs/ControllerMap.h"
-#include <frc/smartdashboard/SmartDashboard.h>
-#include <frc/DriverStation.h>
-#include <COMETS3357/Commands/ChangeModeCommand.h>
-#include "commands/test.h"
-#include <frc2/command/InstantCommand.h>
-#include <frc2/command/RunCommand.h>
+
 using namespace COMETS3357;
 
 Controller::Controller(int controllerSlot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActions, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActions) : slot{controllerSlot}, controller{controllerSlot}, buttonActionMap{buttonActions}, joystickActionMap{joystickActions}, controllerConnectionTrigger{[this]() {return frc::DriverStation::IsJoystickConnected(slot);}}
