@@ -8,11 +8,6 @@
 #include <frc2/command/button/CommandXboxController.h>
 #include <frc2/command/button/Trigger.h>
 
-#include <frc/controller/ProfiledPIDController.h>
-#include <frc/trajectory/TrapezoidProfile.h>
-#include <frc/controller/ArmFeedforward.h>
-#include <frc2/command/ProfiledPIDCommand.h>
-#include <frc/trajectory/TrajectoryUtil.h>
 #include <units/acceleration.h>
 #include <units/length.h>
 #include <units/time.h>
@@ -24,12 +19,9 @@
 #include "COMETS3357/Subsystems/Chassis/SwerveSubsystem.h"
 #include "COMETS3357/Auton/Autons.h"
 #include "COMETS3357/Configs/ControllerMap.h"
+#include "COMETS3357/TimerSubsystem.h"
 
-#include "RobotData.h"
-
-#include "commands/test.h"
-
-
+#include "commands/ExampleCommand.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -44,36 +36,31 @@ class RobotContainer {
 
   void Periodic();
 
-  RobotData robotData{};
-
 
   //Subsystems
-  COMETS3357::GyroSubsystem gyro{robotData.gyroData};
-  COMETS3357::SwerveSubsystem swerve{"Swerve", robotData.gyroData};
-
-
-
-
-
-
-
-  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> actionMap 
-  {
-    {"Test", std::make_shared<Test>()}
-    // {"asdc", std::make_shared<StopRollerSparkMaxCommand>()}
-  };
-
-  COMETS3357::ControllerMap controllerMap{actionMap, "CompControllerMap"};
-  COMETS3357::Autons autos{&swerve, actionMap};
-
-  //frc2::CommandXboxController exampleCommandController{0};
+  COMETS3357::TimerSubsystem timer{};
+  COMETS3357::GyroSubsystem gyro{};
+  COMETS3357::SwerveSubsystem swerve{"Swerve"};
  
 
 
-  void ConfigureBindings();
 
-  frc::Timer timer{};
-  units::second_t time = 0_s;
-  units::second_t lastTime = 0_s;
-  units::second_t deltaTime = 0_s;
+
+  std::unordered_map<std::string, std::shared_ptr<frc2::Command>> buttonActionMap 
+  {
+      {"Test1", std::make_shared<ExampleCommand>(1)},
+      {"Test2", std::make_shared<ExampleCommand>(2)},
+      {"Test3", std::make_shared<ExampleCommand>(3)}
+  };
+
+
+  std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, COMETS3357::Controller::JoystickCommandMode>> joystickActionMap
+  {
+    {"SwerveDefaultCommand", {[this](auto leftX, auto leftY, auto rightX, auto rightY){swerve.Drive(-units::meters_per_second_t{leftY}, -units::meters_per_second_t{leftX}, -units::radians_per_second_t{rightX}, true, true);}, &swerve, COMETS3357::Controller::JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND}}
+  };
+
+  COMETS3357::ControllerMap controllerMap{buttonActionMap, joystickActionMap, "CompControllerMap", };
+  COMETS3357::Autons autos{&swerve, buttonActionMap};
+
+  void ConfigureBindings();
 };

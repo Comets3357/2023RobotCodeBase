@@ -14,6 +14,8 @@ void Robot::RobotInit() {
 // ConfigFiles::getInstance().LoadConfigFiles("Comp");
 // frc::SmartDashboard::PutNumber("A",ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs["DriveMotor1"].ID);
 //m_container.timerSubsystem.ResetAndBeginTimer();
+COMETS3357::SubsystemManager::GetInstance().Init();
+
 }
 
 /**
@@ -29,7 +31,8 @@ void Robot::RobotPeriodic() {
   
   frc2::CommandScheduler::GetInstance().Run();
   m_container.Periodic();
-
+frc::SmartDashboard::PutBoolean("0 CONNECTED", frc::DriverStation::IsJoystickConnected(0));
+frc::SmartDashboard::PutBoolean("1 CONNECTED", frc::DriverStation::IsJoystickConnected(1));
 }
 
 /**
@@ -39,7 +42,9 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {}
 
-void Robot::DisabledPeriodic() {}
+void Robot::DisabledPeriodic() {
+
+}
 
 /**
  * This autonomous runs the autonomous command selected by your {@link
@@ -48,7 +53,7 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {
   //m_autonomousCommand = m_container.GetAutonomousCommand();
 
-  m_container.autos.AutonomousInit();
+ // m_container.autos.AutonomousInit();
 }
 
 void Robot::AutonomousPeriodic() {}

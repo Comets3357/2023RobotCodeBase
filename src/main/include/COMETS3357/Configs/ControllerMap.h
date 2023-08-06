@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "Json/picojson.h"
+#include "COMETS3357/Json/picojson.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -14,6 +14,10 @@
 #include <frc/MathUtil.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/Command.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
+#include <COMETS3357/Commands/ChangeModeCommand.h>
+#include <frc2/command/RunCommand.h>
 
 namespace COMETS3357
 {
@@ -22,24 +26,45 @@ namespace COMETS3357
     {
     public:
 
-        int slot;
+        enum JoystickCommandMode
+        {
+            JOYSTICK_DEFAULT_COMMAND,
+            JOYSTICK_DEADZONE_COMMAND
+        };
 
-        Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions);
+        void InitController(picojson::value &controllers);
+        void InitController(std::string xboxDefaultMode, std::string taranusDefaultMode);
 
-        frc2::CommandXboxController controller;
-        std::map<std::string, std::map<std::string, std::map<std::string, frc2::Trigger>>> controllerMap;
-        std::string currentMode = "SemiAuto";
-        std::string currentController = "XBOX";
+        /**
+         * @brief Contructs a new controller
+         * @param slot the slot of the controller
+         * @param actions an event list of actions to pair to control bindings
+        */
+        Controller(int slot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActions, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActions);
 
-        std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap;
-
-        frc2::Trigger controllerConnectionTrigger{[this]() {return controller.IsConnected();}};
-
+        /**
+         * @brief Loads the config of the controller
+         * @param controllers The json value of the controller
+        */
         void LoadConfig(picojson::value &controllers);
 
-        bool LoadControls();
+        /**
+         * @brief Loads the controls from the json file
+         * @return Did the controls load Successfully
+        */
+        bool LoadControls(picojson::value &controllers);
 
-        frc2::CommandPtr wrappedEventCommand(std::shared_ptr<frc2::Command> command);
+        int slot;
+        frc2::CommandXboxController controller;
+        std::map<std::string, frc2::Trigger> modeTriggers;
+        std::string currentMode = "XBOXSemiAuto";
+        std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActionMap;
+        std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActionMap;
+        frc2::Trigger controllerConnectionTrigger;
+
+        void SetButton(frc2::Trigger trigger, std::string button, std::pair<const std::string, picojson::value>& mode);
+        void SetJoystickTrigger(frc2::Trigger trigger, std::string joystick, std::pair<const std::string, picojson::value>& mode, std::map<std::string, frc2::Trigger>& joystickTriggers);
+        void SetJoysticks(std::map<std::string, frc2::Trigger>& joystickTriggers, std::pair<const std::string, picojson::value>& mode);
 
     };
 
@@ -50,10 +75,12 @@ namespace COMETS3357
 
 
         /**
-         * Returns a static instance of the ControllerMap which is used
-         * to globally distribute the ConfigFile Data
+         * @brief Constructs a controllerMap object
+         * This object is used to automatically bind controller buttons to actions
+         * @param actionMap This is the action map that contains each action being paired
+         * @param fileName This is the filename of the Controller Config file
          */
-        ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName);
+        ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActionMap, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, Controller::JoystickCommandMode>>& joystickActionMap, std::string fileName);
 
 
         Controller primary;

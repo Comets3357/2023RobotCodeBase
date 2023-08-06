@@ -11,19 +11,29 @@
 
 #include "COMETS3357/Configs/ConfigFiles.h"
 
-#include "Constants.h"
 #include "COMETS3357/Subsystems/Chassis/MAXSwerveModule.h"
 #include "units/time.h"
 #include "COMETS3357/GyroSubsystem.h"
 
+class RobotContainer;
+
+enum SwerveState
+{
+  SWERVE_AUTONOMOUS,
+  SWERVE_TELEOP
+};
+
 namespace COMETS3357
 {
 
-  class SwerveSubsystem : public frc2::SubsystemBase {
+  class SwerveSubsystem : public COMETS3357::Subsystem<SwerveState>
+  {
   public:
-    SwerveSubsystem(std::string configFileName, GyroData& data);
+    SwerveSubsystem(std::string configFileName);
 
     SwerveConfig configuration;
+
+    void Initialize() override;
 
     /**
      * Will be called periodically whenever the CommandScheduler runs.
@@ -46,6 +56,10 @@ namespace COMETS3357
      */
     void Drive(units::meters_per_second_t xSpeed,
               units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
+              bool fieldRelative, bool rateLimit);
+    
+    void Drive(units::meters_per_second_t xSpeed,
+              units::meters_per_second_t ySpeed, double directionX, double directionY,
               bool fieldRelative, bool rateLimit);
 
     /**
@@ -127,7 +141,7 @@ namespace COMETS3357
     // 4 defines the number of modules
     frc::SwerveDriveOdometry<4> m_odometry;
 
-    GyroData& gyroData;
+    std::shared_ptr<nt::NetworkTable> gyroSubsystemData;
 
     
   };

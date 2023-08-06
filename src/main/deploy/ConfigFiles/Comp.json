@@ -2,23 +2,72 @@
   "ControllerMap": "CompControllerMap",
   "PositionMotorConfigs": [
     {
+      "AbsolutePositionConversionFactor": 360,
+      "AbsoluteVelocityConversionFactor": 1,
+      "AbsoluteZeroOffset": 339.156818,
+      "CurrentLimit": 45,
+      "DefaultRunMode": "RELATIVE",
+      "ID": 31,
+      "IdleMode": "Brake",
+      "InvertedAbsolute": true,
+      "InvertedRelative": false,
+      "MaxSpeed": 0.1,
+      "MinSpeed": -0.1,
+      "Name": "PivotMotor",
+      "Follow": "NONE",
+      "PositionPID": {
+        "D": 0,
+        "FF": 0,
+        "I": 0,
+        "P": 0.08
+      },
+      "PositionPIDWrappingEnabled": false,
+      "RelativePositionConversionFactor": 1.5428571428,
+      "RelativeVelocityConversionFactor": 1,
+      "TurningEncoderPositionPIDMaxInput": 6.2831853072000001,
+      "TurningEncoderPositionPIDMinInput": 0,
+      "VelocityPID": {
+        "D": 0,
+        "FF": 0,
+        "I": 0,
+        "P": 1
+      },
+      "ForwardSoftLimitEnabled": true,
+      "ReverseSoftLimitEnabled": true,
+      "ForwardSoftLimit": 165,
+      "ReverseSoftLimit": 15,
+      "Positions":
+      {
+        "PivotHomePosition": 11,
+        "PivotConeMidPosition": 154,
+        "PivotConeHighPosition": 150,
+        "PivotCubeMidPosition": 146,
+        "PivotCubeHighPosition": 135,
+        "PivotConeIntakePosition": 12,
+        "PivotUprightConePosition": 24.5,
+        "PivotCubeIntakePosition": 39,
+        "PivotLowPosition": 16
+      }
+    },
+    {
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 1,
-      "IdleMode": "Break",
+      "ID": 2,
+      "IdleMode": "Brake",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor1",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -29,27 +78,36 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 3,
-      "IdleMode": "Break",
+      "ID": 4,
+      "IdleMode": "Brake",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor2",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -60,27 +118,36 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 5,
-      "IdleMode": "Break",
+      "ID": 6,
+      "IdleMode": "Brake",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor3",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -91,27 +158,36 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     },
     {
       "AbsolutePositionConversionFactor": 6.2831853072000001,
       "AbsoluteVelocityConversionFactor": 0.104719755,
       "AbsoluteZeroOffset": 0,
-      "CurrentLimit": 60,
+      "CurrentLimit": 10,
       "DefaultRunMode": "ABSOLUTE",
-      "ID": 7,
-      "IdleMode": "Break",
+      "ID": 8,
+      "IdleMode": "Brake",
       "InvertedAbsolute": true,
       "InvertedRelative": false,
       "MaxSpeed": 1,
       "MinSpeed": -1,
       "Name": "AzimuthMotor4",
+      "Follow": "NONE",
       "PositionPID": {
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 0
+        "P": 1
       },
       "PositionPIDWrappingEnabled": true,
       "RelativePositionConversionFactor": 1,
@@ -122,15 +198,18 @@
         "D": 0,
         "FF": 0,
         "I": 0,
-        "P": 1
+        "P": 0
+      },
+      "ForwardSoftLimitEnabled": false,
+      "ReverseSoftLimitEnabled": false,
+      "ForwardSoftLimit": 0,
+      "ReverseSoftLimit": 0,
+      "Positions":
+      {
+        
       }
     }
   ],
-  "Positions":[ {
-    "Position1": 0,
-    "position2": 0,
-    "position3": 0
-  }],
   "RollerMotorConfigs": [],
   "SwerveConfigs": [
     {
@@ -139,9 +218,9 @@
       "DirectionSlewRate": 1.2,
       "FrontLeftModule": "Module1",
       "FrontRightModule": "Module2",
-      "MagnitudeSlewRate": 1.8,
-      "MaxSpeed": 3,
-      "MaxTurnSpeed": 3.1419999999999999,
+      "MagnitudeSlewRate": 5,
+      "MaxSpeed": 5,
+      "MaxTurnSpeed": 6.2829999999999999,
       "Name": "Swerve",
       "RotationalSlewRate": 2,
       "TrackWidth": 0.67310000000000003,
@@ -177,62 +256,82 @@
   "WheelMotorConfigs": [
     {
       "CurrentLimit": 60,
-      "ID": 2,
-      "IdleMode": "Break",
+      "ID": 1,
+      "IdleMode": "Brake",
       "InvertedRelative": false,
       "Name": "DriveMotor1",
-      "RelativePositionConversionFactor": 0.23928936000000001,
+      "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 4,
-      "IdleMode": "Break",
+      "ID": 3,
+      "IdleMode": "Brake",
       "InvertedRelative": false,
       "Name": "DriveMotor2",
-      "RelativePositionConversionFactor": 0.23928936000000001,
+      "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 6,
-      "IdleMode": "Break",
+      "ID": 5,
+      "IdleMode": "Brake",
       "InvertedRelative": false,
       "Name": "DriveMotor3",
-      "RelativePositionConversionFactor": 0.23928936000000001,
+      "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     },
     {
       "CurrentLimit": 60,
-      "ID": 8,
-      "IdleMode": "Break",
+      "ID": 7,
+      "IdleMode": "Brake",
       "InvertedRelative": false,
       "Name": "DriveMotor4",
-      "RelativePositionConversionFactor": 0.23928936000000001,
+      "RelativePositionConversionFactor": 0.05077956125529683312,
       "RelativeVelocityConversionFactor": 0.00084632602091900004,
+      "Follow": "NONE",
       "VelocityPID": {
         "D": 0,
         "FF": 0.20817085187419279,
         "I": 0,
         "P": 0.040000000000000001
+      },
+      "Velocities":
+      {
+        
       }
     }
   ]

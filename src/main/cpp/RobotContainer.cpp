@@ -14,14 +14,12 @@ RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
   // Configure the button bindings
   ConfigureBindings();
-  timer.Start();
-
 }
 
 void RobotContainer::ConfigureBindings() {
   // Configure your trigger bindings here
 
-  // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+ // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
   //  swerve.SetDefaultCommand(frc2::RunCommand(
   //     [this] {
   //       swerve.Drive(
@@ -48,12 +46,7 @@ void RobotContainer::ConfigureBindings() {
 
 void RobotContainer::Periodic()
 {
-  time = timer.Get();
-
-  deltaTime = time - lastTime;
-  frc::SmartDashboard::PutNumber("TicksPerSecond", 1.0/(double)deltaTime);
-
-  lastTime = time;
+  
 }
 
 // frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

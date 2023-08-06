@@ -1,101 +1,184 @@
 #include "COMETS3357/Configs/ControllerMap.h"
-#include <frc/smartdashboard/SmartDashboard.h>
-#include <frc/DriverStation.h>
 
 using namespace COMETS3357;
 
-Controller::Controller(int controllerSlot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actions) : slot{controllerSlot}, controller{controllerSlot}, actionMap{actions} 
+Controller::Controller(int controllerSlot, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActions, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, JoystickCommandMode>>& joystickActions) : slot{controllerSlot}, controller{controllerSlot}, buttonActionMap{buttonActions}, joystickActionMap{joystickActions}, controllerConnectionTrigger{[this]() {return frc::DriverStation::IsJoystickConnected(slot);}}
 {
 
 }
 
-
-
-void Controller::LoadConfig(picojson::value &controllers)
+void Controller::SetButton(frc2::Trigger trigger, std::string button, std::pair<const std::string, picojson::value>& mode)
 {
-    for (auto& controllerType : controllers.get<picojson::object>())
+    if (mode.second.get(button).get<std::string>() != "NONE")
     {
-        for (auto& mode : controllerType.second.get<picojson::object>())
+        if (buttonActionMap.contains(mode.second.get(button).get<std::string>()))
         {
-            if (true)//controller.GetName() == "XBOX")
-            {
-                controllerMap[controllerType.first][mode.first][mode.second.get("D-padLeft").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 270;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("D-padRight").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 90;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("D-padUp").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 0;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("D-padDown").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetPOV() == 180;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightStickButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightStickButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftStickButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftStickButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("AButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetAButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("BButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("XButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetXButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("YButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetYButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftTrigger").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && frc::ApplyDeadband(controller.GetLeftTriggerAxis(), 0.08) != 0;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightTrigger").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && frc::ApplyDeadband(controller.GetLeftTriggerAxis(), 0.08) != 0;}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftBumper").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftBumper();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightBumper").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightBumper();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("StartButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetStartButton();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("BackButton").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBackButton();}};
-
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightStickButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightStickButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftStickButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftStickButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("XButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetXButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("YButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetYButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("AButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetAButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("BButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("LeftBumperPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetLeftBumperPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("RightBumperPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetRightBumperPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("StartButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetStartButtonPressed();}};
-                controllerMap[controllerType.first][mode.first][mode.second.get("BackButtonPressed").get<std::string>()] = frc2::Trigger{[this, mode]() {return currentMode == mode.first && controller.GetBackButtonPressed();}};
-            }
-            else if (controller.GetName() == "Taranus")
-            {
-
-            }
-            
+            (trigger && modeTriggers[mode.first]).WhileTrue(buttonActionMap[mode.second.get(button).get<std::string>()].get());
+        }
+        else if (modeTriggers.contains(mode.second.get(button).get<std::string>()))
+        {
+            (trigger && modeTriggers[mode.first]).WhileTrue(new frc2::RunCommand{[this, mode, button] {currentMode = mode.second.get(button).get<std::string>();}, {}});
         }
     }
 
-    LoadControls();
+    if (mode.second.get(button + "Pressed").get<std::string>() != "NONE")
+    {
+        if (buttonActionMap.contains(mode.second.get(button + "Pressed").get<std::string>()))
+        {
+            (trigger && modeTriggers[mode.first]).OnTrue(buttonActionMap.at(mode.second.get(button + "Pressed").get<std::string>()).get());
+        }
+        else if (modeTriggers.contains(mode.second.get(button + "Pressed").get<std::string>()))
+        {
+            (trigger && modeTriggers[mode.first]).OnTrue(new frc2::InstantCommand{[this, mode, button] {currentMode = mode.second.get(button + "Pressed").get<std::string>();}, {}});
+        }
+    }
+    if (mode.second.get(button + "Released").get<std::string>() != "NONE")
+    {
+        if (buttonActionMap.contains(mode.second.get(button + "Pressed").get<std::string>()))
+        {
+            (trigger && modeTriggers[mode.first]).OnFalse(buttonActionMap.at(mode.second.get(button + "Released").get<std::string>()).get());
+        }
+        else if (modeTriggers.contains(mode.second.get(button + "Released").get<std::string>()))
+        {
+            (trigger && modeTriggers[mode.first]).OnFalse(new frc2::InstantCommand{[this, mode, button] {currentMode = mode.second.get(button + "Released").get<std::string>();}, {}});
+        }
+    }
+}
+
+void Controller::SetJoystickTrigger(frc2::Trigger trigger, std::string joystick, std::pair<const std::string, picojson::value>& mode, std::map<std::string, frc2::Trigger>& joystickTriggers)
+{
+    if (mode.second.get(joystick).get<std::string>() != "NONE")
+    {
+        if (joystickActionMap.contains(mode.second.get(joystick).get<std::string>()))
+        {
+            if (joystickTriggers.contains(mode.second.get(joystick).get<std::string>()))
+            {
+                joystickTriggers[mode.second.get(joystick).get<std::string>()] = (joystickTriggers[mode.second.get(joystick).get<std::string>()] || trigger);
+            }
+            else
+            {
+                joystickTriggers[mode.second.get(joystick).get<std::string>()] = trigger;
+            }
+        }
+    }
+}
+
+void Controller::SetJoysticks(std::map<std::string, frc2::Trigger>& joystickTriggers, std::pair<const std::string, picojson::value>& mode)
+{
+    for (auto& joystickTrigger : joystickTriggers)
+    {
+        if (std::get<2>(joystickActionMap[joystickTrigger.first]) == JoystickCommandMode::JOYSTICK_DEADZONE_COMMAND)
+        {
+            frc2::Subsystem* sub = std::get<1>(joystickActionMap[joystickTrigger.first]);
+            std::function<void(double, double, double, double)> function = std::get<0>(joystickActionMap[joystickTrigger.first]);
+            (joystickTrigger.second && modeTriggers[mode.first]).WhileTrue(new frc2::RunCommand{[this, sub, function]{function(controller.GetLeftX(),controller.GetLeftY(),controller.GetRightX(),controller.GetRightY());},{sub}});
+        }
+    }
+
+    for (auto& defaultCommand : joystickActionMap)
+    {
+        if (std::get<2>(defaultCommand.second) == JoystickCommandMode::JOYSTICK_DEFAULT_COMMAND)
+        {
+            frc2::Subsystem* sub = std::get<1>(defaultCommand.second);
+            std::function<void(double, double, double, double)> function = std::get<0>(defaultCommand.second);
+            modeTriggers[mode.first].OnTrue(new frc2::InstantCommand{[this, sub, function]{sub->SetDefaultCommand(frc2::RunCommand{[this, function]{function(controller.GetLeftX(), controller.GetLeftY(), controller.GetRightX(), controller.GetRightY());},{sub}});},{}});
+        }
+    }
+}
+
+void Controller::InitController(std::string xboxDefaultMode, std::string taranusDefaultMode)
+{
+    if (frc::DriverStation::GetJoystickName(slot) == "FrSky Taranis Joystick")
+    {
+        currentMode = taranusDefaultMode;
+    }
+    else
+    {
+        currentMode = xboxDefaultMode;
+    }
+}
+
+void Controller::InitController(picojson::value &controllers)
+{
+    if (frc::DriverStation::GetJoystickName(slot) == "FrSky Taranis Joystick")
+    {
+        currentMode = controllers.get<picojson::object>().at("Taranus").get("DefaultMode").get<std::string>();
+    }
+    else
+    {
+        currentMode = controllers.get<picojson::object>().at("XBOX").get("DefaultMode").get<std::string>();
+    }
 
 }
 
-bool Controller::LoadControls()
+void Controller::LoadConfig(picojson::value &controllers)
 {
+    controllerConnectionTrigger.OnTrue(frc2::InstantCommand{[this,controllers]{InitController(controllers.get<picojson::object>().at("XBOX").get("DefaultMode").get<std::string>(), controllers.get<picojson::object>().at("Taranus").get("DefaultMode").get<std::string>());},{}}.IgnoringDisable(true));
+    LoadControls(controllers);
+
+}
+
+bool Controller::LoadControls(picojson::value &controllers)
+{
+    
     if (true)//controller.IsConnected())
     {
-        for (auto& mode : controllerMap["XBOX"])//controller.GetName()])
+        for (auto& controllerType : controllers.get<picojson::object>())
         {
-            for (auto& action : mode.second)
+            for (auto& mode : controllerType.second.get<picojson::object>())//controller.GetName()])
             {
-                if (actionMap.find(action.first) != actionMap.end())
-                action.second.WhileTrue(wrappedEventCommand(actionMap.at(action.first)));
+                if (mode.first != "DefaultMode")
+                {
+
+                    modeTriggers[mode.first] = frc2::Trigger{[this, mode]{return currentMode == mode.first;}};
+                }
+            }
+
+            for (auto& mode : controllerType.second.get<picojson::object>())//controller.GetName()])
+            {
+                if (mode.first != "DefaultMode")
+                {
+
+                    if (frc::DriverStation::GetJoystickName(slot) == "FrSky Taranis Joystick")
+                    {
+                        
+                    }
+                    else
+                    {
+                        SetButton(frc2::Trigger{[this]{return controller.GetPOV() == 0;}}, "D-padUp", mode);
+                        SetButton(frc2::Trigger{[this]{return controller.GetPOV() == 90;}}, "D-padRight", mode);
+                        SetButton(frc2::Trigger{[this]{return controller.GetPOV() == 180;}}, "D-padDown", mode);
+                        SetButton(frc2::Trigger{[this]{return controller.GetPOV() == 270;}}, "D-padLeft", mode);
+                        SetButton(controller.RightStick(), "RightStickButton", mode);
+                        SetButton(controller.LeftStick(), "LeftStickButton", mode);
+                        SetButton(controller.A(), "AButton", mode);
+                        SetButton(controller.B(), "BButton", mode);
+                        SetButton(controller.X(), "XButton", mode);
+                        SetButton(controller.Y(), "YButton", mode);
+                        SetButton(controller.LeftTrigger(), "LeftTrigger", mode);
+                        SetButton(controller.RightTrigger(), "RightTrigger", mode);
+                        SetButton(controller.LeftBumper(), "LeftBumper", mode);
+                        SetButton(controller.RightBumper(), "RightBumper", mode);
+                        SetButton(controller.Start(), "StartButton", mode);
+                        SetButton(controller.Back(), "BackButton", mode);
+
+                        std::map<std::string, frc2::Trigger> joystickTriggers;
+
+                        SetJoystickTrigger(frc2::Trigger{[this]{return frc::ApplyDeadband(controller.GetLeftY(), 0.08) != 0;}}, "LeftStickY", mode, joystickTriggers);
+                        SetJoystickTrigger(frc2::Trigger{[this]{return frc::ApplyDeadband(controller.GetLeftX(), 0.08) != 0;}}, "LeftStickX", mode, joystickTriggers);
+                        SetJoystickTrigger(frc2::Trigger{[this]{return frc::ApplyDeadband(controller.GetRightY(), 0.08) != 0;}}, "RightStickY", mode, joystickTriggers);
+                        SetJoystickTrigger(frc2::Trigger{[this]{return frc::ApplyDeadband(controller.GetRightX(), 0.08) != 0;}}, "RightStickX", mode, joystickTriggers);
+
+                        SetJoysticks(joystickTriggers, mode);
+                    }
+                }
             }
         }
-        return true;
+        
     }
     else
     {
         return false;
     }
+    return true;
 }
-
-frc2::CommandPtr Controller::wrappedEventCommand(
-        std::shared_ptr<frc2::Command> command) {
-    frc2::FunctionalCommand wrapped([command]() {
-        command->Initialize();
-    },
-    [command]() {
-        command->Execute();
-    },
-    [command](bool interrupted) {
-        command->End(interrupted);
-    },
-    [command]() {
-        return command->IsFinished();
-    }
-    );
-    wrapped.AddRequirements(command->GetRequirements());
-
-    return std::move(wrapped).ToPtr();
-}
-

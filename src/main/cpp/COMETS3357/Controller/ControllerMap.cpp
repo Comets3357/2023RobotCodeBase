@@ -2,7 +2,7 @@
 
 using namespace COMETS3357;
 
-ControllerMap::ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap, std::string fileName) : primary{0, actionMap}, secondary{1, actionMap}, test{2, actionMap}
+ControllerMap::ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &buttonActionMap, std::unordered_map<std::string, std::tuple<std::function<void(double, double, double, double)>, frc2::Subsystem*, Controller::JoystickCommandMode>>& joystickActionMap, std::string fileName) : primary{0, buttonActionMap, joystickActionMap}, secondary{1, buttonActionMap, joystickActionMap}, test{2, buttonActionMap, joystickActionMap}
 {
     LoadControllerMap(fileName);
 }
@@ -10,7 +10,7 @@ ControllerMap::ControllerMap(std::unordered_map<std::string, std::shared_ptr<frc
 void ControllerMap::LoadControllerMap(std::string fileName)
     {
         
-        std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "\\ControllerMaps\\" + fileName + ".json");
+        std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "/ControllerMaps/" + fileName + ".json");
         if (!jsonFile.is_open()) {
             std::cerr << "Failed to open file" << std::endl;
         }

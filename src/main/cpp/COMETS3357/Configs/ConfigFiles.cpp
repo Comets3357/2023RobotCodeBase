@@ -1,5 +1,5 @@
 #include "COMETS3357/Configs/ConfigFiles.h"
-#include <frc/Filesystem.h>
+
 
 using namespace COMETS3357;
 
@@ -15,8 +15,8 @@ RobotConfig& ConfigFiles::GetConfigFiles()
 
 void ConfigFiles::LoadConfigFiles(std::string fileName)
 {
-
-    std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "\\ConfigFiles\\" + fileName + ".json");
+   
+    std::ifstream jsonFile(frc::filesystem::GetDeployDirectory() + "/ConfigFiles/" + fileName + ".json");
     if (!jsonFile.is_open()) {
         std::cerr << "Failed to open file" << std::endl;
     }
@@ -34,7 +34,6 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
     picojson::array wheelMotorConfigs = jsonValue.get("WheelMotorConfigs").get<picojson::array>();
     picojson::array swerveConfigs = jsonValue.get("SwerveConfigs").get<picojson::array>();
     picojson::array swerveModuleConfigs = jsonValue.get("SwerveModuleConfigs").get<picojson::array>();
-
 
     for (auto& config : swerveModuleConfigs)
     {
@@ -82,7 +81,7 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.maxSpeed = config.get("MaxSpeed").get<double>();
         motorConfig.minSpeed = config.get("MinSpeed").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
-
+        motorConfig.follow = config.get("Follow").get<std::string>();
 
         motorConfig.velocityPID.P = config.get("VelocityPID").get("P").get<double>();
         motorConfig.velocityPID.I = config.get("VelocityPID").get("I").get<double>();
@@ -129,6 +128,8 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.velocityPID.D = config.get("VelocityPID").get("D").get<double>();
         motorConfig.velocityPID.FF = config.get("VelocityPID").get("FF").get<double>();
 
+        motorConfig.follow = config.get("Follow").get<std::string>();
+
         picojson::object velocities = config.get("Velocities").get<picojson::object>();
         for (auto& velocity : velocities)
         {
@@ -145,8 +146,9 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
         motorConfig.invertedRelative = config.get("InvertedRelative").get<bool>();
         motorConfig.currentLimit = config.get("CurrentLimit").get<double>();
         motorConfig.idleMode = config.get("IdleMode").get<std::string>() == "Brake" ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast;
-
+        motorConfig.follow = config.get("Follow").get<std::string>();
         picojson::object percents = config.get("Percents").get<picojson::object>();
+
         for (auto& percent : percents)
         {
             motorConfig.percents[percent.first] = percent.second.get<double>();
@@ -154,8 +156,4 @@ void ConfigFiles::LoadConfigFiles(std::string fileName)
 
         robotConfig.rollerMotorConfigs[config.get("Name").get<std::string>()] = motorConfig;
     }
-
-
-
-
 }

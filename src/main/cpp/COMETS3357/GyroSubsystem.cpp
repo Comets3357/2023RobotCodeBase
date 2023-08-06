@@ -2,13 +2,14 @@
 
 using namespace COMETS3357;
 
-GyroSubsystem::GyroSubsystem(GyroData& data) : gyroData{data}, m_navx{frc::SPI::Port::kMXP}
+GyroSubsystem::GyroSubsystem() : COMETS3357::Subsystem<GyroState>("GyroSubsystem") , m_navx{frc::SPI::Port::kMXP}
 {
-
+    
 }
 
 void GyroSubsystem::Periodic()
 {
-    gyroData.angle = m_navx.GetAngle();
-    gyroData.angleRate = m_navx.GetRate();
+    subsystemData->GetEntry("angle").SetDouble(-m_navx.GetAngle() * 3.14159 / 180);
+    subsystemData->GetEntry("angleRate").SetDouble(m_navx.GetRate() * 3.14159 / 180);
+
 }

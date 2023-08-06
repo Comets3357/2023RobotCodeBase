@@ -15,6 +15,7 @@
 #include "COMETS3357/Subsystems/Chassis/SwerveSubsystem.h"
 
 #include "COMETS3357/Configs/ConfigFiles.h"
+#include <COMETS3357/Subsystems/SubsystemManager.h>
 
 
 class Robot : public frc::TimedRobot {

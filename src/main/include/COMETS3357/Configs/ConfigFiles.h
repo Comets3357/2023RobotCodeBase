@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "Json/picojson.h"
+#include "COMETS3357/Json/picojson.h"
 #include <string>
 #include <vector>
 #include <map>
@@ -13,11 +13,16 @@
 #include <units/angular_velocity.h>
 #include "COMETS3357/PositionSparkMaxRunMode.h"
 #include <unordered_map>
+#include <frc/Filesystem.h>
+#include <rev/CANSparkMax.h>
 
 namespace COMETS3357
 {
 
+
     struct PositionMotorConfig {
+        rev::CANSparkMax* motor;
+        std::string follow;
         int ID = 1;
         PositionSparkMaxRunMode defaultMode;
         bool invertedAbsolute;
@@ -46,6 +51,8 @@ namespace COMETS3357
     };
 
     struct WheelMotorConfig {
+        rev::CANSparkMax* motor;
+        std::string follow;
         int ID = 100;
         bool invertedRelative;
         double currentLimit;
@@ -58,6 +65,8 @@ namespace COMETS3357
     };
 
     struct RollerMotorConfig {
+        rev::CANSparkMax* motor;
+        std::string follow;
         int ID = 1;
         bool invertedRelative;
         double currentLimit;

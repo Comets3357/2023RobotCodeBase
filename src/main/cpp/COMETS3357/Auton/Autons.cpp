@@ -5,9 +5,10 @@ using namespace COMETS3357;
 Autons::Autons(SwerveSubsystem* drivebase, std::unordered_map<std::string, std::shared_ptr<frc2::Command>> &actionMap) : swerveSubsystem{drivebase}, autoBuilder(
         [this]() {return swerveSubsystem->GetPose();},
         [this](auto initPose) {swerveSubsystem->ResetOdometry(initPose);},
+        swerveSubsystem->kDriveKinematics,
         pathplanner::PIDConstants(5.0, 0.0, 0.0),
         pathplanner::PIDConstants(0.5, 0.0, 0.0),
-        [this](auto speeds) {swerveSubsystem->SetChassisSpeed(speeds);},
+        [this](auto speeds) {swerveSubsystem->SetModuleStates(speeds);},
         actionMap,
         {swerveSubsystem},
         false

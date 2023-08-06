@@ -4,19 +4,20 @@
     {
         "XBOX":
         {
-            "SemiAuto":
+            "DefaultMode": "XBOXSemiAuto",
+            "PrimarySemiAuto":
             {
                 "D-padLeft": "NONE",
                 "D-padRight": "NONE",
                 "D-padUp": "NONE",
                 "D-padDown": "NONE",
-                "LeftStickY": "NONE",
-                "LeftStickX": "NONE",
+                "LeftStickY": "SwerveDefaultCommand",
+                "LeftStickX": "SwerveDefaultCommand",
                 "LeftStickButton": "NONE",
-                "RightStickX": "NONE",
-                "RightStickY": "NONE",
+                "RightStickX": "SwerveDefaultCommand",
+                "RightStickY": "SwerveDefaultCommand",
                 "RightStickButton": "NONE",
-                "AButton": "Test",
+                "AButton": "Test1",
                 "BButton": "NONE",
                 "XButton": "NONE",
                 "YButton": "NONE",
@@ -27,6 +28,10 @@
                 "XboxButton": "NONE",
                 "LeftTrigger": "NONE",
                 "RightTrigger": "NONE",
+                "D-padLeftPressed": "NONE",
+                "D-padRightPressed": "NONE",
+                "D-padUpPressed": "NONE",
+                "D-padDownPressed": "NONE",
                 "LeftStickButtonPressed": "NONE",
                 "RightStickButtonPressed": "NONE",
                 "AButtonPressed": "NONE",
@@ -39,24 +44,42 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "D-padLeftReleased": "NONE",
+                "D-padRightReleased": "NONE",
+                "D-padUpReleased": "NONE",
+                "D-padDownReleased": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         },
 
 
         "Taranus":
         {
-            "SemiAuto":
+            "DefaultMode": "TaranusSemiAuto",
+            "TaranusSemiAuto":
             {
                 "D-padLeft": "NONE",
                 "D-padRight": "NONE",
                 "D-padUp": "NONE",
                 "D-padDown": "NONE",
-                "LeftStickY": "NONE",
-                "LeftStickX": "NONE",
+                "LeftStickY": "SwerveDefaultCommand",
+                "LeftStickX": "SwerveDefaultCommand",
                 "LeftStickButton": "NONE",
-                "RightStickX": "NONE",
-                "RightStickY": "NONE",
+                "RightStickX": "SwerveDefaultCommand",
+                "RightStickY": "SwerveDefaultCommand",
                 "RightStickButton": "NONE",
                 "AButton": "NONE",
                 "BButton": "NONE",
@@ -69,6 +92,10 @@
                 "XboxButton": "NONE",
                 "LeftTrigger": "NONE",
                 "RightTrigger": "NONE",
+                "D-padLeftPressed": "NONE",
+                "D-padRightPressed": "NONE",
+                "D-padUpPressed": "NONE",
+                "D-padDownPressed": "NONE",
                 "LeftStickButtonPressed": "NONE",
                 "RightStickButtonPressed": "NONE",
                 "AButtonPressed": "NONE",
@@ -81,28 +108,50 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "D-padLeftReleased": "NONE",
+                "D-padRightReleased": "NONE",
+                "D-padUpReleased": "NONE",
+                "D-padDownReleased": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         }
     },
 
     "SecondaryController":
     {
+        "Taranus":
+        {
+            "DefaultMode": "NONE"
+        },
         "XBOX":
         {
-            "SemiAuto":
+            "DefaultMode": "XBOXSemiAuto",
+            "XBOXSemiAuto":
             {
                 "D-padLeft": "NONE",
                 "D-padRight": "NONE",
-                "D-padUp": "NONE",
-                "D-padDown": "NONE",
-                "LeftStickY": "NONE",
-                "LeftStickX": "NONE",
+                "D-padUp": "XBOXSemiAuto",
+                "D-padDown": "XBOXManual",
+                "LeftStickY": "Set1",
+                "LeftStickX": "Set1",
                 "LeftStickButton": "NONE",
-                "RightStickX": "NONE",
-                "RightStickY": "NONE",
+                "RightStickX": "Set1",
+                "RightStickY": "Set1",
                 "RightStickButton": "NONE",
-                "AButton": "NONE",
+                "AButton": "Test1",
                 "BButton": "NONE",
                 "XButton": "NONE",
                 "YButton": "NONE",
@@ -113,6 +162,10 @@
                 "XboxButton": "NONE",
                 "LeftTrigger": "NONE",
                 "RightTrigger": "NONE",
+                "D-padLeftPressed": "NONE",
+                "D-padRightPressed": "NONE",
+                "D-padUpPressed": "NONE",
+                "D-padDownPressed": "NONE",
                 "LeftStickButtonPressed": "NONE",
                 "RightStickButtonPressed": "NONE",
                 "AButtonPressed": "NONE",
@@ -125,21 +178,38 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "D-padLeftReleased": "NONE",
+                "D-padRightReleased": "NONE",
+                "D-padUpReleased": "NONE",
+                "D-padDownReleased": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             },
-            "Manual":
+            "XBOXManual":
             {
                 "D-padLeft": "NONE",
                 "D-padRight": "NONE",
-                "D-padUp": "NONE",
-                "D-padDown": "NONE",
+                "D-padUp": "XBOXSemiAuto",
+                "D-padDown": "XBOXManual",
                 "LeftStickY": "NONE",
                 "LeftStickX": "NONE",
                 "LeftStickButton": "NONE",
-                "RightStickX": "NONE",
-                "RightStickY": "NONE",
+                "RightStickX": "Set1",
+                "RightStickY": "Set1",
                 "RightStickButton": "NONE",
-                "AButton": "NONE",
+                "AButton": "Test2",
                 "BButton": "NONE",
                 "XButton": "NONE",
                 "YButton": "NONE",
@@ -150,6 +220,10 @@
                 "XboxButton": "NONE",
                 "LeftTrigger": "NONE",
                 "RightTrigger": "NONE",
+                "D-padLeftPressed": "NONE",
+                "D-padRightPressed": "NONE",
+                "D-padUpPressed": "NONE",
+                "D-padDownPressed": "NONE",
                 "LeftStickButtonPressed": "NONE",
                 "RightStickButtonPressed": "NONE",
                 "AButtonPressed": "NONE",
@@ -162,7 +236,24 @@
                 "StartButtonPressed": "NONE",
                 "XboxButtonPressed": "NONE",
                 "LeftTriggerPressed": "NONE",
-                "RightTriggerPressed": "NONE"
+                "RightTriggerPressed": "NONE",
+                "D-padLeftReleased": "NONE",
+                "D-padRightReleased": "NONE",
+                "D-padUpReleased": "NONE",
+                "D-padDownReleased": "NONE",
+                "LeftStickButtonReleased": "NONE",
+                "RightStickButtonReleased": "NONE",
+                "AButtonReleased": "NONE",
+                "BButtonReleased": "NONE",
+                "XButtonReleased": "NONE",
+                "YButtonReleased": "NONE",
+                "LeftBumperReleased": "NONE",
+                "RightBumperReleased": "NONE",
+                "BackButtonReleased": "NONE",
+                "StartButtonReleased": "NONE",
+                "XboxButtonReleased": "NONE",
+                "LeftTriggerReleased": "NONE",
+                "RightTriggerReleased": "NONE"
             }
         }
     }

@@ -1,12 +1,14 @@
 #include "COMETS3357/Subsystems/SparkMax/WheelSparkMax.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <COMETS3357/Subsystems/SubsystemManager.h>
 
 using namespace COMETS3357;
 
 WheelSparkMax::WheelSparkMax(std::string configName) : config{ConfigFiles::getInstance().GetConfigFiles().wheelMotorConfigs[configName]},
 motor{config.ID, rev::CANSparkMax::MotorType::kBrushless}, encoder{motor.GetEncoder()}, PIDController{motor.GetPIDController()}
 {
-
+    config.motor = &motor;
+    COMETS3357::SubsystemManager::GetInstance().AddInit([this]{RobotInit();});
 }
 
 void WheelSparkMax::RobotInit()
@@ -26,6 +28,12 @@ void WheelSparkMax::RobotInit()
         SetVelocityPID(config.velocityPID);
         encoder.SetPositionConversionFactor(config.relativePositionConversionFactor);
         encoder.SetVelocityConversionFactor(config.relativeVelocityConversionFactor);
+
+        if (config.follow != "NONE")
+        {
+            motor.Follow(*COMETS3357::ConfigFiles::getInstance().GetConfigFiles().positionMotorConfigs[config.follow].motor);
+        }
+
         motor.BurnFlash();
     }
 }
